@@ -1,22 +1,25 @@
 // middleware.js
-import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt"; // To check the session (JWT token)
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-// This will run for every request to your app
-export async function middleware(req: any) {
+export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const pathname = req.nextUrl.pathname;
 
-  // If there's no token (i.e., user is not authenticated)
-  if (!token) {
-    // Redirect to the login page
+  // redirect if not logged in
+  if (!token && pathname !== "/login") {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Allow the request to proceed if authenticated
+  // redirect logged in users away from login/register
+  else if (token && (pathname === "/login" || pathname === "/register")) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
   return NextResponse.next();
 }
 
-// Specify which paths should use this middleware (e.g., protect all routes except login)
+// run middleware on all routes except auth, static files, and favicon
 export const config = {
-  matcher: ["/thread", "/"],
+  matcher: ["/((?!api/auth|_next/static|_next/image|favicon.ico).*)"],
 };
