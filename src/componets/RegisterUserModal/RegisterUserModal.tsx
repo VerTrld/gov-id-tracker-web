@@ -7,6 +7,7 @@ import { UseFormReturnType } from '@mantine/form';
 interface IRegisterUser extends ModalProps {
   onSubmit: () => void;
   form: UseFormReturnType<IPersonShcema>;
+  onLoginClick?: () => void;
 }
 
 const RegisterUserModal = ({
@@ -14,13 +15,15 @@ const RegisterUserModal = ({
   onClose,
   onSubmit,
   form,
+  onLoginClick
 }: IRegisterUser) => {
   return (
     <Modal
       opened={opened}
       onClose={onClose}
-      withCloseButton={false}
+      withCloseButton={true}
       centered
+      title='Register'
     >
       <Box
         component="form"
@@ -58,7 +61,10 @@ const RegisterUserModal = ({
           ta="center"
           c="violet"
           style={{ cursor: 'pointer' }}
-          onClick={() => onClose?.()}
+          onClick={() => {
+            onClose?.();
+            onLoginClick?.();
+          }}
         >
           Already have an account? Login
         </Text>

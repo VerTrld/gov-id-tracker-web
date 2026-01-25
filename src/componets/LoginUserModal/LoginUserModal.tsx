@@ -30,8 +30,9 @@ const LoginUserModal = ({
     <Modal
       opened={opened}
       onClose={onClose}
-      withCloseButton={false}
+      withCloseButton={true}
       centered
+      title='Log In'
     >
       <Box
         component="form"
