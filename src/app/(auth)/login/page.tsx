@@ -98,69 +98,69 @@ export default function Login() {
 
 
 
-         <Box style={{ padding: '80px 100px' }}>
-      <Flex
-        style={{
-          // maxWidth: 1200,
-          // margin: '0 auto',
-          // alignItems: 'center',
-          // justifyContent: 'space-between',
-          // gap: '70px',
-          flexWrap: 'wrap',
-        }}
-        justify={'space-between'}
-        
-       
-      >
-        {/* Left side */}
-        <Box style={{ flex: '1 1 400px', minWidth: 280 }}>
-          <Title
-            order={1}
-            style={{ fontWeight: 800, marginBottom: 16, lineHeight: 1.2 }}
-          >
-            Your One-Stop Guide to
-            <br />
-            Government IDs for
-            <br />
-            First-Time Jobseekers
-          </Title>
-
-          <Text
+        <Box style={{ padding: '80px 100px' }}>
+          <Flex
             style={{
-              color: '#555',
-              marginBottom: 32,
-              maxWidth: 500,
-              lineHeight: 1.5,
+              // maxWidth: 1200,
+              // margin: '0 auto',
+              // alignItems: 'center',
+              // justifyContent: 'space-between',
+              // gap: '70px',
+              flexWrap: 'wrap',
             }}
-          >
-            Designed to help first-time jobseekers understand ID requirements,
-            access official government websites, and track and complete
-            government ID applications with ease.
-          </Text>
+            justify={'space-between'}
 
-          <Button
-            style={{
-              backgroundColor: '#e0e0e0',
-              color: '#000',
-              padding: '10px 24px',
-            }}
+
           >
-            Button
-          </Button>
+            {/* Left side */}
+            <Box style={{ flex: '1 1 400px', minWidth: 280 }}>
+              <Title
+                order={1}
+                style={{ fontWeight: 800, marginBottom: 16, lineHeight: 1.2 }}
+              >
+                Your One-Stop Guide to
+                <br />
+                Government IDs for
+                <br />
+                First-Time Jobseekers
+              </Title>
+
+              <Text
+                style={{
+                  color: '#555',
+                  marginBottom: 32,
+                  maxWidth: 500,
+                  lineHeight: 1.5,
+                }}
+              >
+                Designed to help first-time jobseekers understand ID requirements,
+                access official government websites, and track and complete
+                government ID applications with ease.
+              </Text>
+
+              <Button
+                style={{
+                  backgroundColor: '#e0e0e0',
+                  color: '#000',
+                  padding: '10px 24px',
+                }}
+              >
+                Button
+              </Button>
+            </Box>
+
+            {/* Right side placeholder */}
+            <Box
+              style={{
+                flex: '1 1 400px',
+                minWidth: 280,
+                height: 300,
+                backgroundColor: '#e5e5e5',
+                borderRadius: 8,
+              }}
+            />
+          </Flex>
         </Box>
-
-        {/* Right side placeholder */}
-        <Box
-          style={{
-            flex: '1 1 400px',
-            minWidth: 280,
-            height: 300,
-            backgroundColor: '#e5e5e5',
-            borderRadius: 8,
-          }}
-        />
-      </Flex>
-    </Box>
 
       </Flex>
     </>
