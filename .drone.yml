@@ -11,7 +11,15 @@ steps:
       registry: 192.168.0.212:5000
       repo: 192.168.0.212:5000/gov-id-tracker-web
       insecure: true
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
 
 trigger:
   branch:
     - master
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
