@@ -7,12 +7,12 @@ export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
   // redirect if not logged in
-  if (!token && pathname !== "/login") {
+  if (!token && pathname !== "/login" && pathname !== "/register") {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
   // redirect logged in users away from login/register
-  else if (token && (pathname === "/login" || pathname === "/register")) {
+  if (token && (pathname === "/login" || pathname === "/register")) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 

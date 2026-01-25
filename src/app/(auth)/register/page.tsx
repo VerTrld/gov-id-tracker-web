@@ -65,7 +65,11 @@ export default function Register() {
           {" "}
           Register
         </Button>
-        <Text onClick={() => router.push("/login")} c={"violet"}>
+        <Text
+          onClick={() => router.push("/login")}
+          c={"violet"}
+          style={{ cursor: "pointer" }}
+        >
           login
         </Text>
       </form>

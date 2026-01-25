@@ -63,7 +63,11 @@ export default function Login() {
         <Button type="submit" fullWidth mb={"md"}>
           Login
         </Button>
-        <Text onClick={() => router.push("/register")} c={"violet"}>
+        <Text
+          onClick={() => router.push("/register")}
+          c={"violet"}
+          style={{ cursor: "pointer" }}
+        >
           register
         </Text>
       </form>
