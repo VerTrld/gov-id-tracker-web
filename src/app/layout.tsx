@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@mantine/core/styles.css";
+import { ModalsProvider } from '@mantine/modals';
 
 import {
   ColorSchemeScript,
@@ -27,7 +28,9 @@ export default function RootLayout({
       <body>
         <SessionProvider>
           <QueryClientProvider>
-            <MantineProvider>{children}</MantineProvider>
+            <MantineProvider>
+               <ModalsProvider> {children}</ModalsProvider>
+             </MantineProvider>
           </QueryClientProvider>
         </SessionProvider>
       </body>

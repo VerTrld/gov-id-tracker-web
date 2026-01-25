@@ -2,27 +2,33 @@
 import IPersonShcema, { PersonSchema } from "@/schema/PersonSchema";
 import { Button, Flex, Text, TextInput } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCsrfToken, signIn } from "next-auth/react";
+import DashboardNav from "@/componets/DashboardNav/DashboardNav";
+import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal";
+import { LoginType } from "@/enum/dashboard.enum";
+import axios from "axios";
+import LoginUserModal from "@/componets/LoginUserModal/LoginUserModal";
 
 export default function Login() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [modalOpen, setModalOpen] = useState('')
 
-  const form = useForm<IPersonShcema>({
+  const loginForm = useForm<IPersonShcema>({
     validate: yupResolver(PersonSchema),
     initialValues: {
       email: "",
       password: "",
     },
   });
-  const handleSubmit = form.onSubmit(async () => {
+  const handleLogIn = loginForm.onSubmit(async () => {
     setError(""); // Clear any previous errors
 
     const res = await signIn("credentials", {
-      email: form.values.email,
-      password: form.values.password,
+      email: loginForm.values.email,
+      password: loginForm.values.password,
       redirect: false,
     });
 
@@ -34,39 +40,64 @@ export default function Login() {
     }
   });
 
+
+
+  const registerForm = useForm<IPersonShcema>({
+    validate: yupResolver(PersonSchema),
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+  const handleRegister = registerForm.onSubmit(async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/person/create`,
+        registerForm.values
+      );
+
+      if (res.status === 200 || res.status === 201) {
+        console.log("success");
+        router.push("/login");
+      }
+    } catch { }
+  });
+
+  useEffect(() => {
+    console.log({ registerForm })
+  }, [registerForm])
+
   return (
-    <Flex
-      direction={"column"}
-      h={"100vh"}
-      w={"100%"}
-      align="center"
-      justify="center"
-    >
-      <form
-        onSubmit={handleSubmit}
-        style={{ width: "100%", maxWidth: "400px", padding: "10px" }}
+
+    <>
+
+      <LoginUserModal
+        opened={modalOpen === LoginType.LOGIN}
+        onClose={() => { setModalOpen(''), loginForm.reset() }}
+        form={loginForm}
+        onSubmit={() => handleLogIn()}
+      />
+      
+      <RegisterUserModal
+        opened={modalOpen === LoginType.REGISTER}
+        onClose={() => { setModalOpen(''), registerForm.reset() }}
+        form={registerForm}
+        onSubmit={() => handleRegister()} />
+
+      <Flex
+        direction={"column"}
+      // h={"100vh"}
+      // w={"100%"}
+      // align="center"
+      // justify="center"
       >
-        <TextInput
-          placeholder="Email"
-          {...form.getInputProps("email")}
-          mb="md"
-        />
-        <TextInput
-          placeholder="Password"
-          type="password"
-          {...form.getInputProps("password")}
-          mb="md"
-        />
-        {error && (
-          <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
-        )}
-        <Button type="submit" fullWidth mb={"md"}>
-          Login
-        </Button>
-        <Text onClick={() => router.push("/register")} c={"violet"}>
-          register
-        </Text>
-      </form>
-    </Flex>
+        <DashboardNav
+          logIn={() => setModalOpen(LoginType.LOGIN)}
+          signUp={() => setModalOpen(LoginType.REGISTER)} />
+
+      </Flex>
+    </>
+
   );
 }
