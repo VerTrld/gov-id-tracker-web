@@ -78,7 +78,7 @@ export default function Login() {
         form={loginForm}
         onSubmit={() => handleLogIn()}
       />
-      
+
       <RegisterUserModal
         opened={modalOpen === LoginType.REGISTER}
         onClose={() => { setModalOpen(''), registerForm.reset() }}

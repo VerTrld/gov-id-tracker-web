@@ -1,0 +1,17 @@
+kind: pipeline
+type: docker
+name: dev
+
+steps:
+  - name: build
+    image: plugins/docker:21
+    settings:
+      tags: ${DRONE_TAG}
+      dockerfile: Dockerfile
+      registry: 192.168.0.212:5000
+      repo: 192.168.0.212:5000/gov-id-tracker-web
+      insecure: true
+
+trigger:
+  branch:
+    - master
