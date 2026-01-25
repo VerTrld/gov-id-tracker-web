@@ -4,7 +4,7 @@ name: dev
 
 steps:
   - name: build
-    image: plugins/docker
+       image: 192.168.0.212:5000/plugins/docker:21
     settings:
       tags: ${DRONE_TAG}
       dockerfile: Dockerfile
