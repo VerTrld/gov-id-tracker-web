@@ -10,6 +10,8 @@ import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal";
 import { LoginType } from "@/enum/dashboard.enum";
 import axios from "axios";
 import LoginUserModal from "@/componets/LoginUserModal/LoginUserModal";
+import { ChecklistModule } from "@/componets/ChecklistModule/ChecklistModule";
+
 
 export default function Login() {
   const router = useRouter();
@@ -97,15 +99,20 @@ export default function Login() {
           signUp={() => setModalOpen(LoginType.REGISTER)} />
 
 
+        <ChecklistModule
+          items={[
+            { id: 'profile', label: 'Complete profile', value: 25 },
+            { id: 'email', label: 'Verify email', value: 25 },
+            { id: 'photo', label: 'Upload photo', value: 25 },
+            { id: 'terms', label: 'Accept terms', value: 25 },
+          ]}
+          onComplete={() => console.log('All done!')}
+        />
 
         <Box style={{ padding: '80px 100px' }}>
           <Flex
             style={{
-              // maxWidth: 1200,
-              // margin: '0 auto',
-              // alignItems: 'center',
-              // justifyContent: 'space-between',
-              // gap: '70px',
+       
               flexWrap: 'wrap',
             }}
             justify={'space-between'}
