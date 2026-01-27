@@ -47,7 +47,8 @@ export default function Login() {
   const registerForm = useForm<IPersonShcema>({
     validate: yupResolver(PersonSchema),
     initialValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     },
@@ -56,7 +57,11 @@ export default function Login() {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/person/create`,
-        registerForm.values
+        {
+          name: `${registerForm.values.firstName} ${registerForm.values.lastName}`,
+          email: registerForm.values.email,
+          password: registerForm.values.password
+        }
       );
 
       if (res.status === 200 || res.status === 201) {
@@ -112,7 +117,7 @@ export default function Login() {
         <Box style={{ padding: '80px 100px' }}>
           <Flex
             style={{
-       
+
               flexWrap: 'wrap',
             }}
             justify={'space-between'}

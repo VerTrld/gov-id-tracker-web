@@ -36,14 +36,14 @@ const RegisterUserModal = ({
       >
         <TextInput
           placeholder="First Name"
-          {...form.getInputProps('name')}
+          {...form.getInputProps('firstName')}
           mb="md"
         />
-        {/* <TextInput
+        <TextInput
           placeholder="Last Name"
-          {...form.getInputProps('name')}
+          {...form.getInputProps('lastName')}
           mb="md"
-        /> */}
+        />
 
         <TextInput
           placeholder="Email"

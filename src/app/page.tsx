@@ -1,11 +1,20 @@
 "use client";
-import { Button } from "@mantine/core";
+
+import { UserNav } from "@/componets/UserNav/UserNav";
+import { Button, Flex } from "@mantine/core";
 import { signOut } from "next-auth/react";
 
 export default function Home() {
   return (
-    <>
-      hello dashboard <Button onClick={() => signOut()}>logout</Button>
-    </>
+
+    <Flex>
+      <UserNav>
+        hello dashboard <Button onClick={() => signOut()}>logout</Button>
+      </UserNav>
+    </Flex>
+
+
+
+
   );
 }
