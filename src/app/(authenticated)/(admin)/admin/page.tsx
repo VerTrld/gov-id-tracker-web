@@ -1,18 +1,16 @@
-'use client'
+"use client";
 
-import { useSession } from "next-auth/react"
-import { redirect } from "next/navigation"
+import { UserNav } from "@/componets/UserNav/UserNav";
+import { Button, Flex } from "@mantine/core";
+import { signOut } from "next-auth/react";
 
-const page = () => {
-
-    const session = useSession()
-    // @ts-ignore
-    if (session.data?.user.roles !== 'SUPER_ADMIN') {
-        redirect('/unauthorized')
-    }
+export default function page() {
     return (
-        <div>Admin</div>
-    )
-}
 
-export default page
+        <Flex>
+            <UserNav>
+                hello Admin <Button onClick={() => signOut()}>logout</Button>
+            </UserNav>
+        </Flex>
+    );
+}

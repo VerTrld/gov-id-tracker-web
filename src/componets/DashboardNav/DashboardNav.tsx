@@ -1,6 +1,7 @@
-import React from 'react';
-import { Box, Button, Flex, Burger, Collapse } from '@mantine/core';
+import { Box, Burger, Button, Collapse, Flex, Text } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface IDashboardNav {
   signUp: () => void;
@@ -8,6 +9,9 @@ interface IDashboardNav {
 }
 
 const DashboardNav = ({ signUp, logIn }: IDashboardNav) => {
+  const session = useSession()
+  console.log({ session })
+  const router = useRouter()
   const [opened, { toggle, close }] = useDisclosure(false);
 
   // Responsive breakpoint
@@ -20,12 +24,13 @@ const DashboardNav = ({ signUp, logIn }: IDashboardNav) => {
 
         {!isMobile ? (
           // Desktop menu
-          <Flex gap={15}>
+          <Flex gap={15} align={'center'}>
             <Button variant="subtle">Home</Button>
             <Button variant="subtle">About</Button>
             <Button variant="subtle">Features</Button>
             <Button variant="subtle">Contact</Button>
-            <Button onClick={logIn}>Log In</Button>
+            {session.data?.user?.name ? <Button onClick={() => router.push('/user')}><Text>{session.data.user.name}</Text></Button> : <Button onClick={logIn}>Log In</Button>}
+
             <Button onClick={signUp}>Sign Up</Button>
           </Flex>
         ) : (
@@ -42,8 +47,15 @@ const DashboardNav = ({ signUp, logIn }: IDashboardNav) => {
             <Button variant="subtle" fullWidth onClick={close}>About</Button>
             <Button variant="subtle" fullWidth onClick={close}>Features</Button>
             <Button variant="subtle" fullWidth onClick={close}>Contact</Button>
-            <Button fullWidth onClick={() => { close(); logIn(); }}>Log In</Button>
+            {session.data?.user?.name ?
+              <Flex>
+                <Text>{session.data.user.name}</Text>
+              </Flex> :
+              <Flex>
+                <Button fullWidth onClick={() => { close(); logIn(); }}>Log In</Button>
+              </Flex>}
             <Button fullWidth onClick={() => { close(); signUp(); }}>Sign Up</Button>
+
           </Flex>
         </Collapse>
       )}

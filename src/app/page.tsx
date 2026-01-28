@@ -10,7 +10,7 @@ import { useForm, yupResolver } from "@mantine/form";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export default function Login() {
@@ -59,7 +59,7 @@ export default function Login() {
   const handleRegister = registerForm.onSubmit(async () => {
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/person/create`,
+        `${process.env.NEXT_PUBLIC_API_URL}/userAccount/create/one`,
         {
           name: `${registerForm.values.firstName} ${registerForm.values.lastName}`,
           email: registerForm.values.email,
@@ -74,9 +74,6 @@ export default function Login() {
     } catch { }
   });
 
-  useEffect(() => {
-    console.log({ registerForm })
-  }, [registerForm])
 
   return (
 
