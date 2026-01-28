@@ -63,7 +63,7 @@ export default function page() {
 
             {/* Admin Side UserList */}
 
-            <Flex >
+            <Flex>
                 <ContactCardGrid contacts={mockContacts} />
             </Flex>
 
