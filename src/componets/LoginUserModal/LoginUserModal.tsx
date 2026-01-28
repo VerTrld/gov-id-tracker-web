@@ -32,7 +32,13 @@ const LoginUserModal = ({
       onClose={onClose}
       withCloseButton={true}
       centered
-      title='Log In'
+      title="Log In"
+      styles={{
+        title: {
+          width: '100%',
+          textAlign: 'center',
+        },
+      }}
     >
       <Box
         component="form"

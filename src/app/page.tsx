@@ -147,6 +147,8 @@ export default function Login() {
           signUp={() => setModalOpen(LoginType.REGISTER)} />
 
 
+
+        {/* Sample Data and Call */}
         {/* <ChecklistModule
           items={[
             { id: 'profile', label: 'Complete profile', value: 25 },
@@ -245,13 +247,15 @@ export default function Login() {
           </Flex>
         </Flex>
 
+
+        {/* Admin Side UserList */}
         {/* <Container size="auto">
         <ContactCardGrid contacts={mockContacts} />
       </Container> */}
 
 
 
-{/* ABOUT PAGE */}
+        {/* ABOUT PAGE */}
         {/* <Container size="lg" py="xl">
           Header
           <Stack align="center" mb="xl">
