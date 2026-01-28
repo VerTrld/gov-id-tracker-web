@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
 import { Box, UnstyledButton } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import { PropsWithChildren, useState } from 'react';
 
-interface ResponsiveNavLayoutProps {
-  children: React.ReactNode;
+interface ResponsiveNavLayoutProps extends PropsWithChildren {
 }
-//TO FIX PROPER CHILDREN WITH PROPS 
+//TO FIX PROPER CHILDREN WITH PROPS
 export function UserNav({ children }: ResponsiveNavLayoutProps) {
   const [active, setActive] = useState('dashboard');
   const isMobile = useMediaQuery('(max-width: 768px)');

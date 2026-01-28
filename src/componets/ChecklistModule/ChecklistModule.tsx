@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
 import {
-    Checkbox,
     Button,
-    Stack,
-    Group,
-    RingProgress,
-    Text,
     Card,
     Center,
+    Checkbox,
+    Group,
+    RingProgress,
+    Stack,
+    Text,
 } from '@mantine/core';
+import { useEffect, useMemo, useState } from 'react';
 
 export type ChecklistItem = {
     id: string;

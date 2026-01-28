@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
 import "@mantine/core/styles.css";
 import { ModalsProvider } from '@mantine/modals';
+import type { Metadata } from "next";
 
+import QueryClientProvider from "@/provider/QueryClientProvider";
 import {
   ColorSchemeScript,
   MantineProvider,
   mantineHtmlProps,
 } from "@mantine/core";
-import QueryClientProvider from "@/provider/QueryClientProvider";
 import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
@@ -29,8 +29,8 @@ export default function RootLayout({
         <SessionProvider>
           <QueryClientProvider>
             <MantineProvider>
-               <ModalsProvider> {children}</ModalsProvider>
-             </MantineProvider>
+              <ModalsProvider> {children}</ModalsProvider>
+            </MantineProvider>
           </QueryClientProvider>
         </SessionProvider>
       </body>
