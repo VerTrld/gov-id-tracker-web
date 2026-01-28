@@ -12,7 +12,7 @@ export default function page() {
     const { data } = useQuery({
         queryKey: ['getUser'],
         queryFn: async () => {
-            const res = await get('/users-list')
+            const res = await get('/userAccount/users/list')
             return res.data
         }
     })
@@ -55,14 +55,13 @@ export default function page() {
 
     ];
 
+    console.log({data})
+
     return (
 
         <Flex direction={'column'} gap={10}>
-
             hello Admin <Button onClick={() => signOut()}>logout</Button>
-
             {/* Admin Side UserList */}
-
             <Flex>
                 <ContactCardGrid contacts={mockContacts} />
             </Flex>

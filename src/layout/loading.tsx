@@ -6,7 +6,7 @@ import React, { PropsWithChildren } from "react";
 const LoadingLayout = ({ children }: PropsWithChildren) => {
   const session = useSession();
 
-  console.log({ session });
+  // console.log({ session });
   if (session.status === "loading") {
     return <Flex style={{ flex: 1 }}>Loading</Flex>;
   }
