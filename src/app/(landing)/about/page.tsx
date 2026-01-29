@@ -1,11 +1,9 @@
 "use client";
 import { Container, Divider, Flex, Grid, List, Paper, Stack, Text, Title } from '@mantine/core';
-import React from 'react'
 
 const page = () => {
     return (
         <Flex>
-
             {/* ABOUT PAGE */}
             <Container size="lg" py="xl">
                 {/* Header */}
