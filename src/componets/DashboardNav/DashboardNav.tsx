@@ -4,8 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
-interface IDashboardNav extends PropsWithChildren {
-}
+interface IDashboardNav extends PropsWithChildren {}
 
 const DashboardNav = ({ children }: IDashboardNav) => {
   const session = useSession();
@@ -16,16 +15,22 @@ const DashboardNav = ({ children }: IDashboardNav) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <Flex style={{ flexDirection: 'column' }}>
+    <Flex style={{ flexDirection: "column" }}>
       <Box style={{ boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)" }}>
-        <Flex justify="space-between" align="center" style={{ padding: "20px" }}>
+        <Flex
+          justify="space-between"
+          align="center"
+          style={{ padding: "20px" }}
+        >
           <Box>Logo</Box>
 
           {!isMobile ? (
             // Desktop menu
             <Flex gap={15} align={"center"}>
               <Button variant="subtle">Home</Button>
-              <Button variant="subtle" dir="/about">About</Button>
+              <Button variant="subtle" dir="/about">
+                About
+              </Button>
               <Button variant="subtle">Features</Button>
               <Button variant="subtle">Contact</Button>
               {session.data?.user?.name ? (
@@ -37,8 +42,12 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                 </Flex>
               ) : (
                 <Flex gap={15}>
-                  <Button onClick={() => router.push('?action=login')}>Log In</Button>
-                  <Button onClick={() => router.push('?action=register')}>Sign Up</Button>
+                  <Button onClick={() => router.push("?action=login")}>
+                    Log In
+                  </Button>
+                  <Button onClick={() => router.push("?action=register")}>
+                    Sign Up
+                  </Button>
                 </Flex>
               )}
             </Flex>
@@ -82,8 +91,9 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                   <Button
                     fullWidth
                     onClick={() => {
-                      close();
+                      // close();
                       // logIn();
+                      router.push("?action=login");
                     }}
                   >
                     Log In
@@ -93,8 +103,9 @@ const DashboardNav = ({ children }: IDashboardNav) => {
               <Button
                 fullWidth
                 onClick={() => {
-                  close();
+                  // close();
                   // signUp();
+                  router.push("?action=register");
                 }}
               >
                 Sign Up
@@ -105,7 +116,6 @@ const DashboardNav = ({ children }: IDashboardNav) => {
       </Box>
       {children}
     </Flex>
-
   );
 };
 
