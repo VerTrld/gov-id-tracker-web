@@ -75,6 +75,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
         style={{
           display: "flex",
           minHeight: "100vh",
+          overflowY: "auto",
           backgroundColor: "#f9f9f9",
         }}
       >
@@ -101,9 +102,13 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
 
             <Divider my="sm" />
             <Button
-              fullWidth
               color="red"
               variant="light"
+              style={{
+                flexShrink: 0,
+                height: 40,
+                minHeight: 40,
+              }}
               onClick={() => {
                 signOut();
                 close();
@@ -113,9 +118,6 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             </Button>
           </Box>
         )}
-
-        {/* Main content */}
-        {/* <Box style={{ flex: 1, padding: 20 }}>{children}</Box> */}
       </Box>
 
       {/* Mobile drawer */}
@@ -167,9 +169,10 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
               zIndex: 200,
               padding: 10,
               boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-              minWidth: 40, // optional: button size
+              minWidth: 40,
               minHeight: 40,
               borderRadius: 50,
+              flexShrink: 0,
             }}
           >
             <IconMenu2 size={20} />
