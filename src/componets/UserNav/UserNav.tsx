@@ -139,7 +139,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             <Flex direction="column" style={{ height: "100%" }}>
               <Divider my="sm" />
               {/* Nav items at top */}
-              <Box style={{ flex: 1, overflowY: "auto" }}>{contentNav()}</Box>
+              <Box>{contentNav()}</Box>
 
               <Divider my="sm" />
 
@@ -148,6 +148,11 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                 fullWidth
                 color="red"
                 variant="light"
+                style={{
+                  flexShrink: 0,
+                  height: 40,
+                  minHeight: 40,
+                }}
                 onClick={() => {
                   signOut();
                   close();
