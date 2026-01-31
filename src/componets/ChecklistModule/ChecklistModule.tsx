@@ -82,7 +82,7 @@ export function ChecklistModule({
             <Flex w={"100%"} justify={"space-between"} key={i}>
               <Checkbox
                 key={`${item.id + 34}`}
-                label={`${item.label} (${item.value}%)`}
+                label={`${item.label}`}
                 checked={checked[item.id] ?? false}
                 onChange={(event) => {
                   const isChecked = event.currentTarget.checked; // capture now

@@ -65,7 +65,7 @@ export default function GovernmentIds() {
 
       {/* Title and description */}
       <Box>
-        <Title order={3} mb="xs">
+        <Title order={3} mb="xs" w={"90%"}>
           {data.title}
         </Title>
         <Text size="sm">{data.description}</Text>
@@ -78,45 +78,25 @@ export default function GovernmentIds() {
         <Title order={4} mb="sm">
           Requirements
         </Title>
-        <Text color="dimmed" size="sm" mb="md">
+        <Text c="dimmed" size="sm" mb="md">
           Complete the following items to proceed:
         </Text>
 
-        <ChecklistModule items={data.requirements} uploadImage={open} />
+        <ChecklistModule
+          items={data.requirements}
+          uploadImage={open}
+          onComplete={() => {
+            const total = data.requirements.reduce(
+              (sum: any, item: any) => sum + item.value,
+              0
+            );
+
+            if (total === 100 && data.officialWebsite) {
+              window.open(data.officialWebsite, "_blank");
+            }
+          }}
+        />
       </Box>
-
-      <Divider my="sm" />
-
-      {/* How to Get */}
-      {data.howToGet && data.howToGet.length > 0 && (
-        <Box>
-          <Title order={4} mb="sm">
-            How to Get
-          </Title>
-          <List spacing="sm" size="sm" center>
-            {data.howToGet.map((step: any, index: number) => (
-              <List.Item key={index}>{step}</List.Item>
-            ))}
-          </List>
-        </Box>
-      )}
-
-      {/* Official website */}
-      {data.officialWebsite && (
-        <Box>
-          <Title order={4} mb="xs">
-            Official Website
-          </Title>
-          <Anchor
-            href={data.officialWebsite}
-            target="_blank"
-            size="sm"
-            color="blue"
-          >
-            {data.officialWebsite}
-          </Anchor>
-        </Box>
-      )}
     </Flex>
   );
 }

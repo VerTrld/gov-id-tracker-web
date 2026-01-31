@@ -12,11 +12,6 @@ export const governmentIds = {
         value: 50,
       },
     ],
-    howToGet: [
-      "Register online or walk in at an authorized PhilSys registration center.",
-      "Submit required documents and biometric information.",
-      "Wait for the delivery of the physical ID or use the ePhilID.",
-    ],
     officialWebsite: "https://philsys.gov.ph/",
   },
 
@@ -33,11 +28,6 @@ export const governmentIds = {
         label: "Barangay Certificate (for first-time jobseekers)",
         value: 34,
       },
-    ],
-    howToGet: [
-      "Register through the Bureau of Internal Revenue (BIR) online system or visit the assigned Revenue District Office (RDO).",
-      "Submit the required documents and registration form.",
-      "First-time job seekers may avail themselves of free registration under RA 11261.",
     ],
     officialWebsite: "https://www.bir.gov.ph/",
   },
@@ -56,11 +46,6 @@ export const governmentIds = {
         value: 34,
       },
     ],
-    howToGet: [
-      "Register for an SSS number online.",
-      "Schedule an appointment and visit an SSS branch.",
-      "Submit documents and biometric data for UMID processing.",
-    ],
     officialWebsite: "https://www.sss.gov.ph/",
   },
 
@@ -77,11 +62,6 @@ export const governmentIds = {
       },
       { id: "birth-cert", label: "PSA Birth Certificate", value: 33 },
       { id: "valid-id", label: "Valid ID", value: 33 },
-    ],
-    howToGet: [
-      "Register online or visit a PhilHealth office.",
-      "Submit required documents.",
-      "Receive PhilHealth Identification Number (PIN) and ID.",
     ],
     officialWebsite: "https://www.philhealth.gov.ph/",
   },
@@ -104,11 +84,6 @@ export const governmentIds = {
       },
       { id: "valid-id", label: "Valid ID", value: 33 },
     ],
-    howToGet: [
-      "Register online through Virtual Pag-IBIG or at a Pag-IBIG branch.",
-      "Submit documents and obtain Pag-IBIG Membership ID Number (MID).",
-      "Apply for the Pag-IBIG ID card if needed.",
-    ],
     officialWebsite: "https://www.pagibigfund.gov.ph/",
   },
 
@@ -130,11 +105,6 @@ export const governmentIds = {
         value: 34,
       },
     ],
-    howToGet: [
-      "Register online and set an appointment.",
-      "Select payment option (free for qualified first-time jobseekers under RA 11261).",
-      "Visit the NBI office for biometrics and clearance issuance.",
-    ],
     officialWebsite: "https://nbi.gov.ph/",
   },
 
@@ -152,11 +122,6 @@ export const governmentIds = {
         value: 25,
       },
       { id: "payment", label: "Payment Receipt", value: 25 },
-    ],
-    howToGet: [
-      "Schedule an online appointment with the Department of Foreign Affairs (DFA).",
-      "Appear at the DFA office with complete documents.",
-      "Wait for passport release or delivery.",
     ],
     officialWebsite: "https://passport.gov.ph/",
   },
@@ -176,11 +141,6 @@ export const governmentIds = {
       },
       { id: "postal-form", label: "Application Form", value: 25 },
     ],
-    howToGet: [
-      "Visit a Philippine Postal Corporation (PHLPost) office.",
-      "Submit requirements and have biometrics taken.",
-      "Receive the ID after processing.",
-    ],
     officialWebsite: "https://postalid.ph/",
   },
 
@@ -199,11 +159,6 @@ export const governmentIds = {
       },
       { id: "valid-id", label: "Valid ID", value: 20 },
       { id: "payment", label: "Payment Receipt", value: 20 },
-    ],
-    howToGet: [
-      "Apply for a Student Permit at the Land Transportation Office (LTO).",
-      "Complete the required driving course.",
-      "Pass written and practical driving tests.",
     ],
     officialWebsite: "https://www.lto.gov.ph/",
   },
