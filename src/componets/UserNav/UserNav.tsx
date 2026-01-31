@@ -131,28 +131,35 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             padding="md"
             size="80%"
             styles={{
+              title: {
+                fontWeight: "bold",
+                fontSize: "20px",
+              },
               body: {
-                height: "90vh",
+                height: "90dvh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
               },
             }}
           >
-            <Flex direction="column" style={{ height: "100%" }}>
+            <div>
               <Divider my="sm" />
-              {/* Nav items at top */}
               <Box>{contentNav()}</Box>
+            </div>
 
+            <div>
               <Divider my="sm" />
 
-              {/* Sign Out button at bottom */}
               <Button
                 fullWidth
                 color="red"
                 variant="light"
-                style={{
-                  flexShrink: 0,
-                  height: 40,
-                  minHeight: 40,
-                }}
+                // style={{
+                //   flexShrink: 0,
+                //   height: 40,
+                //   minHeight: 40,
+                // }}
                 onClick={() => {
                   signOut();
                   close();
@@ -160,7 +167,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
               >
                 Sign Out
               </Button>
-            </Flex>
+            </div>
           </Drawer>
 
           {/* Drawer toggle button */}
