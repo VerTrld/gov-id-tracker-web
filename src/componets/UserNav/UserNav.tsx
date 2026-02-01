@@ -11,21 +11,26 @@ import {
   Flex,
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import _ from "lodash";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { governmentIds } from "./govenmentIds";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { IconMenu2 } from "@tabler/icons-react";
 
 interface ResponsiveNavLayoutProps extends PropsWithChildren {}
 
 export function UserNav({ children }: ResponsiveNavLayoutProps) {
-  const [active, setActive] = useState("philid"); // default first ID
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [opened, { open, close }] = useDisclosure(false);
   const router = useRouter();
 
-  const [opened, { open, close }] = useDisclosure(false);
+  const pathname = usePathname();
+  const active = pathname?.split("/")[2] ?? "";
+
+  const session = useSession();
+
+  console.log(session?.data?.user?.name);
 
   const navItems = _.map(governmentIds, (value, id) => ({
     id,
@@ -39,9 +44,8 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
         <UnstyledButton
           key={item.id}
           onClick={() => {
-            setActive(item.id);
             router.push(item.path);
-            close(); // close drawer after navigating
+            close();
           }}
           style={{
             width: "100%",

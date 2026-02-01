@@ -8,47 +8,48 @@ export async function middleware(req: NextRequest) {
     req,
     secret: process.env.NEXTAUTH_SECRET,
   });
-
   const pathname = req.nextUrl.pathname;
-
-  // redirect not logged in users
-  if (!token) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
   const accessToken = token?.accessToken as string;
-  const decode = accessToken ? await jwtDecode.jwtDecode(accessToken) : null;
 
-  if (decode) {
-    // SUPER_ADMIN: only allow /admin routes
+  if (accessToken) {
+    const decode = await jwtDecode.jwtDecode(accessToken);
+    // @ts-ignore
     if (
+      token &&
       // @ts-ignore
       decode.roles === UserRoles.SUPER_ADMIN &&
-      !pathname.startsWith("/admin")
+      pathname !== "/admin"
     ) {
       return NextResponse.redirect(new URL("/admin", req.nextUrl.origin));
     }
 
-    // USER: redirect /user root to /user/philid, allow /user/:id
     // @ts-ignore
-    if (decode.roles === UserRoles.USER) {
-      if (pathname === "/user") {
-        return NextResponse.redirect(
-          new URL("/user/philid", req.nextUrl.origin)
-        );
-      }
-      if (!pathname.startsWith("/user")) {
-        return NextResponse.redirect(
-          new URL("/user/philid", req.nextUrl.origin)
-        );
-      }
+    if (
+      token &&
+      // @ts-ignore
+      decode.roles === UserRoles.USER &&
+      !pathname.startsWith("/user")
+    ) {
+      return NextResponse.redirect(new URL("/user", req.nextUrl.origin));
     }
   }
 
+  if (!token) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+  // @ts-ignore
+
+  // redirect logged in users away from login/register
+  // if (token && (pathname === "/login" || pathname === "/register")) {
+  //   return NextResponse.redirect(new URL("/", req.url));
+  // }
+
+  // redirect if not logged in
+  // @ts-ignore
   return NextResponse.next();
 }
 
-// apply middleware to /admin and /user routes
+// run middleware on all routes except auth, static files, and favicon
 export const config = {
   matcher: ["/admin/:path*", "/user/:path*"],
 };
