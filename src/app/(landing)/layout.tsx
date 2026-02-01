@@ -4,6 +4,7 @@ import LoginUserModal from "@/componets/LoginUserModal/LoginUserModal"
 import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal"
 import { LoginType } from "@/enum/dashboard.enum"
 import IPersonShcema, { PersonSchema } from "@/schema/PersonSchema"
+import { Flex } from "@mantine/core"
 import { useForm, yupResolver } from "@mantine/form"
 import axios from "axios"
 import { signIn } from "next-auth/react"
@@ -85,24 +86,37 @@ const layout = ({ children }: PropsWithChildren) => {
                 }}
                 form={loginForm}
                 onSubmit={() => handleLogIn()}
-                onRegisterClick={() => {
+                onRegisterClick={() => 
+                    router.push("?action=register")
                     // setModalOpen(LoginType.REGISTER) 
-                }}
+                }
             />
 
             <RegisterUserModal
                 opened={action === LoginType.REGISTER}
                 onClose={() => {
                     // setModalOpen(''), 
+                    router.back()
                     registerForm.reset()
                 }}
                 form={registerForm}
                 onSubmit={() => handleRegister()}
-                onLoginClick={() => {
+                onLoginClick={() => 
+                    router.push("?action=login")
                     // setModalOpen(LoginType.LOGIN)
-                }}
+                }
             />
-            <DashboardNav>{children}</DashboardNav>
+            <DashboardNav>
+                {/* <Flex h={'90vh'}
+                 style={{
+                    background: 'linear-gradient(180deg, #FFFFFF, #FFFFFF, #3386e4)',
+                    borderRadius: 16,
+                }}
+                >   */}
+                    {children}
+                    {/* </Flex> */}
+              
+                </DashboardNav>
         </>
     )
 }

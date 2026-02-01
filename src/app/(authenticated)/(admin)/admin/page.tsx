@@ -12,8 +12,8 @@ export default function page() {
     const { data } = useQuery({
         queryKey: ['getUser'],
         queryFn: async () => {
-            const res = await get('/userAccount/users/list')
-            return res.data
+            const res = await get(`/userAccount/users/list`)
+            return res
         }
     })
     const mockContacts = [

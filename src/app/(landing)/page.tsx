@@ -14,18 +14,18 @@ import { useState } from "react";
 
 
 export default function Login() {
-  
-  
+
+
 
     const [modalOpen, setModalOpen] = useState('')
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-   
-   
 
 
-   
+
+
+
 
 
 
@@ -35,16 +35,13 @@ export default function Login() {
 
             <Flex
                 direction={"column"}
-
+                flex={1}
             >
-                {/* <DashboardNav
-                    logIn={() => setModalOpen(LoginType.LOGIN)}
-                    signUp={() => setModalOpen(LoginType.REGISTER)} /> */}
+              
 
 
-
-                {/* Sample Data and Call */}
-                {/* <ChecklistModule
+                {/* Sample Data and Call
+                <ChecklistModule
           items={[
             { id: 'profile', label: 'Complete profile', value: 25 },
             { id: 'email', label: 'Verify email', value: 25 },
@@ -59,6 +56,12 @@ export default function Login() {
                     // flex={1}
                     py={isMobile ? 60 : 100}
                     px={isMobile ? 20 : 100}
+                    style={{
+                    zIndex: -1,
+                    background: 'linear-gradient(180deg, #FFFFFF, #FFFFFF, #3386e4)',
+                    // borderRadius: 16,
+                    flex: 1
+                }}
                 >
                     <Flex flex={1} >
                         <Flex
@@ -140,6 +143,9 @@ export default function Login() {
                             </Box>
                         </Flex>
                     </Flex>
+
+
+
                 </Flex>
 
             </Flex>

@@ -15,7 +15,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <Flex style={{ flexDirection: "column" }}>
+    <Flex style={{ flexDirection: "column", zIndex:100}} flex={1} >
       <Box style={{ boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)" }}>
         <Flex
           justify="space-between"
@@ -27,8 +27,8 @@ const DashboardNav = ({ children }: IDashboardNav) => {
           {!isMobile ? (
             // Desktop menu
             <Flex gap={15} align={"center"}>
-              <Button variant="subtle">Home</Button>
-              <Button variant="subtle" dir="/about">
+              <Button variant="subtle" onClick={() => router.push("/")}>Home</Button>
+              <Button variant="subtle" onClick={() => router.push("/about")}>
                 About
               </Button>
               <Button variant="subtle">Features</Button>
