@@ -80,16 +80,13 @@ const DashboardNav = ({ children }: IDashboardNav) => {
               style={{ padding: "0 20px 20px", backgroundColor: "#f9f9f9" }}
             >
               <Button variant="subtle" fullWidth onClick={close}>
-                Home
+                <Text>Home</Text>
               </Button>
               <Button variant="subtle" fullWidth onClick={close}>
-                About
+                <Text>About</Text>
               </Button>
               <Button variant="subtle" fullWidth onClick={close}>
-                Features
-              </Button>
-              <Button variant="subtle" fullWidth onClick={close}>
-                Contact
+                <Text>Contact</Text>
               </Button>
               {session.data?.user?.name ? (
                 <Flex>
@@ -98,6 +95,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
               ) : (
                 <Flex>
                   <Button
+                    variant="subtle"
                     fullWidth
                     onClick={() => {
                       // close();
@@ -105,7 +103,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                       router.push("?action=login");
                     }}
                   >
-                    Log In
+                    <Text>Contact</Text>
                   </Button>
                 </Flex>
               )}
@@ -116,6 +114,10 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                   // signUp();
                   router.push("?action=register");
                 }}
+                color='#213379'
+                variant="outline"
+                style={{ borderRadius: 20 }}
+
               >
                 Register Now
               </Button>
