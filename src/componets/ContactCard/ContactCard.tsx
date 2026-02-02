@@ -126,7 +126,7 @@ export function ContactCardGrid({ contacts, onCardClick }: ContactCardGridProps)
   return (
     <Grid gutter="lg">
       {contacts?.map((v, index) => (
-        <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4, lg: 6 }}>
+        <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
           <ContactCard
             email={v.email}
             name={v.name}

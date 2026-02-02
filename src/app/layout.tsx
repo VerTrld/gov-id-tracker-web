@@ -39,7 +39,6 @@ export default function RootLayout({ children }: IRootLayoutProps) {
               <ModalsProvider>
                 <LoadingLayout>
                   <Flex h={'100vh'} w={'100%'}>  {children}</Flex>
-
                 </LoadingLayout>
               </ModalsProvider>
             </MantineProvider>
