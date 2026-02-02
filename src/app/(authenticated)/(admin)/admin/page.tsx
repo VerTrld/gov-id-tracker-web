@@ -2,9 +2,9 @@
 
 import { ContactCardGrid } from "@/componets/ContactCard/ContactCard";
 import { UserNav } from "@/componets/UserNav/UserNav";
-import { get } from "@/utils/http-api";
 import { Button, Container, Flex } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { signOut } from "next-auth/react";
 
 export default function page() {
@@ -12,10 +12,13 @@ export default function page() {
     const { data } = useQuery({
         queryKey: ['getUser'],
         queryFn: async () => {
-            const res = await get(`/userAccount/users/list`)
-            return res
+            const res = await axios.get(
+                `${process.env.NEXT_PUBLIC_API_URL}/userAccount/users/list`
+            )
+            return res.data?.data
         }
     })
+
     const mockContacts = [
         {
             name: 'Smartall',
@@ -55,15 +58,15 @@ export default function page() {
 
     ];
 
-    console.log({data})
+    console.log({ data })
 
     return (
 
-        <Flex direction={'column'} gap={10}>
+        <Flex direction={'column'} gap={10} flex={1}>
             hello Admin <Button onClick={() => signOut()}>logout</Button>
             {/* Admin Side UserList */}
             <Flex>
-                <ContactCardGrid contacts={mockContacts} />
+                <ContactCardGrid contacts={data} />
             </Flex>
 
 

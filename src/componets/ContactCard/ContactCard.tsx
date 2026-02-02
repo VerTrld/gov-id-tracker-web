@@ -125,11 +125,13 @@ interface ContactCardGridProps {
 export function ContactCardGrid({ contacts, onCardClick }: ContactCardGridProps) {
   return (
     <Grid gutter="lg">
-      {contacts.map((contact, index) => (
-        <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4, lg: 3 }}>
+      {contacts?.map((v, index) => (
+        <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4, lg: 6 }}>
           <ContactCard
-            {...contact}
-            onClick={() => onCardClick?.(contact)}
+            email={v.email}
+            name={v.name}
+            key={`${index + 1}`}
+            onClick={() => onCardClick?.(v)}
           />
         </Grid.Col>
       ))}

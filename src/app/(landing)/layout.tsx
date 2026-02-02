@@ -86,7 +86,7 @@ const layout = ({ children }: PropsWithChildren) => {
                 }}
                 form={loginForm}
                 onSubmit={() => handleLogIn()}
-                onRegisterClick={() => 
+                onRegisterClick={() =>
                     router.push("?action=register")
                     // setModalOpen(LoginType.REGISTER) 
                 }
@@ -101,22 +101,14 @@ const layout = ({ children }: PropsWithChildren) => {
                 }}
                 form={registerForm}
                 onSubmit={() => handleRegister()}
-                onLoginClick={() => 
+                onLoginClick={() =>
                     router.push("?action=login")
                     // setModalOpen(LoginType.LOGIN)
                 }
             />
             <DashboardNav>
-                {/* <Flex h={'90vh'}
-                 style={{
-                    background: 'linear-gradient(180deg, #FFFFFF, #FFFFFF, #3386e4)',
-                    borderRadius: 16,
-                }}
-                >   */}
-                    {children}
-                    {/* </Flex> */}
-              
-                </DashboardNav>
+                {children}
+            </DashboardNav>
         </>
     )
 }

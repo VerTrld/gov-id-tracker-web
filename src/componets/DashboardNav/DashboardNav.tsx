@@ -1,10 +1,10 @@
-import { Box, Burger, Button, Collapse, Flex, Text } from "@mantine/core";
+import { Box, Burger, Button, Collapse, Flex, Text, Title } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
-interface IDashboardNav extends PropsWithChildren {}
+interface IDashboardNav extends PropsWithChildren { }
 
 const DashboardNav = ({ children }: IDashboardNav) => {
   const session = useSession();
@@ -15,24 +15,28 @@ const DashboardNav = ({ children }: IDashboardNav) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <Flex style={{ flexDirection: "column", zIndex:100}} flex={1} >
+    <Flex style={{ flexDirection: "column", zIndex: 100 }} flex={1} >
       <Box style={{ boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)" }}>
         <Flex
           justify="space-between"
           align="center"
           style={{ padding: "20px" }}
         >
-          <Box>Logo</Box>
+          <Title>Logo</Title>
 
           {!isMobile ? (
             // Desktop menu
             <Flex gap={15} align={"center"}>
-              <Button variant="subtle" onClick={() => router.push("/")}>Home</Button>
-              <Button variant="subtle" onClick={() => router.push("/about")}>
-                About
+              <Button variant="subtle" onClick={() => router.push("/")}>
+                <Text>Home</Text>
               </Button>
-              <Button variant="subtle">Features</Button>
-              <Button variant="subtle">Contact</Button>
+              <Button variant="subtle" onClick={() => router.push("/about")}>
+                <Text>About</Text>
+              </Button>
+              {/* <Button variant="subtle">Features</Button> */}
+              <Button variant="subtle" >
+                <Text>Contact</Text>
+              </Button>
               {session.data?.user?.name ? (
                 <Flex gap={15}>
                   <Button onClick={() => router.push("/user")}>
@@ -42,11 +46,16 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                 </Flex>
               ) : (
                 <Flex gap={15}>
-                  <Button onClick={() => router.push("?action=login")}>
-                    Log In
+                  <Button onClick={() => router.push("?action=login")}
+                    variant="subtle"
+                  >
+                    <Text>Log In</Text>
                   </Button>
-                  <Button onClick={() => router.push("?action=register")}>
-                    Sign Up
+                  <Button onClick={() => router.push("?action=register")}
+                    color='#213379'
+                    variant="outline"
+                    style={{ borderRadius: 20 }}>
+                    <Text>Register Now</Text>
                   </Button>
                 </Flex>
               )}
@@ -108,7 +117,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                   router.push("?action=register");
                 }}
               >
-                Sign Up
+                Register Now
               </Button>
             </Flex>
           </Collapse>

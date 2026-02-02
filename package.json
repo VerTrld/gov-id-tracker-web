@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/carousel": "7.17.8",
     "@mantine/core": "^7.15.2",
     "@mantine/dropzone": "^8.3.13",
     "@mantine/form": "^7.15.2",
@@ -20,6 +21,8 @@
     "argon2": "^0.43.0",
     "axios": "^1.7.2",
     "dayjs": "^1.11.13",
+    "embla-carousel-autoplay": "7.1.0",
+    "embla-carousel-react": "7.1.0",
     "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "next": "^15.5.9",
