@@ -37,7 +37,7 @@ export default function Page() {
         queryKey: ["getUser"],
         queryFn: async () => {
             const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/userAccount/users/list`
+                `${process.env.NEXT_PUBLIC_API_URL}/user-account/users/list`
             );
             return res.data?.data;
         },
