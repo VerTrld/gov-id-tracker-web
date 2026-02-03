@@ -9,7 +9,7 @@ export const theme = createTheme({
         root: {
           fontFamily: '"Open Sans", sans-serif',
           fontWeight: 700,
-          color: '#2d4b81',
+          // color: '#043873',
         },
       },
     },
@@ -19,9 +19,9 @@ export const theme = createTheme({
         root: {
           fontFamily: '"Open Sans", sans-serif',
           fontWeight: 400,
-          fontSize: rem(14),
-          textAlign: 'center',
-          color: '#213379'
+          // fontSize: rem(14),
+          // textAlign: 'center',
+          // color: '#0A58BD'
         },
       },
     },
