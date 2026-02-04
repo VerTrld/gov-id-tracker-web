@@ -2,17 +2,16 @@ import {
   CheckIcon,
   Combobox,
   Group,
-  InputProps,
   MultiSelectProps,
   Pill,
   PillsInput,
-  useCombobox,
+  useCombobox
 } from "@mantine/core";
 import { useState } from "react";
 
-const items: string[] = [];
 
 export function MultiSelectCreatable({ ...props }: MultiSelectProps) {
+  const items: string[] = [];
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex("active"),
@@ -56,7 +55,7 @@ export function MultiSelectCreatable({ ...props }: MultiSelectProps) {
           {value.includes(item) ? <CheckIcon size={12} /> : null}
           <span>{item}</span>
         </Group>
-      </Combobox.Option>
+      </Combobox.Option >
     ));
 
   return (

@@ -1,30 +1,37 @@
 "use client";
-import { MultiSelectCreatable } from "@/componets/MultiSelectCreatable/MultiSelectCreatable";
-import { Button, Flex, Input, Select, Text } from "@mantine/core";
+import { Button, Flex, Input, Text } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import * as y from "yup";
 
 const governmentIdsFormSchema = y
   .object({
-    officialUrls: y.array().of(y.string()).required(),
+    officialUrls: y.string().required(),
     code: y.string().required(),
     label: y.string().required(),
     description: y.string().optional(),
+    requirements: y.array().of(y.object({
+      label: y.string().required(),
+      requirementsGovernmentIds: y.array().of(y.string()).required()
+    })).required()
   })
   .required();
 type IGovernmentIdsForm = y.InferType<typeof governmentIdsFormSchema>;
 
 const page = () => {
+  const query = useQueryClient()
   const governmentIdsForm = useForm<IGovernmentIdsForm>({
     validate: yupResolver(governmentIdsFormSchema),
     initialValues: {
       code: "",
       label: "",
-      officialUrls: [],
-      description: undefined,
+      officialUrls: '',
+      description: '',
+      requirements: [
+
+      ]
     },
   });
   const { data } = useQuery({
@@ -36,6 +43,23 @@ const page = () => {
       return (allGovernmentIds.data || []) as any[];
     },
   });
+
+  const handleCreateGovernmentIds = governmentIdsForm.onSubmit(async (e) => {
+    try {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/government-ids/create/one`,
+        {
+          ...e,
+          officialUrls: [e.officialUrls]
+        })
+
+      if (res.status === 200 || res.status === 201) {
+        alert('Created Government Ids')
+        query.invalidateQueries({ queryKey: ['governmentIds'] })
+      }
+    } catch (error) {
+
+    }
+  })
 
   useEffect(() => {
     console.log({ governmentIdsForm });
@@ -64,6 +88,10 @@ const page = () => {
 
       <form
         action={"submit"}
+        onSubmit={(e) => {
+          e.preventDefault()
+          handleCreateGovernmentIds()
+        }}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -103,12 +131,26 @@ const page = () => {
           size="xs"
           {...governmentIdsForm.getInputProps("description")}
         />
-        <MultiSelectCreatable
+        <Input size="xs" placeholder="Official Url" {...governmentIdsForm.getInputProps('officialUrls')} />
+        {/* <MultiSelectCreatable
+          placeholder="Official Urls"
           {...governmentIdsForm.getInputProps("officialUrls")}
-        />
+        /> */}
         <Button size="xs" type="submit">
           Save
         </Button>
+        {
+          governmentIdsForm.values.requirements.map(r => {
+            return <>
+              <Flex style={{ padding: 10, backgroundColor: 'ghostwhite' }}>
+
+              </Flex>
+            </>
+          })
+        }
+        {/* {
+          _.isEmpty(governmentIdsForm.values.requirements) ? <ActionIcon><ActionIcon> : null
+        } */}
       </form>
     </Flex>
   );

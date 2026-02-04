@@ -3,8 +3,7 @@ import DashboardNav from "@/componets/DashboardNav/DashboardNav"
 import LoginUserModal from "@/componets/LoginUserModal/LoginUserModal"
 import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal"
 import { LoginType } from "@/enum/dashboard.enum"
-import IPersonShcema, { PersonSchema } from "@/schema/PersonSchema"
-import { Flex } from "@mantine/core"
+import IPersonShcema, { PersonActionEnum, PersonSchema } from "@/schema/PersonSchema"
 import { useForm, yupResolver } from "@mantine/form"
 import axios from "axios"
 import { signIn } from "next-auth/react"
@@ -25,7 +24,12 @@ const layout = ({ children }: PropsWithChildren) => {
         initialValues: {
             email: "",
             password: "",
+            confirmPassword: '',
+            action: PersonActionEnum.login
         },
+        mode: 'controlled',
+        name: 'login'
+
     });
 
     const handleLogIn = loginForm.onSubmit(async () => {
@@ -51,16 +55,21 @@ const layout = ({ children }: PropsWithChildren) => {
     const registerForm = useForm<IPersonShcema>({
         validate: yupResolver(PersonSchema),
         initialValues: {
+            action: 'register',
+            confirmPassword: '',
             firstName: "",
             lastName: "",
             email: "",
             password: "",
         },
+        mode: 'controlled',
+        name: 'register'
     });
+
     const handleRegister = registerForm.onSubmit(async () => {
         try {
             const res = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/userAccount/create/one`,
+                `${process.env.NEXT_PUBLIC_API_URL}/user-account/create/one`,
                 {
                     name: `${registerForm.values.firstName} ${registerForm.values.lastName}`,
                     email: registerForm.values.email,
@@ -70,7 +79,7 @@ const layout = ({ children }: PropsWithChildren) => {
 
             if (res.status === 200 || res.status === 201) {
                 console.log("success");
-                // setModalOpen('')
+                router.push('/')
             }
         } catch { }
     });

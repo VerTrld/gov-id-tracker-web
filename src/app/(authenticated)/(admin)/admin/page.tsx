@@ -2,27 +2,27 @@
 
 import { ContactCardGrid } from "@/componets/ContactCard/ContactCard";
 import {
-    Button,
-    Flex,
-    Title,
-    Text,
-    Card,
-    Group,
-    Stack,
-    Menu,
     Avatar,
-    Paper,
-    Grid,
-    Loader,
+    Button,
+    Card,
     Center,
+    Flex,
+    Grid,
+    Group,
+    Loader,
+    Menu,
+    Paper,
+    Stack,
+    Text,
+    Title,
 } from "@mantine/core";
 import {
-    IconLogout,
-    IconUsers,
-    IconUserPlus,
-    IconSettings,
     IconChevronDown,
+    IconLogout,
     IconRefresh,
+    IconSettings,
+    IconUserPlus,
+    IconUsers,
 } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";

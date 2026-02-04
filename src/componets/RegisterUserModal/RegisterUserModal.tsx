@@ -57,6 +57,12 @@ const RegisterUserModal = ({
           {...form.getInputProps('password')}
           mb="md"
         />
+        <TextInput
+          placeholder="Confirm Password"
+          type="password"
+          {...form.getInputProps('confirmPassword')}
+          mb="md"
+        />
 
         <Button type="submit" fullWidth mb="md">
           Register
