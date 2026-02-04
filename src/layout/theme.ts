@@ -25,5 +25,38 @@ export const theme = createTheme({
         },
       },
     },
+
+    TextInput: {
+      styles: {
+        input: {
+          fontFamily: '"Open Sans", sans-serif',
+          borderRadius: rem(10),
+          borderColor: '#F0F4F8',
+          backgroundColor: '#F0F4F8',
+          fontSize: rem(12),
+          color: '#829AB1',
+
+          '&:focus': {
+            borderColor: '#2E8CE9',
+          },
+        },
+
+        label: {
+          fontWeight: 600,
+          marginBottom: rem(6),
+          color: '#334E68',
+          fontSize: rem(12),
+        },
+
+        description: {
+          fontSize: rem(12),
+        },
+
+        error: {
+          fontSize: rem(12),
+        },
+      },
+    },
+
   },
 });

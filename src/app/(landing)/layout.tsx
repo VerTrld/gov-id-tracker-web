@@ -25,7 +25,8 @@ const layout = ({ children }: PropsWithChildren) => {
             email: "",
             password: "",
             confirmPassword: '',
-            action: PersonActionEnum.login
+            action: PersonActionEnum.login,
+            isTerms: true 
         },
         mode: 'controlled',
         name: 'login'
@@ -61,6 +62,7 @@ const layout = ({ children }: PropsWithChildren) => {
             lastName: "",
             email: "",
             password: "",
+            isTerms: false
         },
         mode: 'controlled',
         name: 'register'
@@ -89,30 +91,29 @@ const layout = ({ children }: PropsWithChildren) => {
             <LoginUserModal
                 opened={action === LoginType.LOGIN}
                 onClose={() => {
-                    // setModalOpen(''), 
                     router.back()
                     loginForm.reset()
                 }}
                 form={loginForm}
                 onSubmit={() => handleLogIn()}
                 onRegisterClick={() =>
+                     //WIP need to close before going
                     router.push("?action=register")
-                    // setModalOpen(LoginType.REGISTER) 
+
                 }
             />
 
             <RegisterUserModal
                 opened={action === LoginType.REGISTER}
                 onClose={() => {
-                    // setModalOpen(''), 
                     router.back()
                     registerForm.reset()
                 }}
                 form={registerForm}
                 onSubmit={() => handleRegister()}
                 onLoginClick={() =>
+                    //WIP need to close before going
                     router.push("?action=login")
-                    // setModalOpen(LoginType.LOGIN)
                 }
             />
             <DashboardNav>

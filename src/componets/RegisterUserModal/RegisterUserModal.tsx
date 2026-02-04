@@ -1,7 +1,7 @@
 'use client';
 
 import IPersonShcema from '@/schema/PersonSchema';
-import { Box, Button, Modal, ModalProps, Text, TextInput } from '@mantine/core';
+import { Box, Button, Checkbox, Flex, Modal, ModalProps, Text, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 
 interface IRegisterUser extends ModalProps {
@@ -21,9 +21,24 @@ const RegisterUserModal = ({
     <Modal
       opened={opened}
       onClose={onClose}
-      withCloseButton={true}
+      withCloseButton={false}
       centered
-      title='Register'
+      title={
+        <Flex direction={'column'} gap={10} align={'center'} mb={10}>
+          <Text>LOGO</Text>
+          <Text c='#0B69A3' fw={700} fz={'16px'}>Create an account</Text>
+          <Text c='#4F9CF9' fz={'14px'}>Create an account to track your government ID <br />
+            requirements and prepare for employment</Text>
+        </Flex>
+      }
+      styles={{
+        title: {
+          width: '100%',
+          textAlign: 'center',
+        },
+      }}
+      size='sm'
+      radius={15}
     >
       <Box
         component="form"
@@ -34,51 +49,85 @@ const RegisterUserModal = ({
           margin: '0 auto',
         }}
       >
-        <TextInput
-          placeholder="First Name"
-          {...form.getInputProps('firstName')}
-          mb="md"
-        />
-        <TextInput
-          placeholder="Last Name"
-          {...form.getInputProps('lastName')}
-          mb="md"
-        />
+        <Flex gap={10}>
+
+          <TextInput
+            label="First Name"
+            placeholder="First Name"
+            {...form.getInputProps('firstName')}
+            mb="sm"
+          />
+          <TextInput
+            label="Last Name"
+            placeholder="Last Name"
+            {...form.getInputProps('lastName')}
+            mb="sm"
+          />
+        </Flex>
+
 
         <TextInput
+          label="Email"
           placeholder="Email"
           {...form.getInputProps('email')}
-          mb="md"
+          mb="sm"
         />
 
         <TextInput
+          label="Password"
           placeholder="Password"
           type="password"
           {...form.getInputProps('password')}
-          mb="md"
+          mb="sm"
         />
         <TextInput
+          label="Confirm Password"
           placeholder="Confirm Password"
           type="password"
           {...form.getInputProps('confirmPassword')}
-          mb="md"
+          mb="sm"
         />
 
-        <Button type="submit" fullWidth mb="md">
-          Register
-        </Button>
+        <Flex direction={'column'} gap={10}>
+          <Checkbox
+            color="#334E68"
+           
+            size="xs"
+            label={
+              <Text c='#334E68' fz={'12px'}> I agree to the Terms and Conditions. I understand that ID Mo,
+                Karera Mo provides guidance only and is not connected to any government agency.</Text>
+            }
+            {...form.getInputProps('isTerms')}
+          />
 
-        <Text
-          ta="center"
-          c="violet"
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            onClose?.();
-            onLoginClick?.();
-          }}
-        >
-          Already have an account? Login
-        </Text>
+          <Button type="submit" fullWidth mb="md" radius={10} disabled={form.values.isTerms === false}>
+            Create an account
+          </Button>
+        </Flex>
+
+
+        <Flex direction={'column'} gap={20} justify={'center'}>
+          <Flex justify={'center'} gap={5} ta={'center'}>
+            <Text fz={'12px'} c='#486581'>Already have an account?</Text>
+            <Text
+              fz={'12px'} c='#127FBF'
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                onClose?.();
+                onLoginClick?.();
+              }}
+            >
+              Login
+            </Text>
+          </Flex>
+
+          <Flex justify={'center'} ta={'center'}>
+            <Text c='#043873' fz={'12px'}>This platform is a guide only. Applications are completed
+              <br />
+              through official government websites.</Text>
+          </Flex></Flex>
+
+
       </Box>
     </Modal>
   );

@@ -4,6 +4,7 @@ import IPersonShcema from '@/schema/PersonSchema';
 import {
   Box,
   Button,
+  Flex,
   Modal,
   ModalProps,
   Text,
@@ -30,15 +31,24 @@ const LoginUserModal = ({
     <Modal
       opened={opened}
       onClose={onClose}
-      withCloseButton={true}
+      withCloseButton={false}
       centered
-      title="Log In"
+      title={
+        <Flex direction={'column'} gap={10} align={'center'} mb={10}>
+          <Text>LOGO</Text>
+          <Text c='#0B69A3' fw={700} fz={'16px'}>Welcome Back!</Text>
+          <Text c='#4F9CF9' fz={'14px'}>Continue tracking your government ID <br /> requirements.</Text>
+        </Flex>
+      }
       styles={{
         title: {
           width: '100%',
           textAlign: 'center',
         },
+        
       }}
+      size='sm'
+      radius={15} 
     >
       <Box
         component="form"
@@ -50,16 +60,18 @@ const LoginUserModal = ({
         }}
       >
         <TextInput
+          label="Email"
           placeholder="Email"
           {...form.getInputProps('email')}
-          mb="md"
+          mb="sm"
         />
 
         <TextInput
+          label="Password"
           placeholder="Password"
           type="password"
           {...form.getInputProps('password')}
-          mb="md"
+          mb="sm"
         />
 
         {error && (
@@ -67,22 +79,28 @@ const LoginUserModal = ({
             {error}
           </Text>
         )}
-
-        <Button type="submit" fullWidth mb="md">
+        <Flex direction={'column'} mb={10} gap={5}>
+          <Button type="submit" fullWidth radius={10}>
           Login
         </Button>
+          <Text fz={'12px'} c='#486581' style={{ textAlign: 'right' }}>Forgot Password?</Text>
+        </Flex>
 
-        <Text
-          ta="center"
-          c="violet"
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            onClose?.();
-            onRegisterClick?.();
-          }}
-        >
-          Don’t have an account? Register
-        </Text>
+
+
+        <Flex justify={'center'} gap={5} ta={'center'}>
+          <Text fz={'12px'} c='#486581'>Don’t have an account?</Text>
+          <Text
+            fz={'12px'} c='#127FBF'
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              onClose?.();
+              onRegisterClick?.();
+            }}
+          >
+            Creat an account
+          </Text></Flex>
+
       </Box>
     </Modal>
   );

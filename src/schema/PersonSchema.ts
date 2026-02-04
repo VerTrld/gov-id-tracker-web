@@ -8,6 +8,7 @@ export enum PersonActionEnum{
 export const PersonSchema = y.object({
   action: y.string().oneOf(['register','login']).required(),
   email: y.string().required("Email is required").email(),
+  isTerms: y.boolean().required(),
   password: y.string().required("Password is required"),
   firstName: y.string().when("action", {
     is: "register",
