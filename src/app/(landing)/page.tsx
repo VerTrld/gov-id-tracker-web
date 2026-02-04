@@ -9,11 +9,17 @@ import { IconArrowNarrowRight } from "@tabler/icons-react";
 import Footer from "@/componets/Footer/Footer";
 import { useRouter } from "next/navigation";
 import ContactSection from "@/componets/ContactUs/ContactUs";
+import { IDInfo, idsInfo } from "@/componets/UserNav/govenmentIds";
+import _, { chunk } from "lodash";
+import IDsCard from "@/componets/IDsCard/IDsCard";
 
 export default function Login() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const autoplay = useRef(Autoplay({ delay: 3000 }));
   const router = useRouter();
+
+  const data: IDInfo[] = idsInfo;
+  const chunkedData = chunk(data, 4);
 
   return (
     <>
@@ -176,83 +182,39 @@ export default function Login() {
             style={{ border: "1px solid black" }}
           >
             {/* First Slide: Full-screen Hero */}
-            <Carousel.Slide>
-              <Flex
-                direction="column"
-                style={{
-                  flex: 1,
-                  height: "50vh", // Full screen
-                  // background: 'linear-gradient(180deg, #FFFFFF, #FFFFFF, #3386e4)',
-                }}
-              >
-                111111111111111111111111
-              </Flex>
-            </Carousel.Slide>
+            {chunkedData.map((slideItems, slideIndex) => (
+              <Carousel.Slide key={slideIndex}>
+                <Flex
+                  direction="column"
+                  style={{
+                    flex: 1,
+                    height: isMobile ? '80vh' : '50vh',
+                  }}
+                >
+                  <Flex
+                    style={{
+                      flex: 1,
+                      padding: isMobile ? '40px 10px' : '80px',
+                      flexDirection: isMobile ? 'column' : 'row',
+                      flexWrap: isMobile ? 'nowrap' : 'wrap',
+                    }}
+                    gap={isMobile ? 10 : 20}
+                    justify={isMobile ? 'center' : 'space-evenly'}
+                    align={isMobile ? 'center' : 'stretch'}
+                  >
+                    {slideItems.map((v, index) => (
+                      <IDsCard
+                        key={index} // stable key
+                        title={v.title}
+                        desc={v.description}
+                      />
+                    ))}
+                  </Flex>
+                </Flex>
+              </Carousel.Slide>
+            ))}
 
-            {/* Second Slide: Full screen */}
-            <Carousel.Slide>
-              <Flex
-                style={{
-                  flex: 1,
-                  // background: 'linear-gradient(180deg, #FFFFFF, #FFFFFF, #3386e4)',
-                  height: "50vh",
-                }}
-              >
-                22222222222222
-                {/* <Flex
-                                style={{
-                                    flex: 1,
-                                    padding: isMobile ? '60px 20px' : '100px',
-                                }}
-                            >
-                                <Flex
-                                    gap={isMobile ? 40 : 60}
-                                    align="center"
-                                    direction={isMobile ? 'column' : 'row'}
-                                    style={{ backgroundColor: '#ccc', borderRadius: 10, flex: 1 }}
-                                >
-                                    <Flex
-                                        justify={'space-evenly'}
-                                        direction={'column'}
-                                        style={{
-                                            padding: isMobile ? 24 : 48,
-                                            textAlign: 'center',
-                                            flex: 1
 
-                                        }}
-                                    >
-                                        <Title
-                                            order={2}
-                                            style={{
-                                                fontWeight: 700,
-                                                marginBottom: isMobile ? 16 : 24,
-                                                fontSize: isMobile ? 24 : 32,
-                                                lineHeight: 1.2,
-                                            }}
-                                        >
-                                            Your One-Stop Guide to Government IDs for First-Time Jobseekers
-                                        </Title>
-
-                                        <Text
-                                            size={isMobile ? 'sm' : 'md'}
-                                            color="black"
-                                            style={{ marginBottom: isMobile ? 20 : 32 }}
-                                        >
-                                            Designed to help first-time jobseekers understand ID requirements, access official
-                                            government websites, track and complete government ID applications with ease.
-                                        </Text>
-
-                                        <Flex justify="center" gap={12} wrap="wrap">
-                                            <Button size={isMobile ? 'sm' : 'md'}>Button</Button>
-                                            <Button size={isMobile ? 'sm' : 'md'} variant="outline">
-                                                Learn more
-                                            </Button>
-                                        </Flex>
-                                    </Flex>
-                                </Flex>
-                            </Flex> */}
-              </Flex>
-            </Carousel.Slide>
           </Carousel>
         </Flex>
 

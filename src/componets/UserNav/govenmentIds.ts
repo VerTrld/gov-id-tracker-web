@@ -163,3 +163,74 @@ export const governmentIds = {
     officialWebsite: "https://www.lto.gov.ph/",
   },
 };
+
+
+
+export interface IDInfo {
+  logo: string;
+  title: string;
+  description: string;
+}
+export const idsInfo = [
+  {
+    id: "philid",
+    logo: "",
+    title: "National ID",
+    description: "A government-issued ID that proves your identity as a Filipino citizen or resident.",
+  },
+  {
+    id: "tin",
+    logo: "",
+    title: "BIR TIN",
+    description: "A unique number issued by the BIR for tax identification and transactions.",
+  },
+  {
+    id: "sss",
+    logo: "",
+    title: "SSS",
+    description: "A government program that provides social security benefits for workers.",
+  },
+  {
+    id: "philhealth",
+    logo: "",
+    title: "PhilHealth",
+    description: "A national health insurance program that helps cover medical and hospital expenses.",
+  },
+  {
+    id: "psa",
+    logo: "",
+    title: "PSA Birth Certificate",
+    description: "An official document that records your birth details from the Philippine Statistics Authority.",
+  },
+  {
+    id: "pagibig",
+    logo: "",
+    title: "Pag-Ibig",
+    description: "",
+  },
+  {
+    id: "nbi",
+    logo: "",
+    title: "NBI",
+    description: "",
+  },
+  {
+    id: "passport",
+    logo: "",
+    title: "Philippines Passport",
+    description: "",
+  },
+  {
+    id: "postal",
+    logo: "",
+    title: "Postal ID",
+    description: "",
+  },
+  {
+    id: "driverlicense",
+    logo: "",
+    title: "Drivers License",
+    description: "",
+  },
+];
+
