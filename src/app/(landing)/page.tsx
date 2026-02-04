@@ -18,6 +18,7 @@ export default function Login() {
   return (
     <>
       <Flex direction={"column"} flex={1} style={{ zIndex: -1 }}>
+
         {/* 1st Section */}
         <Flex
           direction="column"
@@ -49,14 +50,22 @@ export default function Login() {
                   lineHeight: 1.15,
                   fontSize: isMobile ? 32 : 48,
                   marginBottom: 20,
-                  // color: 'linear-gradient(180deg, #FFFFFF, #FFFFFF, #3386e4)',
+                  color: '#2E8CE9'
                 }}
               >
                 Your One-Stop Guide to
                 <br />
                 Government IDs for
                 <br />
-                <span>First-Time Jobseekers</span>
+                <span
+                  style={{
+                    background: 'linear-gradient(180deg, #2E8CE9, #0A58BD)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  First-Time Jobseekers
+                </span>
               </Title>
 
               <Text
@@ -144,7 +153,7 @@ export default function Login() {
           }}
         >
           <Title
-            c="#043873"
+            // c="#043873"
             ta={"center"}
             style={{
               fontWeight: 900,
@@ -337,10 +346,6 @@ export default function Login() {
               </Button>
             </Flex>
           </Box>
-        </Flex>
-
-        <Flex      bg={"#E6F1FE"} style={{ flex: 1, padding: isMobile ? "60px 20px" : "100px" }}>
-          <ContactSection />
         </Flex>
 
         {/* Footer */}

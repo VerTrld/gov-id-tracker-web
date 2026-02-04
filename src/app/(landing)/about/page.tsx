@@ -1,6 +1,6 @@
 "use client";
 import Footer from '@/componets/Footer/Footer';
-import { Container, Divider, Flex, Grid, List, Paper, Stack, Text, Title } from '@mantine/core';
+import { Container, Divider, Flex, Grid, Group, List, Paper, Stack, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
 const page = () => {
@@ -50,6 +50,8 @@ const page = () => {
                         </Text>
                     </Flex>
 
+
+
                 </Flex>
 
 
@@ -59,6 +61,51 @@ const page = () => {
                         flex: 1,
                         padding: isMobile ? '60px 20px' : '100px',
                     }}>
+
+                    <Flex
+                        direction={'column'}
+                        gap={isMobile ? 40 : 80}
+                    // flex={1}
+                    >
+                        {/* Left block */}
+                        <Flex flex={1} direction={'column'} gap="sm" align={'flex-start'}  >
+                            <Title c="#043873" style={{
+                                lineHeight: 1.15,
+                                fontSize: isMobile ? 32 : 48,
+                                marginBottom: 20,
+                            }}>
+                                What We Help With
+                            </Title>
+                            <Text c="#4F9CF9" >
+                                ID Mo, Karera Mo helps users understand which IDs are needed,
+                                <br />
+                                what documents to prepare, where to apply, and how to track progress
+                                <br />
+                                throughout the process.
+                            </Text>
+                        </Flex>
+
+                        {/* Right block */}
+                        <Flex flex={1} direction={'column'} gap="sm" align={'flex-end'}>
+                            <Title c="#043873" style={{
+                                lineHeight: 1.15,
+                                fontSize: isMobile ? 32 : 48,
+                                marginBottom: 20,
+                                textAlign: 'right'
+                            }}>
+                                First Time Jobseeker Support
+                            </Title>
+                            <Text c="#4F9CF9" ta={'right'}>
+                                The platform supports awareness of the First Time Jobseekers Assistance
+                                <br />
+                                Act or RA 11261 by guiding users on how to request and use the First Time
+                                <br />
+                                Jobseeker Certification when applying for government IDs.
+                            </Text>
+                        </Flex>
+                    </Flex>
+
+
 
                 </Flex>
 
@@ -75,7 +122,7 @@ const page = () => {
                 >
                     {/* Hero */}
                     <Flex
-                        gap={isMobile ? 40 : 60}
+                        gap={40}
                         align="center"
                         justify="space-between"
                         direction={'column'}
@@ -85,10 +132,10 @@ const page = () => {
 
                     >
                         <Title c={'#043873'} style={{
-                            fontWeight: 900,
+                            // fontWeight: 900,
                             lineHeight: 1.15,
                             fontSize: isMobile ? 32 : 48,
-                            marginBottom: 20,
+                            // marginBottom: 20,
                         }}>Disclaimer</Title>
                         <Text c={'#FFFFFF'} ta={'center'}>ID Mo, Karera Mo is an independent platform created by student developers. The developers and
                             <br />
