@@ -1,6 +1,8 @@
 "use client";
-import { Button, Flex, Input, Text } from "@mantine/core";
+import { MultiSelectCreatable } from "@/componets/MultiSelectCreatable/MultiSelectCreatable";
+import { ActionIcon, Button, Flex, Input, Select, Text } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
+import { IconPlus } from "@tabler/icons-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
@@ -12,26 +14,34 @@ const governmentIdsFormSchema = y
     code: y.string().required(),
     label: y.string().required(),
     description: y.string().optional(),
-    requirements: y.array().of(y.object({
-      label: y.string().required(),
-      requirementsGovernmentIds: y.array().of(y.string()).required()
-    })).required()
+    requirements: y
+      .array()
+      .of(
+        y
+          .object({
+            label: y.string().required(),
+            requirementsGovernmentIds: y
+              .array()
+              .of(y.string().required())
+              .required(),
+          })
+          .required(),
+      )
+      .required(),
   })
   .required();
 type IGovernmentIdsForm = y.InferType<typeof governmentIdsFormSchema>;
 
 const page = () => {
-  const query = useQueryClient()
+  const query = useQueryClient();
   const governmentIdsForm = useForm<IGovernmentIdsForm>({
     validate: yupResolver(governmentIdsFormSchema),
     initialValues: {
       code: "",
       label: "",
-      officialUrls: '',
-      description: '',
-      requirements: [
-
-      ]
+      officialUrls: "",
+      description: "",
+      requirements: [],
     },
   });
   const { data } = useQuery({
@@ -46,20 +56,20 @@ const page = () => {
 
   const handleCreateGovernmentIds = governmentIdsForm.onSubmit(async (e) => {
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/government-ids/create/one`,
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/government-ids/create/one`,
         {
           ...e,
-          officialUrls: [e.officialUrls]
-        })
+          officialUrls: [e.officialUrls],
+        },
+      );
 
       if (res.status === 200 || res.status === 201) {
-        alert('Created Government Ids')
-        query.invalidateQueries({ queryKey: ['governmentIds'] })
+        alert("Created Government Ids");
+        query.invalidateQueries({ queryKey: ["governmentIds"] });
       }
-    } catch (error) {
-
-    }
-  })
+    } catch (error) {}
+  });
 
   useEffect(() => {
     console.log({ governmentIdsForm });
@@ -89,8 +99,8 @@ const page = () => {
       <form
         action={"submit"}
         onSubmit={(e) => {
-          e.preventDefault()
-          handleCreateGovernmentIds()
+          e.preventDefault();
+          handleCreateGovernmentIds();
         }}
         style={{
           display: "flex",
@@ -131,26 +141,88 @@ const page = () => {
           size="xs"
           {...governmentIdsForm.getInputProps("description")}
         />
-        <Input size="xs" placeholder="Official Url" {...governmentIdsForm.getInputProps('officialUrls')} />
+        <Input
+          size="xs"
+          placeholder="Official Url"
+          {...governmentIdsForm.getInputProps("officialUrls")}
+        />
         {/* <MultiSelectCreatable
           placeholder="Official Urls"
           {...governmentIdsForm.getInputProps("officialUrls")}
         /> */}
+
+        <Flex style={{ flexDirection: "column", gap: 10 }}>
+          {governmentIdsForm.values.requirements.map((r, reqI) => {
+            return (
+              <Flex
+                key={`requirement-${reqI}`}
+                style={{
+                  gap: 10,
+                  padding: 10,
+                  backgroundColor: "ghostwhite",
+                  border: "1px solid black",
+                  borderRadius: 10,
+                }}
+              >
+                <Input
+                  size="xs"
+                  placeholder="Label"
+                  {...governmentIdsForm.getInputProps(
+                    `requirements.${reqI}.label`,
+                  )}
+                />
+                <Flex style={{ gap: 10 }}>
+                  {governmentIdsForm.values.requirements[
+                    reqI
+                  ].requirementsGovernmentIds.map((v, reqGovI) => {
+                    return (
+                      <Select
+                        searchable
+                        size="xs"
+                        key={`requirements-selection-${reqGovI}`}
+                        data={data?.map((d) => {
+                          return {
+                            label: d.label,
+                            disabled: governmentIdsForm.values.requirements[
+                              reqI
+                            ].requirementsGovernmentIds.includes(d.id),
+                            value: d.id,
+                          };
+                        })}
+                        {...governmentIdsForm.getInputProps(
+                          `requirements.${reqI}.requirementsGovernmentIds.${reqGovI}`,
+                        )}
+                      />
+                    );
+                  })}
+                  <ActionIcon
+                    onClick={() => {
+                      governmentIdsForm.insertListItem(
+                        `requirements.${reqI}.requirementsGovernmentIds`,
+                        "",
+                      );
+                    }}
+                  >
+                    <IconPlus />
+                  </ActionIcon>
+                </Flex>
+              </Flex>
+            );
+          })}
+          <ActionIcon
+            onClick={() => {
+              governmentIdsForm.insertListItem("requirements", {
+                label: "",
+                requirementsGovernmentIds: [""],
+              });
+            }}
+          >
+            <IconPlus />
+          </ActionIcon>
+        </Flex>
         <Button size="xs" type="submit">
           Save
         </Button>
-        {
-          governmentIdsForm.values.requirements.map(r => {
-            return <>
-              <Flex style={{ padding: 10, backgroundColor: 'ghostwhite' }}>
-
-              </Flex>
-            </>
-          })
-        }
-        {/* {
-          _.isEmpty(governmentIdsForm.values.requirements) ? <ActionIcon><ActionIcon> : null
-        } */}
       </form>
     </Flex>
   );

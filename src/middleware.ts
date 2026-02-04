@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
       token &&
       // @ts-ignore
       decode.roles === UserRoles.SUPER_ADMIN &&
-       !pathname.startsWith("/admin")
+      !pathname.startsWith("/admin")
     ) {
       return NextResponse.redirect(new URL("/admin", req.nextUrl.origin));
     }
