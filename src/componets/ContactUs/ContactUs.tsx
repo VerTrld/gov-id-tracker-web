@@ -39,7 +39,7 @@ export default function ContactSection() {
         >
           Contact Us
         </Title>
-        <Text style={{ color: "#0A58BD"}}>
+        <Text style={{ color: "#0A58BD" }}>
           Have questions, suggestions, or feedback? We are happy to hear from
           you.
         </Text>
@@ -127,28 +127,20 @@ export default function ContactSection() {
                 <Group grow >
                   <TextInput
                     label="First Name"
-                    variant="unstyled"
-                    styles={{
-                      input: { borderBottom: "1px solid #ccc" },
-                    }}
+                    placeholder="First Name"
                   />
                   <TextInput
                     label="Last Name"
-                    variant="unstyled"
-                    styles={{
-                      input: { borderBottom: "1px solid #ccc" },
-                    }}
+                    placeholder="Last Name"
                   />
                 </Group>
 
                 <TextInput
-                  mt="xl"
+                  mt="md"
                   label="Email"
-                  variant="unstyled"
+                  placeholder="Email"
                   w={'50%'}
-                  styles={{
-                    input: { borderBottom: "1px solid #ccc", },
-                  }}
+
                 />
 
                 <Textarea
