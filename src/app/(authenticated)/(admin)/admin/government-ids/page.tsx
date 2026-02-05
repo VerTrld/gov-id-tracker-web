@@ -1,5 +1,4 @@
 "use client";
-import { MultiSelectCreatable } from "@/componets/MultiSelectCreatable/MultiSelectCreatable";
 import { ActionIcon, Button, Flex, Input, Select, Text } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import { IconPlus } from "@tabler/icons-react";
@@ -61,6 +60,12 @@ const page = () => {
         {
           ...e,
           officialUrls: [e.officialUrls],
+          GroupRequirementGovernmentIds: e.requirements.map(r => {
+            return {
+              label: r.label,
+              requirements: r.requirementsGovernmentIds
+            }
+          })
         },
       );
 
@@ -68,7 +73,7 @@ const page = () => {
         alert("Created Government Ids");
         query.invalidateQueries({ queryKey: ["governmentIds"] });
       }
-    } catch (error) {}
+    } catch (error) { }
   });
 
   useEffect(() => {
