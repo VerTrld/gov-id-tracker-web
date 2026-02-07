@@ -99,8 +99,8 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                     c="#4F9CF9"
                     radius={5}
                   >
-                    <Flex gap={10}>
-                      <Text c="#FFFFFF">Sign Up</Text>
+                    <Flex gap={10} align={'center'}>
+                      <Text c="#FFFFFF" ta={'center'}>Sign Up</Text>
                       <IconArrowNarrowRight color="#FFFFFF" />
                     </Flex>
                   </Button>

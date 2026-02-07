@@ -12,6 +12,7 @@ import ContactSection from "@/componets/ContactUs/ContactUs";
 import { IDInfo, idsInfo } from "@/componets/UserNav/govenmentIds";
 import _, { chunk } from "lodash";
 import IDsCard from "@/componets/IDsCard/IDsCard";
+import Image from "next/image";
 
 export default function Login() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -152,7 +153,7 @@ export default function Login() {
         <Flex
           direction={"column"}
           bg={"#E6F1FE"}
-          gap={80}
+          gap={50}
           style={{
             flex: 1,
             padding: isMobile ? "60px 20px" : "100px",
@@ -165,6 +166,7 @@ export default function Login() {
               fontWeight: 900,
               lineHeight: 1.15,
               fontSize: isMobile ? 32 : 48,
+              color: "#043873",
             }}
           >
             Commonly Required Government IDs
@@ -179,7 +181,7 @@ export default function Login() {
             plugins={[autoplay.current]}
             onMouseEnter={autoplay.current.stop}
             onMouseLeave={autoplay.current.reset}
-            style={{ border: "1px solid black" }}
+          // style={{ border: "1px solid black" }}
           >
             {/* First Slide: Full-screen Hero */}
             {chunkedData.map((slideItems, slideIndex) => (
@@ -188,7 +190,7 @@ export default function Login() {
                   direction="column"
                   style={{
                     flex: 1,
-                    height: isMobile ? '80vh' : '50vh',
+                    height: isMobile ? '100vh' : '50vh',
                   }}
                 >
                   <Flex
@@ -204,7 +206,8 @@ export default function Login() {
                   >
                     {slideItems.map((v, index) => (
                       <IDsCard
-                        key={index} // stable key
+                        key={index} // stable key\
+                        logo={v.logo || ''}
                         title={v.title}
                         desc={v.description}
                       />
@@ -222,12 +225,12 @@ export default function Login() {
         <Flex
           gap={isMobile ? 40 : 60}
           align="center"
-          justify="space-between"
+          justify="space-evenly"
           direction={isMobile ? "column" : "row"}
           style={{ flex: 1, padding: isMobile ? "60px 20px" : "100px" }}
         >
           {/* Left Visual */}
-          <Box
+          {/* <Box
             style={{
               flex: 1,
               width: "100%",
@@ -240,14 +243,25 @@ export default function Login() {
               fontWeight: 600,
               color: "#868e96",
             }}
-          >
-            Image / Illustration
-          </Box>
+          > */}
+          <Image alt="barangayCert"
+            width={isMobile ? 220 : 520}
+            height={isMobile ? 220 : 600}
+            src={`${process.env.NEXT_PUBLIC_BRGY_CERTIFICATE}`}
+            style={{
+              background: "linear-gradient(135deg, #f1f3f5, #e9ecef)",
+              borderRadius: 16,
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#868e96",
+            }}
+          />
+          {/* </Box> */}
 
           {/* Right Content */}
           <Box
             style={{
-              flex: 1,
+              // flex: 1,
               textAlign: isMobile ? "center" : "left",
             }}
           >
