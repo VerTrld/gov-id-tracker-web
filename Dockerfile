@@ -15,21 +15,13 @@ RUN npm i -f
 FROM base AS builder
 WORKDIR /app
 
-ARG NEXT_PUBLIC_KARERAMO_LOGO
-ARG NEXT_PUBLIC_NATIONAL_ID
-ARG NEXT_PUBLIC_BIRTH_CERTIFICATE
-ARG NEXT_PUBLIC_BRGY_CERTIFICATE
-ARG NEXT_PUBLIC_SSS
-ARG NEXT_PUBLIC_PHILHEALTH
-ARG NEXT_PUBLIC_TIN_ID
-
-ENV NEXT_PUBLIC_KARERAMO_LOGO=$NEXT_PUBLIC_KARERAMO_LOGO
-ENV NEXT_PUBLIC_NATIONAL_ID=$NEXT_PUBLIC_NATIONAL_ID
-ENV NEXT_PUBLIC_BIRTH_CERTIFICATE=$NEXT_PUBLIC_BIRTH_CERTIFICATE
-ENV NEXT_PUBLIC_BRGY_CERTIFICATE=$NEXT_PUBLIC_BRGY_CERTIFICATE
-ENV NEXT_PUBLIC_SSS=$NEXT_PUBLIC_SSS
-ENV NEXT_PUBLIC_PHILHEALTH=$NEXT_PUBLIC_PHILHEALTH
-ENV NEXT_PUBLIC_TIN_ID=$NEXT_PUBLIC_TIN_ID
+ENV NEXT_PUBLIC_KARERAMO_LOGO=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/kareramo-logo.png
+ENV NEXT_PUBLIC_NATIONAL_ID=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/national-id.png
+ENV NEXT_PUBLIC_BIRTH_CERTIFICATE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/birth-cert.png
+ENV NEXT_PUBLIC_BRGY_CERTIFICATE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/brgy-cert.png
+ENV NEXT_PUBLIC_SSS=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/sss.png
+ENV NEXT_PUBLIC_PHILHEALTH=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/philhealth.png
+ENV NEXT_PUBLIC_TIN_ID=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/tin.png
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
