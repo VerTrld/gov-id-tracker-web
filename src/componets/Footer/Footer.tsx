@@ -11,6 +11,7 @@ import {
     IconBrandLinkedinFilled,
     IconBrandTwitterFilled,
 } from '@tabler/icons-react';
+import Image from 'next/image';
 import React from 'react';
 
 const Footer = () => {
@@ -35,7 +36,11 @@ const Footer = () => {
                 gap={isMobile ? 20 : 0}
             >
                 <Flex align="center" gap={10} justify={'center'} direction={isMobile ? 'column' : "row"}>
-                    <Text style={{ color: '#fff' }}>LOGO</Text>
+                    <Image alt="Logo"
+                        src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+                        width={isMobile ? 40 : 40}
+                        height={isMobile ? 40 : 40}
+                    />
                     <Title c="#FFFFFF" style={{
                         lineHeight: 1.15,
                     }}>ID Mo, Karera Mo</Title>

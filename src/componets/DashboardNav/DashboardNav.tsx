@@ -10,6 +10,7 @@ import {
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
@@ -39,16 +40,23 @@ const DashboardNav = ({ children }: IDashboardNav) => {
           fz={"32px"}
           style={{ padding: isMobile ? "20px" : "20px 50px" }}
         >
-          <Title
-            c={"#0A58BD"}
-            style={{
-              lineHeight: 1.15,
-              cursor: "pointer",
-            }}
-            onClick={() => router.push("/")}
-          >
-            ID Mo, Karera Mo
-          </Title>
+          <Flex gap={'xs'} align={'center'}>
+            <Image alt="Logo"
+              src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+              width={isMobile ? 40 : 40}
+              height={isMobile ? 40 : 40}
+            />
+            <Title
+              c={"#0A58BD"}
+              style={{
+                lineHeight: 1.15,
+                cursor: "pointer",
+              }}
+              onClick={() => router.push("/")}
+            >
+              ID Mo, Karera Mo
+            </Title></Flex>
+
 
           {!isMobile ? (
             // Desktop menu
