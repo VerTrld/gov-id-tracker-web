@@ -30,7 +30,7 @@ export async function middleware(req: NextRequest) {
       decode.roles === UserRoles.USER &&
       !pathname.startsWith("/user")
     ) {
-      return NextResponse.redirect(new URL("/user", req.nextUrl.origin));
+      return NextResponse.redirect(new URL("/user/home", req.nextUrl.origin));
     }
   }
 

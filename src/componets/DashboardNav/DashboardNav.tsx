@@ -14,7 +14,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
-interface IDashboardNav extends PropsWithChildren { }
+interface IDashboardNav extends PropsWithChildren {}
 
 const DashboardNav = ({ children }: IDashboardNav) => {
   const session = useSession();
@@ -40,8 +40,9 @@ const DashboardNav = ({ children }: IDashboardNav) => {
           fz={"32px"}
           style={{ padding: isMobile ? "20px" : "20px 50px" }}
         >
-          <Flex gap={'xs'} align={'center'}>
-            <Image alt="Logo"
+          <Flex gap={"xs"} align={"center"}>
+            <Image
+              alt="Logo"
               src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
               width={isMobile ? 40 : 40}
               height={isMobile ? 40 : 40}
@@ -55,8 +56,8 @@ const DashboardNav = ({ children }: IDashboardNav) => {
               onClick={() => router.push("/")}
             >
               ID Mo, Karera Mo
-            </Title></Flex>
-
+            </Title>
+          </Flex>
 
           {!isMobile ? (
             // Desktop menu
@@ -87,7 +88,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
 
               {session.data?.user?.name ? (
                 <Flex gap={15}>
-                  <Button onClick={() => router.push("/user")}>
+                  <Button onClick={() => router.push("/user/home")}>
                     <Text c={"#4F9CF9"}>{session.data.user.name}</Text>
                   </Button>
                   <Button onClick={() => signOut()}>Logout</Button>
@@ -107,8 +108,10 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                     c="#4F9CF9"
                     radius={5}
                   >
-                    <Flex gap={10} align={'center'}>
-                      <Text c="#FFFFFF" ta={'center'}>Sign Up</Text>
+                    <Flex gap={10} align={"center"}>
+                      <Text c="#FFFFFF" ta={"center"}>
+                        Sign Up
+                      </Text>
                       <IconArrowNarrowRight color="#FFFFFF" />
                     </Flex>
                   </Button>
