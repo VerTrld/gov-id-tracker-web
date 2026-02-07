@@ -79,7 +79,7 @@ export function ChecklistModule({
 
         <Stack gap="xs" style={{ flex: 1 }}>
           {items.map((item, i) => (
-            <Flex w={"100%"} justify={"space-between"} key={i}>
+            <Flex w={"100%"} gap={20} justify={"space-between"} key={i}>
               <Checkbox
                 key={`${item.id + 34}`}
                 label={`${item.label}`}

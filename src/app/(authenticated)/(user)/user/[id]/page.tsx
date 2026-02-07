@@ -74,7 +74,13 @@ export default function GovernmentIds() {
       <Divider my="sm" />
 
       {/* Requirements checklist */}
-      <Box>
+      <Box
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Title order={4} mb="sm">
           Requirements
         </Title>
