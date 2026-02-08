@@ -154,41 +154,34 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             }}
           >
             <Stack pt={10} gap={10}>
-              {data?.map((gi) => (
-                <UnstyledButton
-                  key={gi.id}
-                  onClick={() => {
-                    router.push(`/user/${gi.code.toLowerCase()}`);
-                    close();
-                  }}
-                  style={{
-                    width: "100%",
-                    textAlign: "left",
-                    padding: 10,
-                    borderRadius: "10px 0px 0px 10px",
-                    fontSize: 14,
-                    fontWeight: 500,
-                    color: active === gi.id ? "#0A58BD" : "#fff",
-                    backgroundColor:
-                      active === gi.id ? "#F8FBFE" : "transparent",
-                    boxShadow:
-                      active === gi.id
+              {data?.map((gi) => {
+                const isActive = active === gi.code.toLowerCase();
+
+                return (
+                  <UnstyledButton
+                    key={gi.id}
+                    onClick={() => {
+                      router.push(`/user/${gi.code.toLowerCase()}`);
+                      close();
+                    }}
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      padding: 10,
+                      borderRadius: "10px 0px 0px 10px",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      color: isActive ? "#0A58BD" : "#fff",
+                      backgroundColor: isActive ? "#F8FBFE" : "transparent",
+                      boxShadow: isActive
                         ? "0 4px 6px rgba(0, 0, 0, 0.25)"
                         : "none",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (active !== gi.id)
-                      e.currentTarget.style.backgroundColor =
-                        "rgba(255,255,255,0.12)";
-                  }}
-                  onMouseLeave={(e) => {
-                    if (active !== gi.id)
-                      e.currentTarget.style.backgroundColor = "transparent";
-                  }}
-                >
-                  {gi.label}
-                </UnstyledButton>
-              ))}
+                    }}
+                  >
+                    {gi.label}
+                  </UnstyledButton>
+                );
+              })}
             </Stack>
           </Accordion.Panel>
         </Accordion.Item>
