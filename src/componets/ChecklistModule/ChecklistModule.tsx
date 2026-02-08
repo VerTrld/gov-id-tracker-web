@@ -10,43 +10,40 @@ import {
   Text,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { useEffect, useMemo, useState } from "react";
+import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 
 export type ChecklistItem = {
   id: string;
   label: string;
-  isActive: boolean
+  isActive: boolean;
 };
 
-type ChecklistModuleProps = {
+interface ChecklistModuleProps extends PropsWithChildren {
   items: ChecklistItem[];
   buttonLabel?: string;
   onComplete?: () => void;
   uploadImage?: () => void;
-};
+}
 
 export function ChecklistModule({
   items,
   buttonLabel = "Continue",
   onComplete,
   uploadImage,
+  children,
 }: ChecklistModuleProps) {
   // IMPORTANT: start empty, do NOT derive from items
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  // const [checked, setChecked] = useState<Record<string, boolean>>({});
 
   const progress = useMemo(() => {
     return Math.min(
       items.reduce(
-        (sum, item) => (checked[item.id] ? sum + (1 / items.length) * 100 : sum),
+        (sum, item) => (item.isActive ? sum + (1 / items.length) * 100 : sum),
         0,
       ),
       100,
     );
-  }, [checked, items]);
-
-  useEffect(() => {
-    checked;
-  }, [checked]);
+  }, [items]);
 
   const isComplete = progress === 100;
 
@@ -77,34 +74,7 @@ export function ChecklistModule({
           />
         </Flex>
 
-        <Stack gap="xs" style={{ flex: 1 }}>
-          {items.map((item, i) => (
-            <Flex w={"100%"} gap={20} justify={"space-between"} key={i}>
-              <Checkbox
-                key={`${item.id + 34}`}
-                label={`${item.label}`}
-                checked={checked[item.id] ?? false}
-                onChange={(event) => {
-                  const isChecked = event.currentTarget.checked; // capture now
-                  setChecked((prev) => ({
-                    ...prev,
-                    [item.id]: isChecked,
-                  }));
-                }}
-              />
-
-              <Button
-                size="xs"
-                variant="outline"
-                color="blue"
-                onClick={uploadImage}
-                style={{ width: 80, flexShrink: 0 }}
-              >
-                Upload
-              </Button>
-            </Flex>
-          ))}
-        </Stack>
+        {children}
       </Group>
 
       <Button
