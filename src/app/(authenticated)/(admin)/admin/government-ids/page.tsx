@@ -1,7 +1,8 @@
 "use client";
+import { get, post } from "@/utils/http-api";
 import { ActionIcon, Button, Flex, Input, Select, Text } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import { IconPlus } from "@tabler/icons-react";
+import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
@@ -46,34 +47,30 @@ const page = () => {
   const { data } = useQuery({
     queryKey: ["governmentIds"],
     queryFn: async () => {
-      const allGovernmentIds = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/government-ids/read/all`,
-      );
+      const allGovernmentIds = await get(`/government-ids/read/all`);
+      console.log({ allGovernmentIds });
       return (allGovernmentIds.data || []) as any[];
     },
   });
 
   const handleCreateGovernmentIds = governmentIdsForm.onSubmit(async (e) => {
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/government-ids/create/one`,
-        {
-          ...e,
-          officialUrls: [e.officialUrls],
-          GroupRequirementGovernmentIds: e.requirements.map(r => {
-            return {
-              label: r.label,
-              requirements: r.requirementsGovernmentIds
-            }
-          })
-        },
-      );
+      const res = await post(`/government-ids/create/one`, {
+        ...e,
+        officialUrls: [e.officialUrls],
+        GroupRequirementGovernmentIds: e.requirements.map((r) => {
+          return {
+            label: r.label,
+            requirements: r.requirementsGovernmentIds,
+          };
+        }),
+      });
 
       if (res.status === 200 || res.status === 201) {
         alert("Created Government Ids");
         query.invalidateQueries({ queryKey: ["governmentIds"] });
       }
-    } catch (error) { }
+    } catch (error) {}
   });
 
   useEffect(() => {
@@ -169,35 +166,55 @@ const page = () => {
                   borderRadius: 10,
                 }}
               >
-                <Input
-                  size="xs"
-                  placeholder="Label"
-                  {...governmentIdsForm.getInputProps(
-                    `requirements.${reqI}.label`,
-                  )}
-                />
+                <Flex gap={10}>
+                  <Input
+                    size="xs"
+                    placeholder="Label"
+                    {...governmentIdsForm.getInputProps(
+                      `requirements.${reqI}.label`,
+                    )}
+                  />
+                  <ActionIcon
+                    onClick={() => {
+                      governmentIdsForm.removeListItem(`requirements`, reqI);
+                    }}
+                  >
+                    <IconMinus />
+                  </ActionIcon>
+                </Flex>
                 <Flex style={{ gap: 10 }}>
                   {governmentIdsForm.values.requirements[
                     reqI
                   ].requirementsGovernmentIds.map((v, reqGovI) => {
                     return (
-                      <Select
-                        searchable
-                        size="xs"
-                        key={`requirements-selection-${reqGovI}`}
-                        data={data?.map((d) => {
-                          return {
-                            label: d.label,
-                            disabled: governmentIdsForm.values.requirements[
-                              reqI
-                            ].requirementsGovernmentIds.includes(d.id),
-                            value: d.id,
-                          };
-                        })}
-                        {...governmentIdsForm.getInputProps(
-                          `requirements.${reqI}.requirementsGovernmentIds.${reqGovI}`,
-                        )}
-                      />
+                      <Flex key={`requirements-selection-${reqGovI}`} gap={10}>
+                        <Select
+                          searchable
+                          size="xs"
+                          data={data?.map((d) => {
+                            return {
+                              label: d.label,
+                              disabled: governmentIdsForm.values.requirements[
+                                reqI
+                              ].requirementsGovernmentIds.includes(d.id),
+                              value: d.id,
+                            };
+                          })}
+                          {...governmentIdsForm.getInputProps(
+                            `requirements.${reqI}.requirementsGovernmentIds.${reqGovI}`,
+                          )}
+                        />
+                        <ActionIcon
+                          onClick={() => {
+                            governmentIdsForm.removeListItem(
+                              `requirements.${reqI}.requirementsGovernmentIds`,
+                              reqGovI,
+                            );
+                          }}
+                        >
+                          <IconMinus />
+                        </ActionIcon>
+                      </Flex>
                     );
                   })}
                   <ActionIcon

@@ -15,17 +15,27 @@ import {
 
 import { useParams } from "next/navigation";
 import _ from "lodash";
-import { governmentIds } from "@/componets/UserNav/govenmentIds";
+// import { governmentIds } from "@/componets/UserNav/govenmentIds";
 import { ChecklistModule } from "@/componets/ChecklistModule/ChecklistModule";
 import UploadModal from "@/componets/UploadModal/UploadModal";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCheck } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
+import { get } from "@/utils/http-api";
+import { IGovernmentIds } from "@/entities/IGovernmentIds";
 
 export default function GovernmentIds() {
   const params = useParams();
   const id = params.id;
 
-  const data = id ? _.get(governmentIds, id) : undefined;
+  const { data } = useQuery({
+    queryKey: ["selected-government-id"],
+    queryFn: async () => {
+      const res = await get(`/government-ids/read/${id}`);
+      console.log({ res: res.data });
+      return res.data as IGovernmentIds;
+    },
+  });
 
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -66,9 +76,9 @@ export default function GovernmentIds() {
       {/* Title and description */}
       <Box>
         <Title order={3} mb="xs" w={"90%"}>
-          {data.title}
+          {data?.label}
         </Title>
-        <Text size="sm">{data.description}</Text>
+        <Text size="sm">{data?.description || "No description indicated"}</Text>
       </Box>
 
       <Divider my="sm" />
@@ -89,16 +99,24 @@ export default function GovernmentIds() {
         </Text>
 
         <ChecklistModule
-          items={data.requirements}
+          items={
+            data?.requirements.map((r) => {
+              return {
+                id: r.id,
+                isActive: false,
+                label: r.label,
+              };
+            }) || []
+          }
           uploadImage={open}
           onComplete={() => {
-            const total = data.requirements.reduce(
+            const total = data?.requirements.reduce(
               (sum: any, item: any) => sum + item.value,
-              0
+              0,
             );
 
-            if (total === 100 && data.officialWebsite) {
-              window.open(data.officialWebsite, "_blank");
+            if (total === 100 && data?.officialUrls) {
+              window.open(data?.officialUrls?.[0], "_blank");
             }
           }}
         />

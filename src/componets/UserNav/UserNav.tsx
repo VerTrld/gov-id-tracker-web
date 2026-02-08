@@ -27,6 +27,9 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { get } from "@/utils/http-api";
+import { IGovernmentIds } from "@/entities/IGovernmentIds";
 
 interface ResponsiveNavLayoutProps extends PropsWithChildren {}
 
@@ -38,11 +41,19 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
   const active = pathname?.split("/")[2] ?? "";
   const session = useSession();
 
-  const navItems = _.map(governmentIds, (value, id) => ({
-    id,
-    label: value.title,
-    path: `/user/${id}`,
-  }));
+  const { data } = useQuery({
+    queryKey: ["government-ids"],
+    queryFn: async () => {
+      const res = await get(`/government-ids/read/all`);
+      return res.data as IGovernmentIds[];
+    },
+  });
+
+  // const navItems = _.map(governmentIds, (value, id) => ({
+  //   id,
+  //   label: value.title,
+  //   path: `/user/${id}`,
+  // }));
 
   const isIdsActive =
     active &&
@@ -143,11 +154,11 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             }}
           >
             <Stack pt={10} gap={10}>
-              {navItems.map((item) => (
+              {data?.map((gi) => (
                 <UnstyledButton
-                  key={item.id}
+                  key={gi.id}
                   onClick={() => {
-                    router.push(item.path);
+                    router.push(`/user/${gi.code.toLowerCase()}`);
                     close();
                   }}
                   style={{
@@ -157,25 +168,25 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                     borderRadius: "10px 0px 0px 10px",
                     fontSize: 14,
                     fontWeight: 500,
-                    color: active === item.id ? "#0A58BD" : "#fff",
+                    color: active === gi.id ? "#0A58BD" : "#fff",
                     backgroundColor:
-                      active === item.id ? "#F8FBFE" : "transparent",
+                      active === gi.id ? "#F8FBFE" : "transparent",
                     boxShadow:
-                      active === item.id
+                      active === gi.id
                         ? "0 4px 6px rgba(0, 0, 0, 0.25)"
                         : "none",
                   }}
                   onMouseEnter={(e) => {
-                    if (active !== item.id)
+                    if (active !== gi.id)
                       e.currentTarget.style.backgroundColor =
                         "rgba(255,255,255,0.12)";
                   }}
                   onMouseLeave={(e) => {
-                    if (active !== item.id)
+                    if (active !== gi.id)
                       e.currentTarget.style.backgroundColor = "transparent";
                   }}
                 >
-                  {item.label}
+                  {gi.label}
                 </UnstyledButton>
               ))}
             </Stack>

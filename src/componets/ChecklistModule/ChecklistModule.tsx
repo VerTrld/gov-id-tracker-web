@@ -15,7 +15,7 @@ import { useEffect, useMemo, useState } from "react";
 export type ChecklistItem = {
   id: string;
   label: string;
-  value: number; // percentage value
+  isActive: boolean
 };
 
 type ChecklistModuleProps = {
@@ -37,10 +37,10 @@ export function ChecklistModule({
   const progress = useMemo(() => {
     return Math.min(
       items.reduce(
-        (sum, item) => (checked[item.id] ? sum + item.value : sum),
-        0
+        (sum, item) => (checked[item.id] ? sum + (1 / items.length) * 100 : sum),
+        0,
       ),
-      100
+      100,
     );
   }, [checked, items]);
 

@@ -1,4 +1,5 @@
 "use client";
+
 import DashboardNav from "@/componets/DashboardNav/DashboardNav";
 import LoginUserModal from "@/componets/LoginUserModal/LoginUserModal";
 import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal";
@@ -7,6 +8,7 @@ import IPersonShcema, {
   PersonActionEnum,
   PersonSchema,
 } from "@/schema/PersonSchema";
+import { post } from "@/utils/http-api";
 import { useForm, yupResolver } from "@mantine/form";
 import axios from "axios";
 import { signIn } from "next-auth/react";
@@ -69,14 +71,11 @@ const layout = ({ children }: PropsWithChildren) => {
 
   const handleRegister = registerForm.onSubmit(async () => {
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/user-account/create/one`,
-        {
-          name: `${registerForm.values.firstName} ${registerForm.values.lastName}`,
-          email: registerForm.values.email,
-          password: registerForm.values.password,
-        }
-      );
+      const res = await post(`/user-account/create/one`, {
+        name: `${registerForm.values.firstName} ${registerForm.values.lastName}`,
+        email: registerForm.values.email,
+        password: registerForm.values.password,
+      });
 
       if (res.status === 200 || res.status === 201) {
         console.log("success");
