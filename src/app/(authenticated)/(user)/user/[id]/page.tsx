@@ -11,6 +11,8 @@ import {
   Anchor,
   List,
   ThemeIcon,
+  Stack,
+  Checkbox,
 } from "@mantine/core";
 
 import { useParams } from "next/navigation";
@@ -20,8 +22,8 @@ import { ChecklistModule } from "@/componets/ChecklistModule/ChecklistModule";
 import UploadModal from "@/componets/UploadModal/UploadModal";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCheck } from "@tabler/icons-react";
-import { useQuery } from "@tanstack/react-query";
-import { get } from "@/utils/http-api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { get, patch } from "@/utils/http-api";
 import { IGovernmentIds } from "@/entities/IGovernmentIds";
 
 export default function GovernmentIds() {
@@ -32,10 +34,17 @@ export default function GovernmentIds() {
     queryKey: ["selected-government-id"],
     queryFn: async () => {
       const res = await get(`/government-ids/read/${id}`);
-      console.log({ res: res.data });
+      console.log({ data: res.data });
       return res.data as IGovernmentIds;
     },
   });
+
+  const handleCheckChange = async (userGovernmentId: string) => {
+    const res = await patch(
+      `/user-government-ids/update/toggle/${userGovernmentId}`,
+    );
+    return res.data;
+  };
 
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -84,43 +93,83 @@ export default function GovernmentIds() {
       <Divider my="sm" />
 
       {/* Requirements checklist */}
-      <Box
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Title order={4} mb="sm">
-          Requirements
-        </Title>
-        <Text c="dimmed" size="sm" mb="md">
-          Complete the following items to proceed:
-        </Text>
-
-        <ChecklistModule
-          items={
-            data?.requirements.map((r) => {
-              return {
-                id: r.id,
-                isActive: false,
-                label: r.label,
-              };
-            }) || []
-          }
-          uploadImage={open}
-          onComplete={() => {
-            const total = data?.requirements.reduce(
-              (sum: any, item: any) => sum + item.value,
-              0,
-            );
-
-            if (total === 100 && data?.officialUrls) {
-              window.open(data?.officialUrls?.[0], "_blank");
-            }
+      {!_.isEmpty(data.UserGovernmentIds) ? (
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-        />
-      </Box>
+        >
+          <Title order={4} mb="sm">
+            Requirements
+          </Title>
+          <Text c="dimmed" size="sm" mb="md">
+            Complete the following items to proceed:
+          </Text>
+
+          <ChecklistModule
+            items={
+              data?.requirements.map((r) => {
+                return {
+                  id: r.id,
+                  isActive: false,
+                  label: r.label,
+                };
+              }) || []
+            }
+            uploadImage={open}
+            onComplete={() => {
+              const total = data?.requirements.reduce(
+                (sum: any, item: any) => sum + item.value,
+                0,
+              );
+
+              if (total === 100 && data?.officialUrls) {
+                window.open(data?.officialUrls?.[0], "_blank");
+              }
+            }}
+          >
+            <Stack gap="xs" style={{ flex: 1 }}>
+              {data.requirements.map((item, i) => (
+                <Flex w={"100%"} gap={20} justify={"space-between"} key={i}>
+                  <Checkbox
+                    key={`${item.id + 34}`}
+                    label={`${item.label}`}
+                    checked={
+                      item.require.filter(
+                        (r) => r.UserGovernmentIds?.isCompleted,
+                      ).length == item.minRequirement
+                    }
+                    onChange={async (event) => {
+                      // await handleCheckChange();
+                      // const isChecked = event.currentTarget.checked; // capture now
+                      // setChecked((prev) => ({
+                      //   ...prev,
+                      //   [item.id]: isChecked,
+                      // }));
+                    }}
+                  />
+
+                  <Button
+                    size="xs"
+                    variant="outline"
+                    color="blue"
+                    // onClick={uploadImage}
+                    style={{ width: 80, flexShrink: 0 }}
+                  >
+                    Upload
+                  </Button>
+                </Flex>
+              ))}
+            </Stack>
+          </ChecklistModule>
+        </Box>
+      ) : (
+        <Flex>
+          <Button>Apply</Button>
+        </Flex>
+      )}
     </Flex>
   );
 }
