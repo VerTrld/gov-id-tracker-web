@@ -11,6 +11,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
+import Image from 'next/image';
 
 interface ILoginUser extends ModalProps {
   onSubmit: () => void;
@@ -35,7 +36,12 @@ const LoginUserModal = ({
       centered
       title={
         <Flex direction={'column'} gap={10} align={'center'} mb={10}>
-          <Text>LOGO</Text>
+          <Image
+            alt="Logo"
+            src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+            width={50}
+            height={50}
+          />
           <Text c='#0B69A3' fw={700} fz={'16px'}>Welcome Back!</Text>
           <Text c='#4F9CF9' fz={'14px'}>Continue tracking your government ID <br /> requirements.</Text>
         </Flex>
@@ -45,10 +51,10 @@ const LoginUserModal = ({
           width: '100%',
           textAlign: 'center',
         },
-        
+
       }}
       size='sm'
-      radius={15} 
+      radius={15}
     >
       <Box
         component="form"
@@ -81,8 +87,8 @@ const LoginUserModal = ({
         )}
         <Flex direction={'column'} mb={10} gap={5}>
           <Button type="submit" fullWidth radius={10}>
-          Login
-        </Button>
+            Login
+          </Button>
           <Text fz={'12px'} c='#486581' style={{ textAlign: 'right' }}>Forgot Password?</Text>
         </Flex>
 

@@ -3,6 +3,7 @@
 import IPersonShcema from '@/schema/PersonSchema';
 import { Box, Button, Checkbox, Flex, Modal, ModalProps, Text, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
+import Image from 'next/image';
 
 interface IRegisterUser extends ModalProps {
   onSubmit: () => void;
@@ -25,7 +26,12 @@ const RegisterUserModal = ({
       centered
       title={
         <Flex direction={'column'} gap={10} align={'center'} mb={10}>
-          <Text>LOGO</Text>
+          <Image
+            alt="Logo"
+            src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+            width={50}
+            height={50}
+          />
           <Text c='#0B69A3' fw={700} fz={'16px'}>Create an account</Text>
           <Text c='#4F9CF9' fz={'14px'}>Create an account to track your government ID <br />
             requirements and prepare for employment</Text>
@@ -91,7 +97,7 @@ const RegisterUserModal = ({
         <Flex direction={'column'} gap={10}>
           <Checkbox
             color="#334E68"
-           
+
             size="xs"
             label={
               <Text c='#334E68' fz={'12px'}> I agree to the Terms and Conditions. I understand that ID Mo,
