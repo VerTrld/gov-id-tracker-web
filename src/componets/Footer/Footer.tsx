@@ -83,12 +83,6 @@ const Footer = () => {
                         <Button variant="subtle">
                             <Text c="#FFFFFF">Terms & Privacy</Text>
                         </Button>
-                        <Button variant="subtle">
-                            <Text c="#FFFFFF">Security</Text>
-                        </Button>
-                        <Button variant="subtle">
-                            <Text c="#FFFFFF">Status</Text>
-                        </Button>
 
                         <Text c="#FFFFFF" ta={'center'}>
                             © 2026 ID Mo, Karera Mo | Capstone Research Project

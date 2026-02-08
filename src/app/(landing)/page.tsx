@@ -324,6 +324,44 @@ export default function Login() {
           </Box>
         </Flex>
 
+        {/* 4th Section */}
+        <Flex
+          direction="column"
+          gap={80}
+          style={{
+            flex: 1,
+            padding: isMobile ? "60px 20px" : "100px",
+          }}
+        >
+          <Flex direction={'column'} gap={10} align={'center'}>
+            <Title
+              order={1}
+              style={{
+                fontWeight: 900,
+                lineHeight: 1.15,
+                fontSize: isMobile ? 32 : 48,
+                marginBottom: 20,
+                color: '#043873',
+                textAlign:'center'
+              }}
+            >
+              Start preparing your requirements today.
+            </Title>
+            <Button
+              onClick={() => router.push("?action=register")}
+              c="#4F9CF9"
+              radius={5}
+            >
+              <Flex gap={5} align={"center"}>
+                <Text c="#FFFFFF" ta={"center"}>
+                  Sign Up
+                </Text>
+                <IconArrowNarrowRight color="#FFFFFF" />
+              </Flex>
+            </Button>
+          </Flex>
+        </Flex>
+
         {/* Footer */}
         <Flex flex={1}>
           <Footer />

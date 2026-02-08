@@ -54,8 +54,11 @@ const page = () => {
 
                 </Flex>
 
-
                 {/* 2nd Section */}
+
+                {/* 3rd Section */}
+
+                {/* 4th Section */}
                 <Flex direction={'column'} bg={'#E6F1FE'} gap={80}
                     style={{
                         flex: 1,
@@ -65,42 +68,37 @@ const page = () => {
                     <Flex
                         direction={'column'}
                         gap={isMobile ? 40 : 80}
-                    // flex={1}
-                    >
-                        {/* Left block */}
-                        <Flex flex={1} direction={'column'} gap="sm" align={'flex-start'}  >
-                            <Title c="#043873" style={{
-                                lineHeight: 1.15,
-                                fontSize: isMobile ? 32 : 48,
-                                marginBottom: 20,
-                            }}>
-                                What We Help With
-                            </Title>
-                            <Text c="#4F9CF9" >
-                                ID Mo, Karera Mo helps users understand which IDs are needed,
-                                <br />
-                                what documents to prepare, where to apply, and how to track progress
-                                <br />
-                                throughout the process.
-                            </Text>
-                        </Flex>
 
-                        {/* Right block */}
-                        <Flex flex={1} direction={'column'} gap="sm" align={'flex-end'}>
-                            <Title c="#043873" style={{
+                    >
+                        <Flex
+                            gap={40}
+                            align="center"
+                            justify="space-between"
+                            direction={'column'}
+                            style={{ flex: 1 }}
+                        >
+                            <Title c={'#043873'} style={{
                                 lineHeight: 1.15,
                                 fontSize: isMobile ? 32 : 48,
-                                marginBottom: 20,
-                                textAlign: 'right'
+                                textAlign: 'center'
                             }}>
-                                First Time Jobseeker Support
+                                First-Time Jobseekers Assistance Act (RA 11261)
                             </Title>
-                            <Text c="#4F9CF9" ta={'right'}>
-                                The platform supports awareness of the First Time Jobseekers Assistance
-                                <br />
-                                Act or RA 11261 by guiding users on how to request and use the First Time
-                                <br />
-                                Jobseeker Certification when applying for government IDs.
+                            <Text c={'#4F9CF9'} ta={'center'}>
+                                The First-Time Jobseekers Assistance Act (Republic Act No. 11261) is a Philippine law enacted to support individuals who are applying for
+                                {/* <br /> */}
+                                employment for the first time. Its primary goal is to reduce the financial burden faced by first-time jobseekers by waiving fees for selected
+                                {/* <br /> */}
+                                government documents that are commonly required during job applications.
+                            </Text>
+
+                            <Text c={'#4F9CF9'} ta={'center'}>
+                                Under RA 11261, qualified first-time jobseekers may avail of the free issuance of employment-related government documents, subject to
+                                {/* <br /> */}
+                                the rules and guidelines of the issuing agencies. To qualify for these benefits, applicants are required to present a Barangay Certification
+                                {/* <br /> */}
+                                confirming their status as a first-time jobseeker:
+
                             </Text>
                         </Flex>
                     </Flex>
@@ -109,8 +107,9 @@ const page = () => {
 
                 </Flex>
 
+                {/* 5th Section */}
 
-                {/* 3rd Section */}
+                {/* 6th Section */}
                 <Flex
                     direction="column"
                     gap={80}
@@ -136,7 +135,8 @@ const page = () => {
                             lineHeight: 1.15,
                             fontSize: isMobile ? 32 : 48,
                             // marginBottom: 20,
-                        }}>Disclaimer</Title>
+                        }}>Disclaimer
+                        </Title>
                         <Text c={'#FFFFFF'} ta={'center'}>ID Mo, Karera Mo is an independent platform created by student developers. The developers and
                             <br />
                             owners of this website are not affiliated with any government agency. All applications and

@@ -20,10 +20,11 @@ const IDsCard = ({ desc, title, logo }: IIDsInfo) => {
             gap={isMobile ? 10 : 20} // smaller gap on mobile
             p={isMobile ? '15px 20px' : '20px 30px'}
             style={{
-                borderRadius: '10px',
+                borderRadius: '20px',
                 boxShadow: '0 0 10px 10px rgba(0, 0, 0, 0.19)',
                 width: isMobile ? '75%' : '200px',
                 height: isMobile ? 'auto' : '300px', // auto height on mobile
+                backgroundColor: '#FFFFFF'
             }}
         >
             <Image
