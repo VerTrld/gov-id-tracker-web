@@ -206,7 +206,7 @@ export const idsInfo = [
     id: "pagibig",
     logo: `${process.env.NEXT_PUBLIC_PHILHEALTH}`,
     title: "Pag-Ibig",
-    description: "",
+    description: "A unique number issued by the BIR for tax identification and transactions.",
   },
   {
     id: "nbi",

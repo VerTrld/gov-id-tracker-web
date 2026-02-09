@@ -43,7 +43,7 @@ const RegisterUserModal = ({
           textAlign: 'center',
         },
       }}
-      size='sm'
+      size='md'
       radius={15}
     >
       <Box
@@ -53,9 +53,10 @@ const RegisterUserModal = ({
           width: '100%',
           maxWidth: 400,
           margin: '0 auto',
+          padding: '10px'
         }}
       >
-        <Flex gap={10}>
+        <Flex justify={'space-between'} >
 
           <TextInput
             label="First Name"

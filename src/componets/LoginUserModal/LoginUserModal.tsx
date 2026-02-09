@@ -53,7 +53,7 @@ const LoginUserModal = ({
         },
 
       }}
-      size='sm'
+      size='md'
       radius={15}
     >
       <Box
@@ -63,6 +63,7 @@ const LoginUserModal = ({
           width: '100%',
           maxWidth: 400,
           margin: '0 auto',
+          padding: '10px'
         }}
       >
         <TextInput

@@ -64,34 +64,34 @@ const DashboardNav = ({ children }: IDashboardNav) => {
             <Flex gap={80} align={"center"}>
               <Flex gap={15} align={"center"}>
                 <Button variant="subtle" onClick={() => router.push("/")}>
-                  <Text c={navColor("/")}>Home</Text>
+                  <Text c={navColor("/")} fw={600}>Home</Text>
                 </Button>
 
                 <Button variant="subtle" onClick={() => router.push("/about")}>
-                  <Text c={navColor("/about")}>About</Text>
+                  <Text c={navColor("/about")} fw={600}>About</Text>
                 </Button>
 
                 <Button
                   variant="subtle"
                   onClick={() => router.push("/features")}
                 >
-                  <Text c={navColor("/features")}>Features</Text>
+                  <Text c={navColor("/features")} fw={600}>Features</Text>
                 </Button>
 
                 <Button
                   variant="subtle"
                   onClick={() => router.push("/contact")}
                 >
-                  <Text c={navColor("/contact")}>Contact</Text>
+                  <Text c={navColor("/contact")} fw={600}>Contact</Text>
                 </Button>
               </Flex>
 
               {session.data?.user?.name ? (
                 <Flex gap={15}>
                   <Button onClick={() => router.push("/user/home")}>
-                    <Text c={"#4F9CF9"}>{session.data.user.name}</Text>
+                    <Text c={"#4F9CF9"} fw={600}>{session.data.user.name}</Text>
                   </Button>
-                  <Button onClick={() => signOut()}>Logout</Button>
+                  <Button onClick={() => signOut()} fw={600}>Logout</Button>
                 </Flex>
               ) : (
                 <Flex gap={15}>
@@ -100,7 +100,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                     bg={"#A7CEFC"}
                     radius={5}
                   >
-                    <Text c={"#043873"}>Log In</Text>
+                    <Text c={"#043873"} fw={600}>Log In</Text>
                   </Button>
 
                   <Button
@@ -109,10 +109,10 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                     radius={5}
                   >
                     <Flex gap={10} align={"center"}>
-                      <Text c="#FFFFFF" ta={"center"}>
+                      <Text c="#FFFFFF" ta={"center"} fw={600}>
                         Sign Up
                       </Text>
-                      <IconArrowNarrowRight color="#FFFFFF" />
+                      <IconArrowNarrowRight color="#FFFFFF" stroke={3}/>
                     </Flex>
                   </Button>
                 </Flex>

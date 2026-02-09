@@ -42,10 +42,11 @@ export const theme = createTheme({
         },
 
         label: {
-          fontWeight: 600,
+          fontWeight: 700,
           marginBottom: rem(6),
           color: '#334E68',
           fontSize: rem(12),
+          
         },
 
         description: {
