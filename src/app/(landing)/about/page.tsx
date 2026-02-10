@@ -1,10 +1,44 @@
 "use client";
 import Footer from '@/componets/Footer/Footer';
-import { Container, Divider, Flex, Grid, Group, List, Paper, Stack, Text, Title } from '@mantine/core';
+import IDsCard from '@/componets/IDsCard/IDsCard';
+import { govRequirements, IGovRequirements } from '@/componets/UserNav/govenmentIds';
+import { Carousel } from '@mantine/carousel';
+import { Container, Divider, Flex, Grid, Group, List, Paper, Stack, Stepper, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import { IconNumber1 } from '@tabler/icons-react';
+import Autoplay from 'embla-carousel-autoplay';
+import { chunk } from 'lodash';
+import Image from 'next/image';
+import { useRef } from 'react';
 
 const page = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
+    const autoplay = useRef(Autoplay({ delay: 3000 }));
+
+    const data: IGovRequirements[] = govRequirements;
+    const chunkedData = chunk(data, 4);
+
+
+    const aboutStep = [
+        {
+            logo: '',
+            desc: 'Know which government IDs you need'
+        },
+        {
+            logo: '',
+            desc: 'Understand required documents'
+        },
+        {
+            logo: '',
+            desc: 'Find the right websites'
+        },
+        {
+            logo: '',
+            desc: 'Track the progress'
+        }
+    ]
+
+
     return (
         <>
             <Flex
@@ -55,8 +89,159 @@ const page = () => {
                 </Flex>
 
                 {/* 2nd Section */}
+                <Flex
+                    direction="column"
+                    gap={isMobile ? 40 : 80}
+                    style={{
+                        flex: 1,
+                        padding: isMobile ? '60px 20px' : '40px',
+                    }}
+                >
+                    {/* Hero */}
+                    <Flex
+                        gap={isMobile ? 30 : 40}
+                        align="center"
+                        justify="center"
+                        direction="column"
+                        style={{ flex: 1 }}
+                    >
+                        <Title
+                            c="#043873"
+                            style={{
+                                lineHeight: 1.15,
+                                fontSize: isMobile ? 32 : 48,
+                                textAlign: 'center',
+                            }}
+                        >
+                            What We Help With
+                        </Title>
+
+                        <Flex
+                            justify="center"
+                            gap={isMobile ? 20 : 40}
+                            wrap="wrap"
+                        >
+                            {aboutStep?.map((a, index) => (
+                                <Flex
+                                    key={index}
+                                    direction="column"
+                                    gap={10}
+                                    align="center"
+                                    style={{
+                                        width: isMobile ? '140px' : '200px',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <Image
+                                        alt={a.desc}
+                                        src={`${process.env.NEXT_PUBLIC_NATIONAL_ID}`}
+                                        height={isMobile ? 40 : 80}
+                                        width={isMobile ? 40 : 80}
+                                    />
+
+                                    <Text c="#4F9CF9" size={isMobile ? 'sm' : 'md'} ta={'center'}>
+                                        {a.desc}
+                                    </Text>
+                                </Flex>
+                            ))}
+                        </Flex>
+                    </Flex>
+                </Flex>
 
                 {/* 3rd Section */}
+                <Flex
+                    direction="column"
+                    gap={80}
+                    style={{
+                        flex: 1,
+                        padding: isMobile ? '60px 20px' : '100px',
+                    }}
+                >
+                    {/* Hero */}
+                    <Flex
+                        gap={isMobile ? 40 : 60}
+                        align="center"
+                        justify="space-between"
+                        direction={'column'}
+                        style={{ flex: 1 }}
+
+
+                    >
+                        <Title c={'#043873'} style={{
+                            fontWeight: 900,
+                            lineHeight: 1.15,
+                            fontSize: isMobile ? 32 : 48,
+                            marginBottom: 20,
+                        }}
+                            ta={'center'}>
+                            First-Time Jobseeker Support
+                        </Title>
+
+
+                        <Text c={'#0A58BD'} ta={'center'}>
+                            ID Mo, Karera Mo supports RA 11261 by promoting awareness and understanding of
+                            the law among first-time jobseekers and fresh graduates. Many eligible individuals
+                            remain unaware of the benefits provided by the Act, which often results in unnecessary
+                            expenses during the job application process. Through this platform, users are guided on:
+                        </Text>
+
+                        {/* <Flex flex={1} w={'100%'} justify={'center'} align={'center'}>  */}
+                        {/* <Stepper
+                        
+                            active={0}
+                            w="100%"
+                            iconSize={isMobile ? 32 : 47}
+                            orientation={isMobile ? 'vertical' : 'horizontal'}
+                            styles={{
+                                root: { display: 'flex', flex: 1, justifyContent: 'center' },
+                                stepIcon: { backgroundColor: '#0986FF', color: '#FFFFFF' },
+                                steps: { backgroundColor: '#0986FF', color: '#0986FF', height: 5, stroke: '1px' },
+                                step: { backgroundColor: '#0986FF', color: '#0986FF', height: 5, stroke: '1px', width: '40px' },
+                                separator: { backgroundColor: '#0986FF', color: '#0986FF', height: 5, stroke: '1px', width: '40px' },
+                            }}
+                        >
+                            <Stepper.Step />
+                            <Stepper.Step />
+                            <Stepper.Step />
+                            <Stepper.Step />
+                        </Stepper> */}
+
+
+                        {/* </Flex> */}
+                        <Stepper
+                            active={0}
+                            orientation={isMobile ? 'vertical' : 'horizontal'}
+                            iconSize={isMobile ? 32 : 47}
+                            w="60%"
+                            styles={{
+                                stepIcon: { backgroundColor: '#0986FF', color: '#FFFFFF', marginBottom: 8, },
+                                step: {
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                },
+                                // stepIcon: {
+                                //    
+                                // },
+                                stepLabel: {
+                                    textAlign: 'center',
+                                    color: '#4F9CF9',
+                                    width: '140px',
+                                    marginTop: 6,
+                                },
+                            }}
+                        >
+                            <Stepper.Step label="Overview of RA 11261 and eligible users" />
+                            <Stepper.Step label="Covered government IDs and documents" />
+                            <Stepper.Step label="Required supporting documents, e.g., Barangay Certification" />
+                            <Stepper.Step label="Official government websites for accurate information" />
+                        </Stepper>
+
+                    </Flex>
+
+
+
+                </Flex>
 
                 {/* 4th Section */}
                 <Flex direction={'column'} bg={'#E6F1FE'} gap={80}
@@ -108,6 +293,79 @@ const page = () => {
                 </Flex>
 
                 {/* 5th Section */}
+                <Flex
+                    direction={"column"}
+                    // bg={"#E6F1FE"}
+                    gap={50}
+                    style={{
+                        flex: 1,
+                        padding: isMobile ? "60px 20px" : "100px",
+                    }}
+                >
+                    <Title
+                        // c="#043873"
+                        ta={"center"}
+                        style={{
+                            fontWeight: 900,
+                            lineHeight: 1.15,
+                            fontSize: isMobile ? 32 : 48,
+                            color: "#043873",
+                        }}
+                    >
+                        Documents Covered Under
+                        <br />
+                        RA 11261
+                    </Title>
+                    <Carousel
+                        slideSize="100%" // full width
+                        slideGap={0} // no gap between slides
+                        loop
+                        align="start"
+                        withIndicators
+                        flex={1}
+                        plugins={[autoplay.current]}
+                        onMouseEnter={autoplay.current.stop}
+                        onMouseLeave={autoplay.current.reset}
+                    // style={{ border: "1px solid black" }}
+                    >
+                        {/* First Slide: Full-screen Hero */}
+                        {chunkedData.map((slideItems, slideIndex) => (
+                            <Carousel.Slide key={slideIndex}>
+                                <Flex
+                                    direction="column"
+                                    style={{
+                                        flex: 1,
+                                        height: isMobile ? '100vh' : '50vh',
+                                    }}
+                                >
+                                    <Flex
+                                        style={{
+                                            flex: 1,
+                                            padding: isMobile ? '40px 10px' : '80px',
+                                            flexDirection: isMobile ? 'column' : 'row',
+                                            flexWrap: isMobile ? 'nowrap' : 'wrap',
+                                        }}
+                                        gap={isMobile ? 10 : 20}
+                                        justify={isMobile ? 'center' : 'space-evenly'}
+                                        align={isMobile ? 'center' : 'stretch'}
+                                    >
+                                        {slideItems.map((v, index) => (
+                                            <IDsCard
+                                                // color='#D9EAFE'
+                                                key={index} // stable key\
+                                                logo={v.logo || ''}
+                                                title={v.title}
+                                            // desc={v.description}
+                                            />
+                                        ))}
+                                    </Flex>
+                                </Flex>
+                            </Carousel.Slide>
+                        ))}
+
+
+                    </Carousel>
+                </Flex>
 
                 {/* 6th Section */}
                 <Flex

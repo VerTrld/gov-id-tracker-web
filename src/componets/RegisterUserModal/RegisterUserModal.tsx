@@ -32,7 +32,7 @@ const RegisterUserModal = ({
             width={50}
             height={50}
           />
-          <Text c='#0B69A3' fw={700} fz={'16px'}>Create an account</Text>
+          <Text c='#043873'  fw={700} fz={'16px'}>Create an account</Text>
           <Text c='#4F9CF9' fz={'14px'}>Create an account to track your government ID <br />
             requirements and prepare for employment</Text>
         </Flex>

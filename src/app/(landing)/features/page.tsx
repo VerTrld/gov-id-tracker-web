@@ -1,6 +1,6 @@
 "use client";
 import Footer from '@/componets/Footer/Footer';
-import { Accordion, Flex, Text, Title } from '@mantine/core';
+import { Accordion, Flex, Paper, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { data } from './data';
 import { IconPointFilled } from '@tabler/icons-react';
@@ -27,14 +27,13 @@ const page = () => {
                 flex={1}
                 style={{ zIndex: -1 }}>
 
-
                 {/* 1st Section */}
                 <Flex
                     direction="column"
                     gap={80}
                     style={{
                         flex: 1,
-                        padding: isMobile ? '60px 20px' : '100px',
+                        padding: isMobile ? '60px 20px' : '100px 100px 30px 100px',
                     }}
                 >
                     {/* Hero */}
@@ -61,9 +60,6 @@ const page = () => {
                             jobseekers can focus on getting hired, not getting lost in requirements.
                         </Text>
                     </Flex>
-
-
-
                 </Flex>
 
                 {/* 2nd Section */}
@@ -72,25 +68,38 @@ const page = () => {
                     gap={80}
                     style={{
                         flex: 1,
-                        padding: isMobile ? '60px 20px' : '60px 100px',
+                        padding: isMobile ? '60px 20px' : '20px 100px 40px 100px',
                     }}
                 >
                     {/* Hero */}
                     <Flex
-                        gap={40}
                         align="center"
                         direction={'column'}
                         style={{ flex: 1 }}
                     >
-                        <Flex direction={'column'} flex={1} w={'100%'} style={{
-                            borderRadius: 12, boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                        }}
-                        >
-                            <Accordion style={{ flex: 1, }}>
-                                {items}
-                            </Accordion>
-                        </Flex>
+                        <Flex direction={'column'}
+                            flex={1}
+                        // style={{
+                        //     borderRadius: 12, boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
 
+                        // }}
+                        >
+                            <Paper
+                                shadow="xl"
+                                radius="md"
+                                withBorder
+                                style={{
+                                    maxWidth: 1000,
+                                    width: "100%",
+                                    margin: "auto",
+                                    boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)"
+                                }}
+                            >
+                                <Accordion style={{ flex: 1, }}>
+                                    {items}
+                                </Accordion>
+                            </Paper>
+                        </Flex>
                     </Flex>
                 </Flex>
 
@@ -100,13 +109,13 @@ const page = () => {
                     gap={80}
                     style={{
                         flex: 1,
-                        padding: isMobile ? '60px 20px' : '100px',
+                        padding: isMobile ? '60px 20px' : '50px',
                     }}
                     bg={'#A7CEFC'}
                 >
                     {/* Hero */}
                     <Flex
-                        gap={40}
+                        gap={20}
                         align="center"
                         justify="space-between"
                         direction={'column'}

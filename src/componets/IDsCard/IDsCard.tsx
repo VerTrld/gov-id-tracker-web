@@ -5,11 +5,12 @@ import React from 'react'
 
 interface IIDsInfo {
     title: string
-    desc: string
+    desc?: string
     logo: string
+    color?: string
 }
 
-const IDsCard = ({ desc, title, logo }: IIDsInfo) => {
+const IDsCard = ({ desc, title, logo, color}: IIDsInfo) => {
     const isMobile = useMediaQuery("(max-width: 768px)");
 
     return (
@@ -21,10 +22,10 @@ const IDsCard = ({ desc, title, logo }: IIDsInfo) => {
             p={isMobile ? '15px 20px' : '20px 30px'}
             style={{
                 borderRadius: '20px',
-                boxShadow: '0 0 10px 10px rgba(0, 0, 0, 0.19)',
+                boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
                 width: isMobile ? '75%' : '200px',
                 height: isMobile ? 'auto' : '300px', // auto height on mobile
-                backgroundColor: '#FFFFFF'
+                backgroundColor: color ? color : '#FFFFFF'
             }}
         >
             <Image
@@ -46,9 +47,13 @@ const IDsCard = ({ desc, title, logo }: IIDsInfo) => {
                 }}
             />
             <Title c='#043873' fz={isMobile ? '16px' : '18px'}>{title}</Title>
+            {desc ? 
             <Text fz={isMobile ? '12px' : '14px'} w={isMobile ? '80%' : '140px'} ta="center">
                 {desc}
             </Text>
+            : null
+            }
+
         </Flex>
     );
 };

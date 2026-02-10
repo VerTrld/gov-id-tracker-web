@@ -234,3 +234,51 @@ export const idsInfo = [
   },
 ];
 
+export interface IGovRequirements {
+  logo: string;
+  title: string;
+ 
+}
+export const govRequirements = [
+  {
+    title: "Police Clearance",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+  {
+    title: "NBI Clearance",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+  {
+    title: "Medical Certificate",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+  {
+    title: "Barangay Clearance",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+  {
+    title: "PSA Birth Certificate",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+  {
+    title: "Marriage Certificate",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+  {
+    title: "Transcript of Records",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+  {
+    title: "TIN ID",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+  {
+    title: "UMID ID",
+    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+  },
+];
+
+
+
+
+

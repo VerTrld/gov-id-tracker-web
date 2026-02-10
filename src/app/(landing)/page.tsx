@@ -57,7 +57,7 @@ export default function Login() {
                   lineHeight: 1.15,
                   fontSize: isMobile ? 32 : 48,
                   marginBottom: 20,
-                  color: '#2E8CE9'
+                  color: '#0A58BD'
                 }}
               >
                 Your One-Stop Guide to
@@ -66,7 +66,7 @@ export default function Login() {
                 <br />
                 <span
                   style={{
-                    background: 'linear-gradient(180deg, #2E8CE9, #0A58BD)',
+                    background: 'linear-gradient(180deg, #0A58BD, #043873)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}
@@ -77,7 +77,7 @@ export default function Login() {
 
               <Text
                 size={isMobile ? "md" : "lg"}
-                c="dimmed"
+                c="#0A58BD"
                 style={{
                   maxWidth: 520,
                   margin: isMobile ? "0 auto 28px" : "0 0 36px",
@@ -98,7 +98,7 @@ export default function Login() {
                   onClick={() => router.push("?action=register")}
                 >
                   <Flex gap={10}>
-                    <Text>Sign Up</Text>
+                    <Text ff={'Helvetica'}>Sign Up</Text>
                     <IconArrowNarrowRight />
                   </Flex>
                 </Button>
@@ -230,20 +230,7 @@ export default function Login() {
           style={{ flex: 1, padding: isMobile ? "60px 20px" : "100px" }}
         >
           {/* Left Visual */}
-          {/* <Box
-            style={{
-              flex: 1,
-              width: "100%",
-              height: isMobile ? 220 : 340,
-              background: "linear-gradient(135deg, #f1f3f5, #e9ecef)",
-              borderRadius: 16,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 600,
-              color: "#868e96",
-            }}
-          > */}
+         
           <Image alt="barangayCert"
             width={isMobile ? 220 : 520}
             height={isMobile ? 220 : 600}
@@ -256,7 +243,6 @@ export default function Login() {
               color: "#868e96",
             }}
           />
-          {/* </Box> */}
 
           {/* Right Content */}
           <Box
@@ -353,7 +339,7 @@ export default function Login() {
               radius={5}
             >
               <Flex gap={5} align={"center"}>
-                <Text c="#FFFFFF" ta={"center"}>
+                <Text c="#FFFFFF" ta={"center"} ff={'Helvetica'}>
                   Sign Up
                 </Text>
                 <IconArrowNarrowRight color="#FFFFFF" />

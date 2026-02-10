@@ -7,7 +7,7 @@ export const theme = createTheme({
     Title: {
       styles: {
         root: {
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: 'Helvetica',
           fontWeight: 700,
           // color: '#043873',
         },
@@ -32,7 +32,7 @@ export const theme = createTheme({
           fontFamily: '"Open Sans", sans-serif',
           borderRadius: rem(10),
           borderColor: '#F0F4F8',
-          backgroundColor: '#F0F4F8',
+          backgroundColor: '#D9EAFE',
           fontSize: rem(12),
           color: '#829AB1',
 

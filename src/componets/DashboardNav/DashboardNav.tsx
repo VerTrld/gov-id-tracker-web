@@ -14,7 +14,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
-interface IDashboardNav extends PropsWithChildren {}
+interface IDashboardNav extends PropsWithChildren { }
 
 const DashboardNav = ({ children }: IDashboardNav) => {
   const session = useSession();
@@ -48,7 +48,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
               height={isMobile ? 40 : 40}
             />
             <Title
-              c={"#0A58BD"}
+              c={"#043873"}
               style={{
                 lineHeight: 1.15,
                 cursor: "pointer",
@@ -64,34 +64,34 @@ const DashboardNav = ({ children }: IDashboardNav) => {
             <Flex gap={80} align={"center"}>
               <Flex gap={15} align={"center"}>
                 <Button variant="subtle" onClick={() => router.push("/")}>
-                  <Text c={navColor("/")} fw={600}>Home</Text>
+                  <Text c={navColor("/")} fw={600} ff={'Helvetica'}>Home</Text>
                 </Button>
 
                 <Button variant="subtle" onClick={() => router.push("/about")}>
-                  <Text c={navColor("/about")} fw={600}>About</Text>
+                  <Text c={navColor("/about")} fw={600} ff={'Helvetica'}>About</Text>
                 </Button>
 
                 <Button
                   variant="subtle"
                   onClick={() => router.push("/features")}
                 >
-                  <Text c={navColor("/features")} fw={600}>Features</Text>
+                  <Text c={navColor("/features")} fw={600} ff={'Helvetica'}>Features</Text>
                 </Button>
 
                 <Button
                   variant="subtle"
                   onClick={() => router.push("/contact")}
                 >
-                  <Text c={navColor("/contact")} fw={600}>Contact</Text>
+                  <Text c={navColor("/contact")} fw={600} ff={'Helvetica'}>Contact</Text>
                 </Button>
               </Flex>
 
               {session.data?.user?.name ? (
                 <Flex gap={15}>
-                  <Button onClick={() => router.push("/user/home")}>
-                    <Text c={"#4F9CF9"} fw={600}>{session.data.user.name}</Text>
+                  <Button onClick={() => router.push("/user/home")} >
+                    <Text c={"#4F9CF9"} fw={600} ff={'Helvetica'}>{session.data.user.name}</Text>
                   </Button>
-                  <Button onClick={() => signOut()} fw={600}>Logout</Button>
+                  <Button onClick={() => signOut()} fw={600} ff={'Helvetica'}>Logout</Button>
                 </Flex>
               ) : (
                 <Flex gap={15}>
@@ -100,7 +100,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                     bg={"#A7CEFC"}
                     radius={5}
                   >
-                    <Text c={"#043873"} fw={600}>Log In</Text>
+                    <Text c={"#043873"} fw={600} ff={'Helvetica'}>Log In</Text>
                   </Button>
 
                   <Button
@@ -109,10 +109,10 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                     radius={5}
                   >
                     <Flex gap={10} align={"center"}>
-                      <Text c="#FFFFFF" ta={"center"} fw={600}>
+                      <Text c="#FFFFFF" ta={"center"} fw={600} ff={'Helvetica'}>
                         Sign Up
                       </Text>
-                      <IconArrowNarrowRight color="#FFFFFF" stroke={3}/>
+                      <IconArrowNarrowRight color="#FFFFFF" stroke={3} />
                     </Flex>
                   </Button>
                 </Flex>
@@ -148,7 +148,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                   router.push("/");
                 }}
               >
-                <Text c={navColor("/")}>Home</Text>
+                <Text c={navColor("/")} ff={'Helvetica'}>Home</Text>
               </Button>
 
               <Button
@@ -159,7 +159,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                   router.push("/about");
                 }}
               >
-                <Text c={navColor("/about")}>About</Text>
+                <Text c={navColor("/about")} ff={'Helvetica'}>About</Text>
               </Button>
 
               <Button
@@ -170,7 +170,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                   router.push("/features");
                 }}
               >
-                <Text c={navColor("/features")}>Features</Text>
+                <Text c={navColor("/features")} ff={'Helvetica'}>Features</Text>
               </Button>
 
               <Button
@@ -181,12 +181,12 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                   router.push("/contact");
                 }}
               >
-                <Text c={navColor("/contact")}>Contact</Text>
+                <Text c={navColor("/contact")} ff={'Helvetica'}>Contact</Text>
               </Button>
 
               {session.data?.user?.name ? (
                 <Flex>
-                  <Text>{session.data.user.name}</Text>
+                  <Text ff={'Helvetica'}>{session.data.user.name}</Text>
                 </Flex>
               ) : (
                 <Button
@@ -195,7 +195,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                   bg={"#A7CEFC"}
                   radius={5}
                 >
-                  <Text c={"#043873"}>Log In</Text>
+                  <Text c={"#043873"} ff={'Helvetica'}>Log In</Text>
                 </Button>
               )}
 
@@ -209,7 +209,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                 radius={5}
               >
                 <Flex gap={10}>
-                  <Text c="#FFFFFF">Sign Up</Text>
+                  <Text c="#FFFFFF" ff={'Helvetica'}>Sign Up</Text>
                   <IconArrowNarrowRight color="#FFFFFF" />
                 </Flex>
               </Button>
