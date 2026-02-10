@@ -11,7 +11,12 @@ NEXT_PUBLIC_TIN_ID=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/pu
 NEXT_PUBLIC_SSS=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/sss.png
 NEXT_PUBLIC_PHILHEALTH=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/philhealth.png
 
+# ADD NEW IDS
 
-NEXT_PUBLIC_BIRTH_CERTIFICATE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/birth-cert.png
+NEXT_PUBLIC_PASSPORT=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/passport.png
+NEXT_PUBLIC_POST_OFFICE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/post-office.png
+NEXT_PUBLIC_NBI=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/nbi.png
+NEXT_PUBLIC_DRIVER_LICENSE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/driver-license.png
+NEXT_PUBLIC_PAGIBIG=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/pagibig.png
+
 NEXT_PUBLIC_BRGY_CERTIFICATE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/brgy-cert.png
-
