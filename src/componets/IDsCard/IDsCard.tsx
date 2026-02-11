@@ -46,7 +46,7 @@ const IDsCard = ({ desc, title, logo, color}: IIDsInfo) => {
                     color: "#868e96",
                 }}
             />
-            <Title c='#043873' fz={isMobile ? '16px' : '18px'}>{title}</Title>
+            <Title c='#043873' fz={isMobile ? '16px' : '18px'} style={{whiteSpace:'nowrap'}}>{title}</Title>
             {desc ? 
             <Text fz={isMobile ? '12px' : '14px'} w={isMobile ? '80%' : '140px'} ta="center">
                 {desc}
