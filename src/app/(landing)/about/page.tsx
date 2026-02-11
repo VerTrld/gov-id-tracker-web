@@ -208,7 +208,7 @@ const page = () => {
 
 
                         {/* </Flex> */}
-                        <Stepper
+                        {/* <Stepper
                             active={0}
                             orientation={isMobile ? 'vertical' : 'horizontal'}
                             iconSize={isMobile ? 32 : 47}
@@ -235,7 +235,7 @@ const page = () => {
                             <Stepper.Step label="Covered government IDs and documents" />
                             <Stepper.Step label="Required supporting documents, e.g., Barangay Certification" />
                             <Stepper.Step label="Official government websites for accurate information" />
-                        </Stepper>
+                        </Stepper> */}
 
                     </Flex>
 
