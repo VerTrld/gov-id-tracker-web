@@ -1,10 +1,12 @@
 "use client";
+import { SelectCreatable } from "@/componets/SelectCreatable/SelectCreateble";
+import { IGovernmentIds } from "@/entities/IGovernmentIds";
+import { IRequirement } from "@/entities/IRequirement";
 import { get, post } from "@/utils/http-api";
-import { ActionIcon, Button, Flex, Input, Select, Text } from "@mantine/core";
+import { ActionIcon, Button, Flex, Input, Text } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useEffect } from "react";
 import * as y from "yup";
 
@@ -19,14 +21,11 @@ const governmentIdsFormSchema = y
       .of(
         y
           .object({
+            id: y.string().optional(),
             label: y.string().required(),
-            requirementsGovernmentIds: y
-              .array()
-              .of(y.string().required())
-              .required(),
           })
           .required(),
-      )
+      ).min(1)
       .required(),
   })
   .required();
@@ -41,15 +40,28 @@ const page = () => {
       label: "",
       officialUrls: "",
       description: "",
-      requirements: [],
+      requirements: [
+        {
+          label: '',
+        }
+      ],
     },
   });
-  const { data } = useQuery({
+  const { data: governemntIds } = useQuery({
     queryKey: ["governmentIds"],
     queryFn: async () => {
       const allGovernmentIds = await get(`/government-ids/read/all`);
       console.log({ allGovernmentIds });
-      return (allGovernmentIds.data || []) as any[];
+      return (allGovernmentIds.data || []) as IGovernmentIds[];
+    },
+  });
+
+  const { data: requirements } = useQuery({
+    queryKey: ["requirements"],
+    queryFn: async () => {
+      const allGovernmentIds = await get(`/government-ids/read/all`);
+      console.log({ allGovernmentIds });
+      return (allGovernmentIds.data || []) as IRequirement[];
     },
   });
 
@@ -58,10 +70,10 @@ const page = () => {
       const res = await post(`/government-ids/create/one`, {
         ...e,
         officialUrls: [e.officialUrls],
-        GroupRequirementGovernmentIds: e.requirements.map((r) => {
+        Requirements: e.requirements.map((r) => {
           return {
+            id: r.id,
             label: r.label,
-            requirements: r.requirementsGovernmentIds,
           };
         }),
       });
@@ -70,8 +82,10 @@ const page = () => {
         alert("Created Government Ids");
         query.invalidateQueries({ queryKey: ["governmentIds"] });
       }
-    } catch (error) {}
+    } catch (error) { }
   });
+
+
 
   useEffect(() => {
     console.log({ governmentIdsForm });
@@ -84,7 +98,7 @@ const page = () => {
           flexDirection: "column",
         }}
       >
-        {data?.map((d, i) => {
+        {governemntIds?.map((d, i) => {
           return (
             <Flex
               key={`government-ids-${i}`}
@@ -148,10 +162,6 @@ const page = () => {
           placeholder="Official Url"
           {...governmentIdsForm.getInputProps("officialUrls")}
         />
-        {/* <MultiSelectCreatable
-          placeholder="Official Urls"
-          {...governmentIdsForm.getInputProps("officialUrls")}
-        /> */}
 
         <Flex style={{ flexDirection: "column", gap: 10 }}>
           {governmentIdsForm.values.requirements.map((r, reqI) => {
@@ -167,12 +177,28 @@ const page = () => {
                 }}
               >
                 <Flex gap={10}>
-                  <Input
-                    size="xs"
-                    placeholder="Label"
-                    {...governmentIdsForm.getInputProps(
-                      `requirements.${reqI}.label`,
-                    )}
+                  <SelectCreatable
+                    inputValue={governmentIdsForm.getInputProps(`.requirements.${reqI}.label`).value}
+                    onChangeOptionSelect={(e) => {
+                      const val = governmentIdsForm.getInputProps(`requirements.${reqI}.label`).value
+                      console.log({ e, val, isTrue: e === val })
+                      if (e === val) {
+                        console.log({ tang: '' })
+                        governmentIdsForm.setFieldValue(`requirements.${reqI}.label`, '');
+                        governmentIdsForm.setFieldValue(`requirements.${reqI}.id`, undefined);
+                      }
+                      if (requirements?.map((v) => v.label).includes(e)) {
+                        const selected = requirements.find(
+                          (v) => v.label === e
+                        );
+                        governmentIdsForm.setFieldValue(`requirements.${reqI}.label`, selected?.label);
+                        governmentIdsForm.setFieldValue(`requirements.${reqI}.id`, selected?.id);
+                      } else {
+                        governmentIdsForm.setFieldValue(`requirements.${reqI}.label`, e);
+                        governmentIdsForm.setFieldValue(`requirements.${reqI}.id`, '');
+                      }
+                    }}
+                    data={requirements?.map((v) => v.label) || []}
                   />
                   <ActionIcon
                     onClick={() => {
@@ -182,52 +208,6 @@ const page = () => {
                     <IconMinus />
                   </ActionIcon>
                 </Flex>
-                <Flex style={{ gap: 10 }}>
-                  {governmentIdsForm.values.requirements[
-                    reqI
-                  ].requirementsGovernmentIds.map((v, reqGovI) => {
-                    return (
-                      <Flex key={`requirements-selection-${reqGovI}`} gap={10}>
-                        <Select
-                          searchable
-                          size="xs"
-                          data={data?.map((d) => {
-                            return {
-                              label: d.label,
-                              disabled: governmentIdsForm.values.requirements[
-                                reqI
-                              ].requirementsGovernmentIds.includes(d.id),
-                              value: d.id,
-                            };
-                          })}
-                          {...governmentIdsForm.getInputProps(
-                            `requirements.${reqI}.requirementsGovernmentIds.${reqGovI}`,
-                          )}
-                        />
-                        <ActionIcon
-                          onClick={() => {
-                            governmentIdsForm.removeListItem(
-                              `requirements.${reqI}.requirementsGovernmentIds`,
-                              reqGovI,
-                            );
-                          }}
-                        >
-                          <IconMinus />
-                        </ActionIcon>
-                      </Flex>
-                    );
-                  })}
-                  <ActionIcon
-                    onClick={() => {
-                      governmentIdsForm.insertListItem(
-                        `requirements.${reqI}.requirementsGovernmentIds`,
-                        "",
-                      );
-                    }}
-                  >
-                    <IconPlus />
-                  </ActionIcon>
-                </Flex>
               </Flex>
             );
           })}
@@ -235,7 +215,6 @@ const page = () => {
             onClick={() => {
               governmentIdsForm.insertListItem("requirements", {
                 label: "",
-                requirementsGovernmentIds: [""],
               });
             }}
           >

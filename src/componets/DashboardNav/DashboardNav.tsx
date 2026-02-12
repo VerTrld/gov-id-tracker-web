@@ -88,7 +88,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
 
               {session.data?.user?.name ? (
                 <Flex gap={15}>
-                  <Button onClick={() => router.push("/user/home")} >
+                  <Button bg={"#A7CEFC"} onClick={() => router.push("/user/home")} >
                     <Text c={"#4F9CF9"} fw={600} ff={'Helvetica'}>{session.data.user.name}</Text>
                   </Button>
                   <Button onClick={() => signOut()} fw={600} ff={'Helvetica'}>Logout</Button>

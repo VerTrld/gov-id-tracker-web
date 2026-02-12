@@ -1,14 +1,11 @@
-import { IGroupRequirementGovernmentIds } from "./IGroupRequirementGovernmentIds";
-import { IRequirementGovernmentIds } from "./IRequirementGovernmentIds";
+import { IRequirementList } from "./IRequirementList";
 import { IUserGovernmentIds } from "./IUserGovernmentIds";
 
 export interface IGovernmentIds extends IDefault {
   code: string;
   label: string;
   officialUrls: string[];
-  requirements: IGroupRequirementGovernmentIds[];
+  RequirementLists: IRequirementList[]
   description?: string;
-  RequirementGovernmentIds: IRequirementGovernmentIds[];
-  RequireGovernmentIds: IRequirementGovernmentIds[];
   UserGovernmentIds: IUserGovernmentIds;
 }

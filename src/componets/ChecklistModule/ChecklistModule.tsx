@@ -2,15 +2,13 @@ import {
   Button,
   Card,
   Center,
-  Checkbox,
   Flex,
   Group,
   RingProgress,
-  Stack,
-  Text,
+  Text
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { PropsWithChildren, useMemo } from "react";
 
 export type ChecklistItem = {
   id: string;

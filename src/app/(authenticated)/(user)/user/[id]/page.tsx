@@ -1,36 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
 import {
   Box,
-  Title,
-  Text,
-  Flex,
-  Divider,
   Button,
-  Anchor,
-  List,
-  ThemeIcon,
-  Stack,
   Checkbox,
+  Divider,
+  Flex,
+  Stack,
+  Text,
+  Title
 } from "@mantine/core";
 
-import { useParams } from "next/navigation";
 import _ from "lodash";
+import { useParams } from "next/navigation";
 // import { governmentIds } from "@/componets/UserNav/govenmentIds";
 import { ChecklistModule } from "@/componets/ChecklistModule/ChecklistModule";
 import UploadModal from "@/componets/UploadModal/UploadModal";
-import { useDisclosure } from "@mantine/hooks";
-import { IconCheck } from "@tabler/icons-react";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { get, patch } from "@/utils/http-api";
 import { IGovernmentIds } from "@/entities/IGovernmentIds";
+import { get, patch, post } from "@/utils/http-api";
+import { useDisclosure } from "@mantine/hooks";
+import { useQuery } from "@tanstack/react-query";
 
 export default function GovernmentIds() {
   const params = useParams();
   const id = params.id;
 
-  const { data } = useQuery({
+  const { data, refetch: refetchGovernmentIds } = useQuery({
     queryKey: ["selected-government-id"],
     queryFn: async () => {
       const res = await get(`/government-ids/read/${id}`);
@@ -39,12 +34,39 @@ export default function GovernmentIds() {
     },
   });
 
-  const handleCheckChange = async (userGovernmentId: string) => {
-    const res = await patch(
-      `/user-government-ids/update/toggle/${userGovernmentId}`,
-    );
-    return res.data;
+  const handleApplyGovernmentIds = async (governmentIdsId: string) => {
+    try {
+      const res = await post(
+        `/user-government-ids/create/one`, {
+        isActive: true,
+        governmentIdsId
+      }
+      );
+
+      if (res.status === 200 || res.status === 201) {
+        refetchGovernmentIds()
+        alert(`Success Applying for ${data?.label}`)
+      }
+    } catch (error) {
+      alert(`Error Applying for ${data?.label}: Try again later`)
+
+    }
   };
+
+  const handleCheckToggle = async (requirementsId: string, userRequirementId: string) => {
+    try {
+      const res = await patch(`/user-requirement/update/toggle`, {
+        requirementsId,
+        id: userRequirementId || null,
+      })
+      if (res.status === 200 || res.status === 201) {
+        refetchGovernmentIds()
+        // alert('Success Updating Requirement')
+      }
+    } catch (error) {
+      // alert('Error Updating Requirement: Try again later')
+    }
+  }
 
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -72,7 +94,7 @@ export default function GovernmentIds() {
     >
       {/* Upload modal */}
       <UploadModal
-        onSubmit={() => {}}
+        onSubmit={() => { }}
         opened={opened}
         onClose={close}
         dropzoneProps={{
@@ -110,17 +132,17 @@ export default function GovernmentIds() {
 
           <ChecklistModule
             items={
-              data?.requirements.map((r) => {
+              data?.RequirementLists?.[0]?.Requirements?.map((r) => {
                 return {
                   id: r.id,
-                  isActive: false,
+                  isActive: r.UserRequirements?.[0]?.isActive || false,
                   label: r.label,
                 };
               }) || []
             }
             uploadImage={open}
             onComplete={() => {
-              const total = data?.requirements.reduce(
+              const total = data?.RequirementLists?.[0].Requirements.reduce(
                 (sum: any, item: any) => sum + item.value,
                 0,
               );
@@ -131,23 +153,16 @@ export default function GovernmentIds() {
             }}
           >
             <Stack gap="xs" style={{ flex: 1 }}>
-              {data.requirements.map((item, i) => (
+              {data.RequirementLists?.[0]?.Requirements.map((item, i) => (
                 <Flex w={"100%"} gap={20} justify={"space-between"} key={i}>
                   <Checkbox
                     key={`${item.id + 34}`}
                     label={`${item.label}`}
-                    checked={
-                      item.require.filter(
-                        (r) => r.UserGovernmentIds?.isCompleted,
-                      ).length == item.minRequirement
-                    }
+                    // checked={item.UserRequirements?.[0]?.isActive || false}
+                    defaultChecked={item.UserRequirements?.[0]?.isActive || false}
                     onChange={async (event) => {
-                      // await handleCheckChange();
-                      // const isChecked = event.currentTarget.checked; // capture now
-                      // setChecked((prev) => ({
-                      //   ...prev,
-                      //   [item.id]: isChecked,
-                      // }));
+                      console.log({ sta: item, reqId: item.id, userReq: item.UserRequirements?.[0]?.id || '' })
+                      handleCheckToggle(item.id, item?.UserRequirements?.[0]?.id)
                     }}
                   />
 
@@ -167,7 +182,7 @@ export default function GovernmentIds() {
         </Box>
       ) : (
         <Flex>
-          <Button>Apply</Button>
+          <Button onClick={() => handleApplyGovernmentIds(data.id)}>Apply</Button>
         </Flex>
       )}
     </Flex>

@@ -1,17 +1,14 @@
 "use client";
-import { Box, Button, Flex, Select, Text } from "@mantine/core";
-import { useForm, yupResolver } from "@mantine/form";
+import { get } from "@/utils/http-api";
+import { Flex, Text } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import React from "react";
-import * as y from "yup";
 
 const page = () => {
   const { data } = useQuery({
     queryKey: ["governmentIds"],
     queryFn: async () => {
-      const allGovernmentIds = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/government-ids/read/all`,
+      const allGovernmentIds = await get(
+        `/government-ids/read/all`,
       );
       return (allGovernmentIds.data || []) as any[];
     },
