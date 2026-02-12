@@ -1,22 +1,23 @@
-update env logo
+New IDS
 
-# LOGO
+NEXT_PUBLIC_KARERAMO_LOGO_2=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/kareramo-logo-2.png
 
-NEXT_PUBLIC_KARERAMO_LOGO=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/kareramo-logo.png
+NEXT_PUBLIC_UMID_CARD_3=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%203.png
 
-# GOVERNMENT IDS
+NEXT_PUBLIC_UMID_CARD_4=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%204.png
 
-NEXT_PUBLIC_NATIONAL_ID=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/national-id.png
-NEXT_PUBLIC_TIN_ID=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/tin.png
-NEXT_PUBLIC_SSS=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/sss.png
-NEXT_PUBLIC_PHILHEALTH=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/philhealth.png
-NEXT_PUBLIC_PAGIBIG=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/pagibig.png
-NEXT_PUBLIC_NBI=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/nbi.png
-NEXT_PUBLIC_PASSPORT=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/passport.png
-NEXT_PUBLIC_POST_OFFICE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/post-office.png
-NEXT_PUBLIC_DRIVER_LICENSE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/driver-license.png
+NEXT_PUBLIC_UMID_CARD_5=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%205.png
 
-# ADD NEW IDS
+NEXT_PUBLIC_UMID_CARD_6=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%206.png
 
+NEXT_PUBLIC_UMID_CARD_7=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%207.png
 
-NEXT_PUBLIC_BRGY_CERTIFICATE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/brgy-cert.png
+NEXT_PUBLIC_UMID_CARD_8=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%208.png
+
+NEXT_PUBLIC_UMID_CARD_9=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%209.png
+
+NEXT_PUBLIC_UMID_CARD_10=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2010.png
+
+NEXT_PUBLIC_UMID_CARD_11=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2011.png
+
+NEXT_PUBLIC_UMID_CARD_12=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2012.png
