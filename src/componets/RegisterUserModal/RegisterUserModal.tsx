@@ -1,9 +1,10 @@
 'use client';
 
 import IPersonShcema from '@/schema/PersonSchema';
-import { Box, Button, Checkbox, Flex, Modal, ModalProps, Text, TextInput } from '@mantine/core';
+import { Box, Button, Checkbox, Flex, Group, Modal, ModalProps, Text, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface IRegisterUser extends ModalProps {
   onSubmit: () => void;
@@ -18,6 +19,9 @@ const RegisterUserModal = ({
   form,
   onLoginClick
 }: IRegisterUser) => {
+
+  const searchParams = useSearchParams();
+  const action = searchParams.get('action');
   return (
     <Modal
       opened={opened}
@@ -32,7 +36,7 @@ const RegisterUserModal = ({
             width={50}
             height={50}
           />
-          <Text c='#043873'  fw={700} fz={'16px'}>Create an account</Text>
+          <Text c='#043873' fw={700} fz={'16px'}>Create an account</Text>
           <Text c='#4F9CF9' fz={'14px'}>Create an account to track your government ID <br />
             requirements and prepare for employment</Text>
         </Flex>
@@ -56,7 +60,7 @@ const RegisterUserModal = ({
           padding: '10px'
         }}
       >
-        <Flex justify={'space-between'} >
+        <Group grow >
 
           <TextInput
             label="First Name"
@@ -70,7 +74,7 @@ const RegisterUserModal = ({
             {...form.getInputProps('lastName')}
             mb="sm"
           />
-        </Flex>
+        </Group>
 
 
         <TextInput
@@ -96,43 +100,52 @@ const RegisterUserModal = ({
         />
 
         <Flex direction={'column'} gap={10}>
-          <Checkbox
-            color="#334E68"
+          {action === "admin_register" ?
+            <></>
+            :
+            <Checkbox
+              color="#334E68"
 
-            size="xs"
-            label={
-              <Text c='#334E68' fz={'12px'}> I agree to the Terms and Conditions. I understand that ID Mo,
-                Karera Mo provides guidance only and is not connected to any government agency.</Text>
-            }
-            {...form.getInputProps('isTerms')}
-          />
+              size="xs"
+              label={
+                <Text c='#334E68' fz={'12px'}> I agree to the Terms and Conditions. I understand that ID Mo,
+                  Karera Mo provides guidance only and is not connected to any government agency.</Text>
+              }
+              {...form.getInputProps('isTerms')}
+            />}
+
 
           <Button type="submit" fullWidth mb="md" radius={10} disabled={form.values.isTerms === false}>
             Create an account
           </Button>
         </Flex>
 
+        {action === "admin_register" ?
+          <></>
+          :
 
-        <Flex direction={'column'} gap={20} justify={'center'}>
-          <Flex justify={'center'} gap={5} ta={'center'}>
-            <Text fz={'12px'} c='#486581'>Already have an account?</Text>
-            <Text
-              fz={'12px'} c='#127FBF'
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                onClose?.();
-                onLoginClick?.();
-              }}
-            >
-              Login
-            </Text>
-          </Flex>
+          <Flex direction={'column'} gap={20} justify={'center'}>
+            <Flex justify={'center'} gap={5} ta={'center'}>
+              <Text fz={'12px'} c='#486581'>Already have an account?</Text>
+              <Text
+                fz={'12px'} c='#127FBF'
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  onClose?.();
+                  onLoginClick?.();
+                }}
+              >
+                Login
+              </Text>
+            </Flex>
 
-          <Flex justify={'center'} ta={'center'}>
-            <Text c='#043873' fz={'12px'}>This platform is a guide only. Applications are completed
-              <br />
-              through official government websites.</Text>
-          </Flex></Flex>
+            <Flex justify={'center'} ta={'center'}>
+              <Text c='#043873' fz={'12px'}>This platform is a guide only. Applications are completed
+                <br />
+                through official government websites.</Text>
+            </Flex>
+          </Flex>}
+
 
 
       </Box>

@@ -1,6 +1,10 @@
 "use client";
 
 import { ContactCardGrid } from "@/componets/ContactCard/ContactCard";
+import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal";
+import { LoginType } from "@/enum/dashboard.enum";
+import IPersonShcema, { PersonSchema } from "@/schema/PersonSchema";
+import { post } from "@/utils/http-api";
 import {
     Avatar,
     Button,
@@ -16,6 +20,8 @@ import {
     Text,
     Title,
 } from "@mantine/core";
+import { useForm, yupResolver } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import {
     IconChevronDown,
     IconLogout,
@@ -27,11 +33,15 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { signOut } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
     const [searchQuery, setSearchQuery] = useState("");
     const [filterStatus, setFilterStatus] = useState<string | null>(null);
+    const router = useRouter();
+    const params = useSearchParams();
+    const action = params.get("action");
 
     const { data, isLoading, refetch } = useQuery({
         queryKey: ["getUser"],
@@ -52,8 +62,76 @@ export default function Page() {
         return matchesSearch && matchesFilter;
     });
 
+    const registerForm = useForm<IPersonShcema>({
+        validate: yupResolver(PersonSchema),
+        initialValues: {
+            action: "register",
+            confirmPassword: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            isTerms: true,
+        },
+        mode: "controlled",
+        name: "register",
+    });
+
+    const handleRegister = registerForm.onSubmit(async () => {
+        try {
+            const res = await post(`/user-account/create/one`, {
+                name: `${registerForm.values.firstName} ${registerForm.values.lastName}`,
+                email: registerForm.values.email,
+                password: registerForm.values.password,
+            });
+
+            if (res.status === 200 || res.status === 201) {
+                notifications.show({
+                    title: 'Registration Successful',
+                    message: 'Your account has been created! You can now log in.',
+                    color: 'green',
+                });
+                refetch();
+                registerForm.reset();
+                router.push("/admin"); // Redirect after successful registration
+            } else {
+                // Handle unexpected non-error responses
+                notifications.show({
+                    title: 'Registration Failed',
+                    message: 'Something went wrong. Please try again.',
+                    color: 'red',
+                });
+                console.error("Unexpected response:", res);
+            }
+        } catch (error) {
+            // Catch network errors or exceptions
+            notifications.show({
+                title: 'Error',
+                message: 'Registration failed. Please try again later.',
+                color: 'red',
+            });
+            console.error("Registration error:", error);
+        }
+    });
+
+
     return (
         <>
+
+            <RegisterUserModal
+                opened={action === LoginType.ADMIN_REGISTER}
+                onClose={() => {
+                    router.replace("/admin");
+                    registerForm.reset();
+                }}
+                form={registerForm}
+                onSubmit={() => handleRegister()}
+            // onLoginClick={() =>
+            //     //WIP need to close before going
+            //     router.replace("/admin?action=login")
+            // }
+            />
+
             <Flex direction="column" style={{ backgroundColor: "#f8f9fa" }} flex={1}>
                 {/* Header */}
                 <Flex
@@ -144,33 +222,36 @@ export default function Page() {
                                 </Card>
                             </Grid.Col>
 
-                            {/* <Grid.Col span={{ base: 12, sm: 6, md: 6 }}>
-                            <Card shadow="xs" padding="lg" radius="md">
 
-                                <Stack gap={4}>
-                                    <Text size="xs" c="dimmed" tt="uppercase" fw={700}>
-                                        Active Users
-                                    </Text>
-                                    <Text size="xl" fw={700} style={{ color: "#2d4b81" }}>
-                                        {data?.filter((u: any) => u.status === "active")?.length || 0}
-                                    </Text>
-                                </Stack>
-
-                            </Card>
-                        </Grid.Col> */}
                             {/* Filters and Actions */}
                             <Grid.Col span={{ base: 12, sm: 6, md: 6 }}>
                                 <Card shadow="xs" padding="lg" radius="md">
                                     <Stack gap={4}>
                                         <Flex justify="space-between">
-                                            <Text size="lg" fw={600} style={{ color: "#2d4b81", alignSelf: 'center' }}>
+                                            <Text
+                                                size="lg"
+                                                fw={600}
+                                                style={{ color: "#2d4b81", alignSelf: 'center' }}>
                                                 Users List
                                             </Text>
                                             <Group gap="xs">
-                                                <Button variant="light" color="#2d4b81" leftSection={<IconRefresh size={16} />} onClick={() => refetch()}>
+                                                <Button
+                                                    variant="light"
+                                                    color="#2d4b81"
+                                                    leftSection={<IconRefresh
+                                                        size={16} />}
+                                                    onClick={() => refetch()}>
                                                     Refresh
                                                 </Button>
-                                                <Button variant="filled" color="#2d4b81" leftSection={<IconUserPlus size={16} />}>
+                                                <Button
+                                                    variant="filled"
+                                                    color="#2d4b81"
+                                                    leftSection={<IconUserPlus size={16}
+                                                    />}
+                                                    onClick={() => {
+                                                        router.replace("/admin?action=admin_register")
+                                                    }}
+                                                >
                                                     Add User
                                                 </Button>
                                             </Group>

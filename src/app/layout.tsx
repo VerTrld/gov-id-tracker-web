@@ -16,6 +16,8 @@ import {
 import { SessionProvider, useSession } from "next-auth/react";
 import { PropsWithChildren } from "react";
 import { theme } from "@/layout/theme";
+import '@mantine/notifications/styles.css';
+import { Notifications } from '@mantine/notifications';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -35,6 +37,7 @@ export default function RootLayout({ children }: IRootLayoutProps) {
           <QueryClientProvider>
             <MantineProvider theme={theme}>
               <ModalsProvider>
+                <Notifications />
                 <LoadingLayout>
                   <Flex h={"100vh"} w={"100%"}>
                     {" "}
