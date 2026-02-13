@@ -72,6 +72,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
         style={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
           gap: 8,
           width: "100%",
           padding: 10,
@@ -91,10 +92,8 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             e.currentTarget.style.backgroundColor = "transparent";
         }}
       >
-        <IconHome size={20} />
-        <Text c="inherit" fw={700}>
-          Home
-        </Text>
+        <IconHome size={35} />
+        {/* <Text c="inherit">Home</Text> */}
       </UnstyledButton>
 
       {/* LIST OF IDS */}
@@ -113,8 +112,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             borderRadius: "10px 0px 0px 10px",
             fontSize: 14,
             display: "flex",
-            alignItems: "center",
-            gap: 8,
+            // gap: 8,
             color: isIdsActive ? "#043873" : "#fff",
             backgroundColor: isIdsActive ? "#F8FBFE" : "transparent",
             boxShadow: isIdsActive ? "0 4px 6px rgba(0, 0, 0, 0.25)" : "none", // <-- Shadow added here
@@ -136,23 +134,23 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
         <Accordion.Item value="ids">
           <Accordion.Control
             styles={{
-              icon: { margin: 0 },
+              icon: {
+                margin: 0,
+                width: "100%",
+                paddingLeft: 15,
+              },
               label: {
                 padding: 0,
               },
             }}
-            icon={<IconId size={20} />}
+            icon={<IconId size={30} />}
           >
-            <Text c="inherit" fw={700}>
+            {/* <Text c="inherit" fw={700}>
               List of IDs
-            </Text>
+            </Text> */}
           </Accordion.Control>
 
-          <Accordion.Panel
-            style={{
-              backgroundColor: "rgba(255,255,255,0.06)",
-            }}
-          >
+          <Accordion.Panel>
             <Stack pt={10} gap={10}>
               {data?.map((gi) => {
                 const isActive = active === gi.code.toLowerCase();
@@ -196,6 +194,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
         style={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
           gap: 8,
           width: "100%",
           padding: 10,
@@ -215,10 +214,8 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             e.currentTarget.style.backgroundColor = "transparent";
         }}
       >
-        <IconSettings size={20} />
-        <Text c="inherit" fw={700}>
-          Settings
-        </Text>
+        <IconSettings size={30} />
+        {/* <Text c="inherit">Settings</Text> */}
       </UnstyledButton>
 
       {/* HELP */}
@@ -230,6 +227,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
         style={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
           gap: 8,
           width: "100%",
           padding: 10,
@@ -249,10 +247,8 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             e.currentTarget.style.backgroundColor = "transparent";
         }}
       >
-        <IconHeadphones size={20} />
-        <Text c="inherit" fw={700}>
-          Help / Support
-        </Text>
+        <IconHeadphones size={30} />
+        {/* <Text c="inherit">Support</Text> */}
       </UnstyledButton>
     </Stack>
   );
@@ -264,13 +260,15 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           <Box
             component="nav"
             style={{
-              width: 220,
+              width: 120,
               backgroundColor: "#043873",
               display: "flex",
               flexDirection: "column",
               // padding: 20,
               overflowY: "auto",
               scrollbarWidth: "thin",
+              margin: 5,
+              borderRadius: "20px",
             }}
           >
             <Flex
@@ -284,9 +282,9 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                 height={70}
                 src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
               />
-              <Text size="lg" fw={700} c="white" ta="center">
+              {/* <Text size="lg" fw={700} c="white" ta="center">
                 Government IDs
-              </Text>
+              </Text> */}
             </Flex>
 
             <Divider m={"0px 10px 20px 10px"} />
@@ -302,7 +300,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             <Divider my="sm" m={"0px 10px 20px 10px"} />
 
             <Button
-              leftSection={<IconLogout />}
+              // leftSection={<IconLogout />}
               color="#fff"
               style={{
                 flexShrink: 0,
@@ -315,7 +313,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                 close();
               }}
             >
-              Sign Out
+              <IconLogout />
             </Button>
           </Box>
         )}
@@ -348,7 +346,6 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
               title: {
                 fontWeight: "bold",
                 fontSize: "20px",
-
               },
               header: {
                 paddingTop: 10,
