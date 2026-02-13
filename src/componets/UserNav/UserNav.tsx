@@ -77,7 +77,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           padding: 10,
           borderRadius: "20px 0px 0px 20px",
           fontSize: 14,
-          color: active === "home" ? "#0A58BD" : "#fff",
+          color: active === "home" ? "#043873" : "#fff",
           backgroundColor: active === "home" ? "#F8FBFE" : "transparent",
           boxShadow:
             active === "home" ? "0 4px 6px rgba(0, 0, 0, 0.25)" : "none",
@@ -115,7 +115,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             display: "flex",
             alignItems: "center",
             gap: 8,
-            color: isIdsActive ? "#0A58BD" : "#fff",
+            color: isIdsActive ? "#043873" : "#fff",
             backgroundColor: isIdsActive ? "#F8FBFE" : "transparent",
             boxShadow: isIdsActive ? "0 4px 6px rgba(0, 0, 0, 0.25)" : "none", // <-- Shadow added here
             "&:hover": {
@@ -171,7 +171,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                       borderRadius: "10px 0px 0px 10px",
                       fontSize: 14,
                       fontWeight: 500,
-                      color: isActive ? "#0A58BD" : "#fff",
+                      color: isActive ? "#043873" : "#fff",
                       backgroundColor: isActive ? "#F8FBFE" : "transparent",
                       boxShadow: isActive
                         ? "0 4px 6px rgba(0, 0, 0, 0.25)"
@@ -201,7 +201,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           padding: 10,
           borderRadius: "10px 0px 0px 10px",
           fontSize: 14,
-          color: active === "settings" ? "#0A58BD" : "#fff",
+          color: active === "settings" ? "#043873" : "#fff",
           backgroundColor: active === "settings" ? "#F8FBFE" : "transparent",
           boxShadow:
             active === "settings" ? "0 4px 6px rgba(0, 0, 0, 0.25)" : "none",
@@ -235,7 +235,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           padding: 10,
           borderRadius: "10px 0px 0px 10px",
           fontSize: 14,
-          color: active === "support" ? "#0A58BD" : "#fff",
+          color: active === "support" ? "#043873" : "#fff",
           backgroundColor: active === "support" ? "#F8FBFE" : "transparent",
           boxShadow:
             active === "support" ? "0 4px 6px rgba(0, 0, 0, 0.25)" : "none",
@@ -265,7 +265,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             component="nav"
             style={{
               width: 220,
-              backgroundColor: "#4F9CF9",
+              backgroundColor: "#043873",
               display: "flex",
               flexDirection: "column",
               // padding: 20,
@@ -327,6 +327,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           <Drawer
             opened={opened}
             onClose={close}
+            withCloseButton={false}
             title={
               <Flex align={"center"} gap={20}>
                 <Image
@@ -347,11 +348,12 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
               title: {
                 fontWeight: "bold",
                 fontSize: "20px",
+
               },
               header: {
                 paddingTop: 10,
                 paddingBottom: 10,
-                background: "#4F9CF9",
+                background: "#043873",
                 borderBottom: "1px solid white",
                 margin: "0 10px 0 10px",
               },
@@ -365,7 +367,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                 overflowY: "auto",
               },
               content: {
-                background: "#4F9CF9",
+                background: "#043873",
               },
             }}
           >
