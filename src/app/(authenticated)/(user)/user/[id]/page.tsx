@@ -85,7 +85,7 @@ export default function GovernmentIds() {
         flex: 1,
         padding: 24,
         gap: 24,
-        backgroundColor: "#fff",
+        // backgroundColor: "#fff",
         borderRadius: 12,
         boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
         minHeight: "100%",
