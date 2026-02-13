@@ -3,7 +3,7 @@ import Footer from '@/componets/Footer/Footer';
 import IDsCard from '@/componets/IDsCard/IDsCard';
 import { govRequirements, IGovRequirements } from '@/componets/UserNav/govenmentIds';
 import { Carousel } from '@mantine/carousel';
-import { Container, Divider, Flex, Grid, Group, List, Paper, Stack, Stepper, Text, Title } from '@mantine/core';
+import { Box, Container, Divider, Flex, Grid, Group, List, Paper, Stack, Stepper, Text, Title, Tooltip } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IconNumber1 } from '@tabler/icons-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -37,6 +37,13 @@ const page = () => {
             desc: 'Track the progress'
         }
     ]
+
+    const steps = [
+        'Overview of RA 11261 and eligible users',
+        'Covered government IDs and documents',
+        'Required supporting documents, e.g., Barangay Certification',
+        'Official government websites for accurate information',
+    ];
 
 
     return (
@@ -185,62 +192,69 @@ const page = () => {
                             expenses during the job application process. Through this platform, users are guided on:
                         </Text>
 
-                        {/* <Flex flex={1} w={'100%'} justify={'center'} align={'center'}>  */}
-                        {/* <Stepper
-                        
-                            active={0}
-                            w="100%"
-                            iconSize={isMobile ? 32 : 47}
-                            orientation={isMobile ? 'vertical' : 'horizontal'}
-                            styles={{
-                                root: { display: 'flex', flex: 1, justifyContent: 'center' },
-                                stepIcon: { backgroundColor: '#0986FF', color: '#FFFFFF' },
-                                steps: { backgroundColor: '#0986FF', color: '#0986FF', height: 5, stroke: '1px' },
-                                step: { backgroundColor: '#0986FF', color: '#0986FF', height: 5, stroke: '1px', width: '40px' },
-                                separator: { backgroundColor: '#0986FF', color: '#0986FF', height: 5, stroke: '1px', width: '40px' },
-                            }}
-                        >
-                            <Stepper.Step />
-                            <Stepper.Step />
-                            <Stepper.Step />
-                            <Stepper.Step />
-                        </Stepper> */}
 
 
-                        {/* </Flex> */}
-                        {/* <Stepper
-                            active={0}
-                            orientation={isMobile ? 'vertical' : 'horizontal'}
-                            iconSize={isMobile ? 32 : 47}
-                            w="60%"
-                            styles={{
-                                stepIcon: { backgroundColor: '#0986FF', color: '#FFFFFF', marginBottom: 8, },
-                                step: {
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                },
-                                // stepIcon: {
-                                //    
-                                // },
-                                stepLabel: {
-                                    textAlign: 'center',
-                                    color: '#4F9CF9',
-                                    width: '140px',
-                                    marginTop: 6,
-                                },
-                            }}
-                        >
-                            <Stepper.Step label="Overview of RA 11261 and eligible users" />
-                            <Stepper.Step label="Covered government IDs and documents" />
-                            <Stepper.Step label="Required supporting documents, e.g., Barangay Certification" />
-                            <Stepper.Step label="Official government websites for accurate information" />
-                        </Stepper> */}
+                        <Box w="100%" mx="auto" p={'20px 90px'}>
+                            <Stepper
+                                active={0}
+                                orientation="horizontal"
+                                iconSize={36}
+                                w="100%"
+                                styles={{
+                                    steps: {
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                                        gap: 16, // spacing between steps
+                                        justifyItems: 'center', // center each step in its grid cell
+                                    },
+
+                                    step: {
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        textAlign: 'center',
+                                    },
+
+                                    stepIcon: {
+                                        backgroundColor: '#0986FF',
+                                        color: '#FFFFFF',
+                                    },
+
+                                    stepLabel: {
+                                        marginTop: 8,
+                                        minHeight: 56,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        padding: '0 8px',
+                                    },
+
+                                    separator: {
+                                        display: 'none', // hide line separators for grid
+                                    },
+                                }}
+                            >
+                                {steps.map((label, index) => (
+                                    <Stepper.Step
+                                        key={index}
+                                        label={
+                                            <Tooltip label={label} multiline w={220}>
+                                                <Text
+                                                    lineClamp={2}
+                                                    size="sm"
+                                                    c="#4F9CF9"
+                                                    ta="center"
+                                                >
+                                                    {label}
+                                                </Text>
+                                            </Tooltip>
+                                        }
+                                    />
+                                ))}
+                            </Stepper>
+                        </Box>
 
                     </Flex>
-
-
-
                 </Flex>
 
                 {/* 4th Section */}

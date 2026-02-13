@@ -10,7 +10,7 @@ interface IIDsInfo {
     color?: string
 }
 
-const IDsCard = ({ desc, title, logo, color}: IIDsInfo) => {
+const IDsCard = ({ desc, title, logo, color }: IIDsInfo) => {
     const isMobile = useMediaQuery("(max-width: 768px)");
 
     return (
@@ -28,30 +28,33 @@ const IDsCard = ({ desc, title, logo, color}: IIDsInfo) => {
                 backgroundColor: color ? color : '#FFFFFF'
             }}
         >
-            <Image
-                alt='saadds'
-                src={logo}
-                height={isMobile ? 40 : 80}
-                width={isMobile ? 40 : 80}
-                style={{
-                    // flex: 1,
-                    //   width: "100%",
-                    //   height: isMobile ? 220 : 340,
-                    // background: "linear-gradient(135deg, #f1f3f5, #e9ecef)",
-                    // borderRadius: 16,
-                    // display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: 600,
-                    color: "#868e96",
-                }}
-            />
-            <Title c='#043873' fz={isMobile ? '16px' : '18px'} style={{whiteSpace:'nowrap'}}>{title}</Title>
-            {desc ? 
-            <Text fz={isMobile ? '12px' : '14px'} w={isMobile ? '80%' : '140px'} ta="center">
-                {desc}
-            </Text>
-            : null
+            <Flex p={5} >
+                <Image
+                    alt='saadds'
+                    src={logo}
+                    height={isMobile ? 40 : 80}
+                    width={isMobile ? 40 : 80}
+                    style={{
+                        // flex: 1,
+                        //   width: "100%",
+                        //   height: isMobile ? 220 : 340,
+                        // background: "linear-gradient(135deg, #f1f3f5, #e9ecef)",
+                        // borderRadius: 16,
+                        // display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: 600,
+                        color: "#868e96",
+                    }}
+                />
+            </Flex>
+
+            <Title c='#043873' fz={isMobile ? '16px' : '18px'} style={{ whiteSpace: 'nowrap' }}>{title}</Title>
+            {desc ?
+                <Text fz={isMobile ? '12px' : '14px'} w={isMobile ? '80%' : '140px'} ta="center" h={'110px'}>
+                    {desc}
+                </Text>
+                : null
             }
 
         </Flex>
