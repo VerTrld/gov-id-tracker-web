@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 import "@mantine/carousel/styles.css";
-
+import "@mantine/dates/styles.css";
 import { ModalsProvider } from "@mantine/modals";
 import type { Metadata } from "next";
 import LoadingLayout from "@/layout/loading";
@@ -16,8 +16,8 @@ import {
 import { SessionProvider, useSession } from "next-auth/react";
 import { PropsWithChildren } from "react";
 import { theme } from "@/layout/theme";
-import '@mantine/notifications/styles.css';
-import { Notifications } from '@mantine/notifications';
+import "@mantine/notifications/styles.css";
+import { Notifications } from "@mantine/notifications";
 
 export const metadata: Metadata = {
   title: "Create Next App",
