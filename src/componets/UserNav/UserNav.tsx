@@ -76,7 +76,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           gap: 8,
           width: "100%",
           padding: 10,
-          borderRadius: "20px 0px 0px 20px",
+          borderRadius: "20px",
           fontSize: 14,
           color: active === "home" ? "#043873" : "#fff",
           backgroundColor: active === "home" ? "#F8FBFE" : "transparent",
@@ -109,7 +109,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           content: { padding: 0 },
           control: {
             padding: 10,
-            borderRadius: "10px 0px 0px 10px",
+            borderRadius: "20px",
             fontSize: 14,
             display: "flex",
             // gap: 8,
@@ -166,7 +166,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                       width: "100%",
                       textAlign: "left",
                       padding: 10,
-                      borderRadius: "10px 0px 0px 10px",
+                      borderRadius: "20px",
                       fontSize: 14,
                       fontWeight: 500,
                       color: isActive ? "#043873" : "#fff",
@@ -198,7 +198,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           gap: 8,
           width: "100%",
           padding: 10,
-          borderRadius: "10px 0px 0px 10px",
+          borderRadius: "20px",
           fontSize: 14,
           color: active === "settings" ? "#043873" : "#fff",
           backgroundColor: active === "settings" ? "#F8FBFE" : "transparent",
@@ -231,7 +231,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           gap: 8,
           width: "100%",
           padding: 10,
-          borderRadius: "10px 0px 0px 10px",
+          borderRadius: "20px",
           fontSize: 14,
           color: active === "support" ? "#043873" : "#fff",
           backgroundColor: active === "support" ? "#F8FBFE" : "transparent",
@@ -260,15 +260,16 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           <Box
             component="nav"
             style={{
-              width: 120,
+              width: 150,
               backgroundColor: "#043873",
               display: "flex",
               flexDirection: "column",
-              // padding: 20,
+              padding: 10,
               overflowY: "auto",
               scrollbarWidth: "thin",
-              margin: 5,
-              borderRadius: "20px",
+              margin: 3,
+
+              borderRadius: 20,
             }}
           >
             <Flex
@@ -280,7 +281,8 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                 alt="logo"
                 width={70}
                 height={70}
-                src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+                style={{ borderRadius: "50%" }}
+                src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO_2}`}
               />
               {/* <Text size="lg" fw={700} c="white" ta="center">
                 Government IDs
@@ -291,8 +293,8 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             <Box
               style={{
                 flex: 1,
-                paddingInlineEnd: 0,
-                margin: "0 0 0 20px",
+                // paddingInlineEnd: 0,
+                // margin: "0 0 0 20px",
               }}
             >
               {contentNav()}
@@ -327,21 +329,19 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             onClose={close}
             withCloseButton={false}
             title={
-              <Flex align={"center"} gap={20}>
+              <Flex justify={"center"} align={"center"} gap={20}>
                 <Image
                   alt="logo"
-                  width={50}
-                  height={50}
-                  src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+                  width={70}
+                  height={70}
+                  style={{ borderRadius: "50%" }}
+                  src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO_2}`}
                 />
-                <Text fw={700} c={"#fff"}>
-                  Government IDs
-                </Text>
               </Flex>
             }
             overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
             padding="md"
-            size="70%"
+            size="60%"
             styles={{
               title: {
                 fontWeight: "bold",
@@ -353,6 +353,8 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                 background: "#043873",
                 borderBottom: "1px solid white",
                 margin: "0 10px 0 10px",
+                justifyContent: "center", // 👈 ito ang importante
+                alignItems: "center",
               },
 
               body: {
@@ -360,7 +362,6 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                paddingRight: 0,
                 overflowY: "auto",
               },
               content: {

@@ -6,9 +6,15 @@ import {
   Checkbox,
   Divider,
   Flex,
+  Grid,
+  GridCol,
+  Group,
+  Paper,
   Stack,
   Text,
-  Title
+  Textarea,
+  TextInput,
+  Title,
 } from "@mantine/core";
 
 import _ from "lodash";
@@ -20,6 +26,7 @@ import { IGovernmentIds } from "@/entities/IGovernmentIds";
 import { get, patch, post } from "@/utils/http-api";
 import { useDisclosure } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
+import { IconMail, IconMapPin } from "@tabler/icons-react";
 
 export default function GovernmentIds() {
   const params = useParams();
@@ -36,37 +43,37 @@ export default function GovernmentIds() {
 
   const handleApplyGovernmentIds = async (governmentIdsId: string) => {
     try {
-      const res = await post(
-        `/user-government-ids/create/one`, {
+      const res = await post(`/user-government-ids/create/one`, {
         isActive: true,
-        governmentIdsId
-      }
-      );
+        governmentIdsId,
+      });
 
       if (res.status === 200 || res.status === 201) {
-        refetchGovernmentIds()
-        alert(`Success Applying for ${data?.label}`)
+        refetchGovernmentIds();
+        alert(`Success Applying for ${data?.label}`);
       }
     } catch (error) {
-      alert(`Error Applying for ${data?.label}: Try again later`)
-
+      alert(`Error Applying for ${data?.label}: Try again later`);
     }
   };
 
-  const handleCheckToggle = async (requirementsId: string, userRequirementId: string) => {
+  const handleCheckToggle = async (
+    requirementsId: string,
+    userRequirementId: string
+  ) => {
     try {
       const res = await patch(`/user-requirement/update/toggle`, {
         requirementsId,
         id: userRequirementId || null,
-      })
+      });
       if (res.status === 200 || res.status === 201) {
-        refetchGovernmentIds()
+        refetchGovernmentIds();
         // alert('Success Updating Requirement')
       }
     } catch (error) {
       // alert('Error Updating Requirement: Try again later')
     }
-  }
+  };
 
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -81,6 +88,8 @@ export default function GovernmentIds() {
   return (
     <Flex
       direction="column"
+      align={"center"}
+      justify={"center"}
       style={{
         flex: 1,
         padding: 24,
@@ -94,7 +103,7 @@ export default function GovernmentIds() {
     >
       {/* Upload modal */}
       <UploadModal
-        onSubmit={() => { }}
+        onSubmit={() => {}}
         opened={opened}
         onClose={close}
         dropzoneProps={{
@@ -105,14 +114,14 @@ export default function GovernmentIds() {
       />
 
       {/* Title and description */}
-      <Box>
+      {/* <Box>
         <Title order={3} mb="xs" w={"90%"}>
           {data?.label}
         </Title>
         <Text size="sm">{data?.description || "No description indicated"}</Text>
-      </Box>
+      </Box> */}
 
-      <Divider my="sm" />
+      {/* <Divider my="sm" /> */}
 
       {/* Requirements checklist */}
       {!_.isEmpty(data.UserGovernmentIds) ? (
@@ -121,16 +130,20 @@ export default function GovernmentIds() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
           }}
         >
-          <Title order={4} mb="sm">
-            Requirements
-          </Title>
-          <Text c="dimmed" size="sm" mb="md">
-            Complete the following items to proceed:
-          </Text>
-
           <ChecklistModule
+            details={
+              <>
+                <Text fw={600} size="lg">
+                  {data?.label}
+                </Text>
+                <Button color="#4F9CF9">OFFICIAL SITE</Button>
+              </>
+            }
             items={
               data?.RequirementLists?.[0]?.Requirements?.map((r) => {
                 return {
@@ -144,7 +157,7 @@ export default function GovernmentIds() {
             onComplete={() => {
               const total = data?.RequirementLists?.[0].Requirements.reduce(
                 (sum: any, item: any) => sum + item.value,
-                0,
+                0
               );
 
               if (total === 100 && data?.officialUrls) {
@@ -152,17 +165,37 @@ export default function GovernmentIds() {
               }
             }}
           >
-            <Stack gap="xs" style={{ flex: 1 }}>
+            <Stack gap="lg" style={{ flex: 1 }}>
               {data.RequirementLists?.[0]?.Requirements.map((item, i) => (
                 <Flex w={"100%"} gap={20} justify={"space-between"} key={i}>
                   <Checkbox
                     key={`${item.id + 34}`}
                     label={`${item.label}`}
+                    size="lg"
                     // checked={item.UserRequirements?.[0]?.isActive || false}
-                    defaultChecked={item.UserRequirements?.[0]?.isActive || false}
+                    defaultChecked={
+                      item.UserRequirements?.[0]?.isActive || false
+                    }
                     onChange={async (event) => {
-                      console.log({ sta: item, reqId: item.id, userReq: item.UserRequirements?.[0]?.id || '' })
-                      handleCheckToggle(item.id, item?.UserRequirements?.[0]?.id)
+                      console.log({
+                        sta: item,
+                        reqId: item.id,
+                        userReq: item.UserRequirements?.[0]?.id || "",
+                      });
+                      handleCheckToggle(
+                        item.id,
+                        item?.UserRequirements?.[0]?.id
+                      );
+                    }}
+                    styles={{
+                      input: {
+                        borderRadius: "50%", // 🔥 makes the box circular
+                        width: 30,
+                        height: 30,
+                      },
+                      icon: {
+                        borderRadius: "50%", // makes the check mark fit inside circle
+                      },
                     }}
                   />
 
@@ -182,7 +215,9 @@ export default function GovernmentIds() {
         </Box>
       ) : (
         <Flex>
-          <Button onClick={() => handleApplyGovernmentIds(data.id)}>Apply</Button>
+          <Button onClick={() => handleApplyGovernmentIds(data.id)}>
+            Apply
+          </Button>
         </Flex>
       )}
     </Flex>

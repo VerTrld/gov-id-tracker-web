@@ -23,6 +23,20 @@ ENV NEXT_PUBLIC_SSS=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/p
 ENV NEXT_PUBLIC_PHILHEALTH=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/philhealth.png
 ENV NEXT_PUBLIC_TIN_ID=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/tin.png
 
+
+ENV NEXT_PUBLIC_KARERAMO_LOGO_2=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/kareramo-logo-2.png
+ENV NEXT_PUBLIC_UMID_CARD_3=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%203.png
+ENV NEXT_PUBLIC_UMID_CARD_4=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%204.png
+ENV NEXT_PUBLIC_UMID_CARD_5=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%205.png
+ENV NEXT_PUBLIC_UMID_CARD_6=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%206.png
+ENV NEXT_PUBLIC_UMID_CARD_7=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%207.png
+ENV NEXT_PUBLIC_UMID_CARD_8=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%208.png
+ENV NEXT_PUBLIC_UMID_CARD_9=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%209.png
+ENV NEXT_PUBLIC_UMID_CARD_10=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2010.png
+ENV NEXT_PUBLIC_UMID_CARD_11=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2011.png
+ENV NEXT_PUBLIC_UMID_CARD_12=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2012.png
+
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
  

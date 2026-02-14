@@ -9,6 +9,7 @@ import {
   Group,
   Paper,
   RingProgress,
+  Stack,
   Text,
   Textarea,
   TextInput,
@@ -27,6 +28,7 @@ interface ChecklistModuleProps extends PropsWithChildren {
   buttonLabel?: string;
   onComplete?: () => void;
   uploadImage?: () => void;
+  details?: React.ReactNode;
 }
 
 export function ChecklistModule({
@@ -34,6 +36,7 @@ export function ChecklistModule({
   buttonLabel = "Continue",
   onComplete,
   uploadImage,
+  details,
   children,
 }: ChecklistModuleProps) {
   // IMPORTANT: start empty, do NOT derive from items
@@ -57,23 +60,31 @@ export function ChecklistModule({
     <Paper
       withBorder
       shadow="xl"
-      radius="md"
-      w="75%"
-      maw={1200}
+      radius="lg"
+      w="90%"
+      h="80dvh"
       style={{
         boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
-        overflow: "hidden",
+        position: "relative",
+
+        // overflow: "hidden",
       }}
     >
-      <Grid gutter={0}>
-        {/* LEFT / BLUE PANEL */}
-        <GridCol span={{ base: 12, md: 5 }} p={{ base: 10, md: 20 }}>
+      <Grid h="100%" gutter={0}>
+        {/* LEFT PANEL */}
+        <Grid.Col
+          span={{ base: 12, md: 5 }}
+          style={{
+            height: isMobile ? undefined : "80vh",
+            padding: 10,
+          }}
+        >
           <Box
             style={{
+              height: "100%",
               borderRadius: 12,
-              overflow: "hidden", // para hindi lumabas ang decorative circles
-              border: "1px solid red",
-              padding: 10,
+              overflow: "hidden",
+              padding: isMobile ? 10 : 20,
             }}
           >
             <Box
@@ -84,71 +95,58 @@ export function ChecklistModule({
                 position: "relative",
                 display: "flex",
                 flexDirection: "column",
+                justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 12,
                 padding: 40,
-                gap: 15,
+                gap: 30,
               }}
             >
-              {/* Ring Progress with White Center */}
-              {/* <Box style={{ position: "relative", width: 160, height: 160 }}>
+              {/* Ring Progress Container */}
+              <Box
+                style={{
+                  width: 155,
+                  height: 155,
+                  background: "#fff",
+                  borderRadius: "50%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "relative",
+                }}
+              >
                 <RingProgress
-                  size={160}
-                  thickness={18}
+                  size={220}
+                  thickness={15}
                   roundCaps
                   sections={[{ value: progress, color: "#4dabf7" }]}
+                  rootColor="#B4B4B4"
+                  label={
+                    <Center>
+                      <Text fw={700} size="30px" c="#043873">
+                        {progress}%
+                      </Text>
+                    </Center>
+                  }
                 />
-                <Box
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: 124,
-                    height: 124,
-                    background: "white",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text fw={700} size="xl" c="dark">
-                    {progress}%
-                  </Text>
-                </Box>
-              </Box> */}
+              </Box>
 
-              <RingProgress
-                size={150}
-                thickness={15}
-                roundCaps
-                sections={[{ value: progress, color: "#4dabf7" }]}
-                label={
-                  <Center>
-                    {" "}
-                    <Text fw={700} size="xl">
-                      {" "}
-                      {progress}%{" "}
-                    </Text>{" "}
-                  </Center>
-                }
-              />
-
-              <Text fw={600} size="md">
-                National ID
-              </Text>
-
-              <Button variant="light" color="white">
-                Official Site
-              </Button>
+              {/* Details / Optional content */}
+              <Stack
+                gap={10}
+                justify="center"
+                align="center"
+                style={{ zIndex: 1 }}
+              >
+                {details}
+              </Stack>
 
               {/* Decorative Circles */}
               <Box
                 style={{
                   position: "absolute",
                   bottom: 10,
-                  right: 20,
+                  right: 80,
                   width: 100,
                   height: 100,
                   borderRadius: "50%",
@@ -158,21 +156,21 @@ export function ChecklistModule({
               <Box
                 style={{
                   position: "absolute",
-                  bottom: -20,
-                  right: -70,
-                  width: 140,
-                  height: 140,
+                  bottom: -30,
+                  right: -80,
+                  width: 180,
+                  height: 170,
                   borderRadius: "50%",
                   background: "#A7CEFC",
-                  opacity: "60%",
+                  opacity: 0.6,
                 }}
               />
             </Box>
           </Box>
-        </GridCol>
+        </Grid.Col>
 
-        {/* RIGHT / FORM PANEL */}
-        <GridCol span={{ base: 12, md: 7 }}>
+        {/* RIGHT PANEL */}
+        <Grid.Col span={{ base: 12, md: 7 }}>
           <Box
             h="100%"
             p={{ base: 20, md: 40 }}
@@ -180,23 +178,35 @@ export function ChecklistModule({
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              background: "#f8f9fa",
+              background: "#fff",
+              width: "100%",
+              borderRadius: "lg",
             }}
           >
-            <Box>{children}</Box>
+            <Box
+              style={{
+                display: "flex",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {children}
+            </Box>
 
             <Flex w="100%" justify="flex-end" mt="md">
               <Button
                 disabled={!isComplete}
-                color="green"
+                color="#0A58BD"
                 px={40}
+                size="md"
                 onClick={onComplete}
               >
-                {buttonLabel}
+                Confirm
               </Button>
             </Flex>
           </Box>
-        </GridCol>
+        </Grid.Col>
       </Grid>
     </Paper>
   );

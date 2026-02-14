@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 
 export default function UserLayout({ children }: PropsWithChildren) {
   return (
-    <Flex w={"100%"} h={"100vh"}>
+    <Flex w={"100%"} h={"100vh"} bg={"#d3e4f9"}>
       <UserNav />
       {children}
     </Flex>
