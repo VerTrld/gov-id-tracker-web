@@ -43,9 +43,10 @@ const DashboardNav = ({ children }: IDashboardNav) => {
           <Flex gap={"xs"} align={"center"}>
             <Image
               alt="Logo"
+              style={{ borderRadius: "50%" }}
               src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
-              width={isMobile ? 40 : 40}
-              height={isMobile ? 40 : 40}
+              width={isMobile ? 40 : 50}
+              height={isMobile ? 40 : 50}
             />
             <Title
               c={"#043873"}

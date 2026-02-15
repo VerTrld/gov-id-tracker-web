@@ -37,9 +37,9 @@ export default function Login() {
         >
           {/* Hero */}
           <Flex
-            gap={isMobile ? 40 : 60}
+            gap={40}
             align="center"
-            justify="space-between"
+            justify="space-around"
             direction={isMobile ? "column" : "row"}
             style={{ flex: 1 }}
           >
@@ -106,22 +106,20 @@ export default function Login() {
             </Box>
 
             {/* Right Visual */}
-            <Box
+            <Image
+              alt='saadds'
+              src={`${process.env.NEXT_PUBLIC_LANDING_IMAGE}`}
+              height={isMobile ? 220 : 400}
+              width={isMobile ? 430 : 690}
               style={{
-                flex: 1,
-                width: "100%",
-                height: isMobile ? 220 : 340,
-                background: "linear-gradient(135deg, #f1f3f5, #e9ecef)",
-                borderRadius: 16,
-                display: "flex",
+                borderRadius: "145px",
+                boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
                 alignItems: "center",
                 justifyContent: "center",
                 fontWeight: 600,
                 color: "#868e96",
               }}
-            >
-              Image / Illustration
-            </Box>
+            />
           </Flex>
 
           {/* Info Section */}
@@ -145,7 +143,7 @@ export default function Login() {
               application.
             </Text>
 
-            <Button>How it Works</Button>
+            <Button onClick={() => router.push("/features")}>How it Works</Button>
           </Flex>
         </Flex>
 
@@ -230,7 +228,7 @@ export default function Login() {
           style={{ flex: 1, padding: isMobile ? "60px 20px" : "100px" }}
         >
           {/* Left Visual */}
-         
+
           <Image alt="barangayCert"
             width={isMobile ? 220 : 520}
             height={isMobile ? 220 : 600}
@@ -328,7 +326,7 @@ export default function Login() {
                 fontSize: isMobile ? 32 : 48,
                 marginBottom: 20,
                 color: '#043873',
-                textAlign:'center'
+                textAlign: 'center'
               }}
             >
               Start preparing your requirements today.

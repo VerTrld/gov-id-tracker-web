@@ -1,9 +1,10 @@
 "use client";
+import DocumentCard from '@/componets/DocomentCard/DocumentCard';
 import Footer from '@/componets/Footer/Footer';
 import IDsCard from '@/componets/IDsCard/IDsCard';
 import { govRequirements, IGovRequirements } from '@/componets/UserNav/govenmentIds';
 import { Carousel } from '@mantine/carousel';
-import { Box, Container, Divider, Flex, Grid, Group, List, Paper, Stack, Stepper, Text, Title, Tooltip } from '@mantine/core';
+import { Box, Button, Container, Divider, Flex, Grid, Group, List, Paper, Stack, Stepper, Text, Title, Tooltip } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IconNumber1 } from '@tabler/icons-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -16,24 +17,22 @@ const page = () => {
     const autoplay = useRef(Autoplay({ delay: 3000 }));
 
     const data: IGovRequirements[] = govRequirements;
-    const chunkedData = chunk(data, 4);
-
 
     const aboutStep = [
         {
-            logo: '',
+            logo: `${process.env.NEXT_PUBLIC_STEP_1}`,
             desc: 'Know which government IDs you need'
         },
         {
-            logo: '',
+            logo: `${process.env.NEXT_PUBLIC_STEP_2}`,
             desc: 'Understand required documents'
         },
         {
-            logo: '',
+            logo: `${process.env.NEXT_PUBLIC_STEP_3}`,
             desc: 'Find the right websites'
         },
         {
-            logo: '',
+            logo: `${process.env.NEXT_PUBLIC_STEP_4}`,
             desc: 'Track the progress'
         }
     ]
@@ -79,14 +78,13 @@ const page = () => {
                             fontSize: isMobile ? 32 : 48,
                             marginBottom: 20,
                         }}>About</Title>
-                        <Title c={'#4F9CF9'} ta={'center'}>ID Mo, Karera Mo is a web-based guide and tracking
-                            <br />
+                        <Title c={'#4F9CF9'} ta={'center'}>
+                            ID Mo, Karera Mo is a web-based guide and tracking
                             platform created to help first-time jobseekers prepare their
-                            <br />
                             government ID requirements for employment.</Title>
 
-                        <Text c={'#0A58BD'} ta={'center'}>Applying for government IDs can be confusing when information is scattered, and steps are unclear.
-                            <br />
+                        <Text c={'#0A58BD'} ta={'center'}>
+                            Applying for government IDs can be confusing when information is scattered, and steps are unclear.
                             This platform brings everything together in one place to make the process easier to understand and manage.
                         </Text>
                     </Flex>
@@ -141,7 +139,7 @@ const page = () => {
                                 >
                                     <Image
                                         alt={a.desc}
-                                        src={`${process.env.NEXT_PUBLIC_NATIONAL_ID}`}
+                                        src={`${a.logo}`}
                                         height={isMobile ? 40 : 80}
                                         width={isMobile ? 40 : 80}
                                     />
@@ -312,7 +310,7 @@ const page = () => {
                     // bg={"#E6F1FE"}
                     gap={50}
                     style={{
-                        flex: 1,
+                        // flex: 1,
                         padding: isMobile ? "60px 20px" : "100px",
                     }}
                 >
@@ -330,55 +328,39 @@ const page = () => {
                         <br />
                         RA 11261
                     </Title>
-                    <Carousel
-                        slideSize="100%" // full width
-                        slideGap={0} // no gap between slides
-                        loop
-                        align="start"
-                        withIndicators
-                        flex={1}
-                        plugins={[autoplay.current]}
-                        onMouseEnter={autoplay.current.stop}
-                        onMouseLeave={autoplay.current.reset}
-                    // style={{ border: "1px solid black" }}
-                    >
-                        {/* First Slide: Full-screen Hero */}
-                        {chunkedData.map((slideItems, slideIndex) => (
-                            <Carousel.Slide key={slideIndex}>
-                                <Flex
-                                    direction="column"
-                                    style={{
-                                        flex: 1,
-                                        height: isMobile ? '100vh' : '50vh',
-                                    }}
-                                >
-                                    <Flex
-                                        style={{
-                                            flex: 1,
-                                            padding: isMobile ? '40px 10px' : '80px',
-                                            flexDirection: isMobile ? 'column' : 'row',
-                                            flexWrap: isMobile ? 'nowrap' : 'wrap',
-                                        }}
-                                        gap={isMobile ? 10 : 20}
-                                        justify={isMobile ? 'center' : 'space-evenly'}
-                                        align={isMobile ? 'center' : 'stretch'}
-                                    >
-                                        {slideItems.map((v, index) => (
-                                            <IDsCard
-                                                // color='#D9EAFE'
-                                                key={index} // stable key\
-                                                logo={v.logo || ''}
-                                                title={v.title}
-                                            // desc={v.description}
-                                            />
-                                        ))}
-                                    </Flex>
-                                </Flex>
-                            </Carousel.Slide>
+
+                    <Flex wrap="wrap" gap="md" p={20} justify={'center'} align={'center'}>
+                        {data.map((v, index) => (
+                            <Flex
+                                align={'center'}
+                                justify={'center'}
+                                key={index}
+                                flex="0 0 calc(33.333% - var(--mantine-spacing-md))"
+                            >
+                                <DocumentCard img={v.logo} title={v.title} />
+                            </Flex>
                         ))}
+                    </Flex>
+
+                    <Flex direction={'column'} gap={10} >
+                        <Text ta={'center'} fz={'20px'} style={{ color: '#4F9CF9' }}>
+                            View full information and other Government requirements covered by RA 11261
+                        </Text>
+
+                        <Flex direction={'row'} justify={'center'} align={'center'}>
+                            <Button
+                                style={{ backgroundColor: '#0A58BD', color: '#FFFF' }}
+                                component="a"
+                                href="https://issuances-library.senate.gov.ph/sites/default/files/2021-08/RA%2011261%20IRR.pdf"
+                                download="https://issuances-library.senate.gov.ph/sites/default/files/2021-08/RA%2011261%20IRR.pdf"
+                            >
+                                Download PDF
+                            </Button>
+                        </Flex>
+                    </Flex>
 
 
-                    </Carousel>
+
                 </Flex>
 
                 {/* 6th Section */}

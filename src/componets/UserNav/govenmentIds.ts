@@ -165,7 +165,7 @@ export const governmentIds = {
 };
 
 
-
+// Commonly Required Government IDs
 export interface IDInfo {
   logo: string;
   title: string;
@@ -234,48 +234,56 @@ export const idsInfo = [
   },
 ];
 
+
+// Documents Covered Under RA 11261
 export interface IGovRequirements {
   logo: string;
   title: string;
- 
+
 }
 export const govRequirements = [
   {
-    title: "Police Clearance",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
-  },
-  {
-    title: "NBI Clearance",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
-  },
-  {
-    title: "Medical Certificate",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
-  },
-  {
-    title: "Barangay Clearance",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
-  },
-  {
     title: "PSA Birth Certificate",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
-  },
-  {
-    title: "Marriage Certificate",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_5}`,
   },
   {
     title: "Transcript of Records",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_8}`,
+  },
+  {
+    title: "Police Clearance",
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_11}`,
+  },
+
+  {
+    title: "Medical Certificate",
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_10}`,
   },
   {
     title: "TIN ID",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_4}`,
+  },
+  {
+    title: "NBI Clearance",
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_12}`,
+  },
+
+  {
+    title: "Marriage Certificate",
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_9}`,
   },
   {
     title: "UMID ID",
-    logo: `${process.env.NEXT_PUBLIC_NATIONAL_ID}`,
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_6}`,
   },
+  {
+    title: "Barangay Clearance",
+    logo: `${process.env.NEXT_PUBLIC_UMID_CARD_7}`,
+  },
+
+
+
+
 ];
 
 

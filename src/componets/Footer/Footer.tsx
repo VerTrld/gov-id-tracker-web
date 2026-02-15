@@ -38,8 +38,9 @@ const Footer = () => {
                 <Flex align="center" gap={10} justify={'center'} direction={isMobile ? 'column' : "row"}>
                     <Image alt="Logo"
                         src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
-                        width={isMobile ? 40 : 40}
-                        height={isMobile ? 40 : 40}
+                        style={{ borderRadius: "50%" }}
+                        width={isMobile ? 40 : 60}
+                        height={isMobile ? 40 : 60}
                     />
                     <Title c="#FFFFFF" style={{
                         lineHeight: 1.15,

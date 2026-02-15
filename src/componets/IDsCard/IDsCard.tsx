@@ -29,24 +29,24 @@ const IDsCard = ({ desc, title, logo, color }: IIDsInfo) => {
       }}
     >
       <Flex p={5}>
-        {/* <Image
-                    alt='saadds'
-                    src={logo}
-                    height={isMobile ? 40 : 80}
-                    width={isMobile ? 40 : 80}
-                    style={{
-                        // flex: 1,
-                        //   width: "100%",
-                        //   height: isMobile ? 220 : 340,
-                        // background: "linear-gradient(135deg, #f1f3f5, #e9ecef)",
-                        // borderRadius: 16,
-                        // display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontWeight: 600,
-                        color: "#868e96",
-                    }}
-                /> */}
+        <Image
+          alt='saadds'
+          src={logo}
+          height={isMobile ? 40 : 80}
+          width={isMobile ? 40 : 80}
+          style={{
+            // flex: 1,
+            //   width: "100%",
+            //   height: isMobile ? 220 : 340,
+            // background: "linear-gradient(135deg, #f1f3f5, #e9ecef)",
+            // borderRadius: 16,
+            // display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontWeight: 600,
+            color: "#868e96",
+          }}
+        />
       </Flex>
 
       <Title

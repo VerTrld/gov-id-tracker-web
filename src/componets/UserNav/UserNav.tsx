@@ -31,7 +31,7 @@ import { useQuery } from "@tanstack/react-query";
 import { get } from "@/utils/http-api";
 import { IGovernmentIds } from "@/entities/IGovernmentIds";
 
-interface ResponsiveNavLayoutProps extends PropsWithChildren {}
+interface ResponsiveNavLayoutProps extends PropsWithChildren { }
 
 export function UserNav({ children }: ResponsiveNavLayoutProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -282,7 +282,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                 width={70}
                 height={70}
                 style={{ borderRadius: "50%" }}
-                src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO_2}`}
+                src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
               />
               {/* <Text size="lg" fw={700} c="white" ta="center">
                 Government IDs
@@ -335,7 +335,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                   width={70}
                   height={70}
                   style={{ borderRadius: "50%" }}
-                  src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO_2}`}
+                  src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
                 />
               </Flex>
             }
