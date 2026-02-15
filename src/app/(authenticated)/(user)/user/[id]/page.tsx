@@ -18,7 +18,7 @@ import {
 } from "@mantine/core";
 
 import _ from "lodash";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 // import { governmentIds } from "@/componets/UserNav/govenmentIds";
 import { ChecklistModule } from "@/componets/ChecklistModule/ChecklistModule";
 import UploadModal from "@/componets/UploadModal/UploadModal";
@@ -31,6 +31,7 @@ import { IconMail, IconMapPin } from "@tabler/icons-react";
 export default function GovernmentIds() {
   const params = useParams();
   const id = params.id;
+  const router = useRouter();
 
   const { data, refetch: refetchGovernmentIds } = useQuery({
     queryKey: ["selected-government-id"],
@@ -141,7 +142,14 @@ export default function GovernmentIds() {
                 <Text fw={600} size="lg">
                   {data?.label}
                 </Text>
-                <Button color="#4F9CF9">OFFICIAL SITE</Button>
+                <Button
+                  color="#4F9CF9"
+                  onClick={() => {
+                    router.push(data?.officialUrls?.[0]);
+                  }}
+                >
+                  OFFICIAL SITE
+                </Button>
               </>
             }
             items={
