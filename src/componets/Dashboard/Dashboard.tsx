@@ -1,9 +1,11 @@
+"use client";
 import {
   Box,
   Button,
   Flex,
   Group,
   Paper,
+  Progress,
   RingProgress,
   Stack,
   Text,
@@ -12,6 +14,7 @@ import {
 import Image from "next/image";
 import React from "react";
 import { Calendar } from "@mantine/dates";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Dashboard = () => {
   const images = [
@@ -27,44 +30,30 @@ const Dashboard = () => {
     process.env.NEXT_PUBLIC_UMID_CARD_12,
   ];
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
     <Paper
       withBorder
       shadow="xl"
       radius="lg"
       w="95%"
-      h="90dvh"
+      h={isMobile ? "98vh" : "95vh"}
       style={{
-        boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
         position: "relative",
         overflowY: "auto",
       }}
     >
-      <Flex
-        direction={"column"}
-        h={"100%"}
-        p={20}
-        gap={20}
-        style={{ border: "2px solid blue" }}
-      >
-        <Flex
-          direction="row"
-          gap={10}
-          style={{ border: "1px solid red" }}
-          wrap="wrap"
-        >
+      <Flex direction={"column"} h={"100%"} p={30} gap={20}>
+        <Flex direction="row" gap={10} wrap="wrap">
           {/* Left Stack */}
-          <Stack
-            flex={1} // ✅ flexible width
-            gap={5}
-            style={{ border: "2px solid red" }}
-          >
-            <Title size="5vw" c="#043873">
+          <Stack flex={1} gap={5}>
+            <Title size={isMobile ? "10vw" : "5vw"} c="#043873">
               Hello, Ver!
             </Title>
 
             <Box
-              flex={1} // ✅ flexible height at width
+              flex={1}
               bg="#043873"
               style={{
                 borderRadius: 50,
@@ -75,6 +64,7 @@ const Dashboard = () => {
                 justifyContent: "space-between",
                 position: "relative",
                 overflow: "hidden",
+                boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
               }}
               p={30}
             >
@@ -120,7 +110,6 @@ const Dashboard = () => {
           <Box
             bg={"#d3e4f9"}
             style={{
-              border: "1px solid red",
               width: 250,
               borderRadius: 30,
               padding: 20,
@@ -131,6 +120,7 @@ const Dashboard = () => {
               alignItems: "center",
               textAlign: "center",
               margin: 10,
+              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
             }}
           >
             <Text c="#043873" fw={700} size="sm" lh={1.3}>
@@ -153,22 +143,17 @@ const Dashboard = () => {
           </Box>
 
           <Calendar
-            style={{ border: "1px solid black", borderRadius: 20, margin: 10 }}
+            style={{
+              borderRadius: 20,
+              margin: 10,
+              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
+            }}
           />
         </Flex>
 
         {/* 2nd */}
-        <Flex
-          direction="row"
-          gap={10}
-          wrap="wrap" // ✅ wraps to next line on small screens
-          style={{ border: "1px solid green" }}
-          flex={1}
-        >
-          <Stack
-            gap={5}
-            style={{ flex: "1 1 60%", minWidth: 280 }} // ✅ shrinks but won't go below 280px, then wraps
-          >
+        <Flex direction="row" gap={10} wrap="wrap" flex={1}>
+          <Stack gap={5} style={{ flex: "1 1 60%", minWidth: 280 }}>
             <Group gap={0} style={{ width: "fit-content" }}>
               <Button
                 size="xs"
@@ -202,13 +187,13 @@ const Dashboard = () => {
               bg="#8ea5c0"
               flex={1}
               style={{
-                border: "1px solid violet",
                 borderRadius: 40,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 gap: 10,
-                minHeight: 200, // ✅ stays visible when flex collapses
+                minHeight: 200,
+                boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
               }}
               p={10}
             >
@@ -248,12 +233,31 @@ const Dashboard = () => {
 
           <Box
             style={{
-              flex: "1 1 200px", // ✅ wraps below the Stack on small screens
-              border: "1px solid red",
-              minHeight: 120, // ✅ stays visible when flex collapses
+              flex: "1 1 200px",
+              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
+              minHeight: 120,
+              padding: 10,
+              margin: 10,
             }}
           >
             <Text>In Progress</Text>
+
+            <Group style={{ width: "100%" }}>
+              <Text>Id</Text>
+              <Progress value={50} style={{ flex: 1 }} />
+            </Group>
+            <Group style={{ width: "100%" }}>
+              <Text>Id</Text>
+              <Progress value={50} style={{ flex: 1 }} />
+            </Group>
+            <Group style={{ width: "100%" }}>
+              <Text>Id</Text>
+              <Progress value={50} style={{ flex: 1 }} />
+            </Group>
+            <Group style={{ width: "100%" }}>
+              <Text>Id</Text>
+              <Progress value={50} style={{ flex: 1 }} />
+            </Group>
           </Box>
         </Flex>
       </Flex>
