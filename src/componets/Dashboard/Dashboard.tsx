@@ -17,22 +17,48 @@ import React, { useState } from "react";
 import { Calendar } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import dayjs from "dayjs";
+import { useSession } from "next-auth/react";
+import _ from "lodash";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const images = [
-    process.env.NEXT_PUBLIC_UMID_CARD_3,
-    process.env.NEXT_PUBLIC_UMID_CARD_4,
-    process.env.NEXT_PUBLIC_UMID_CARD_5,
-    process.env.NEXT_PUBLIC_UMID_CARD_6,
-    process.env.NEXT_PUBLIC_UMID_CARD_7,
-    process.env.NEXT_PUBLIC_UMID_CARD_8,
-    process.env.NEXT_PUBLIC_UMID_CARD_9,
-    process.env.NEXT_PUBLIC_UMID_CARD_10,
-    process.env.NEXT_PUBLIC_UMID_CARD_11,
-    process.env.NEXT_PUBLIC_UMID_CARD_12,
+    {
+      image: process.env.NEXT_PUBLIC_PHILID_ICON,
+      label: "Philippine National (PhilSys ID)",
+    },
+    {
+      image: process.env.NEXT_PUBLIC_TIN_ICON,
+      label: "Tax Identification Number (TIN)",
+    },
+    {
+      image: process.env.NEXT_PUBLIC_SSS_ICON,
+      label: "Social Security System (SSS)",
+    },
+    {
+      image: process.env.NEXT_PUBLIC_PASSPORT_ICON,
+      label: "Philippine Passport",
+    },
+    { image: process.env.NEXT_PUBLIC_POSTAL_ICON, label: "Postal ID" },
+    {
+      image: process.env.NEXT_PUBLIC_UMID_ICON,
+      label: "Unified Multi-Purpose ID (UMID)",
+    },
+    { image: process.env.NEXT_PUBLIC_PHILHEALTH_ICON, label: "PhilHealth ID" },
+    { image: process.env.NEXT_PUBLIC_PAGIBIG_ICON, label: "Pag-IBIG ID" },
+    { image: process.env.NEXT_PUBLIC_NBI_ICON, label: "NBI Clearance" },
+    {
+      image: process.env.NEXT_PUBLIC_DRIVERLICENSE_ICON,
+      label: "Driver's License",
+    },
   ];
 
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const router = useRouter();
+
+  const session = useSession();
+
+  console.log(session.data?.user?.name);
 
   return (
     <Paper
@@ -51,7 +77,7 @@ const Dashboard = () => {
           {/* Left Stack */}
           <Stack flex={1} gap={5}>
             <Title size={isMobile ? "10vw" : "5vw"} c="#043873">
-              Hello, Ver!
+              Hello, {_.upperCase(String(session.data?.user?.name))} !
             </Title>
 
             <Box
@@ -72,13 +98,20 @@ const Dashboard = () => {
             >
               <Stack justify="space-between" style={{ height: "100%" }}>
                 <div>
-                  <Text>Please ensure that you complete your in-progress IDs application</Text>
+                  <Text>
+                    Please ensure that you complete your in-progress IDs
+                    application
+                  </Text>
                   <Text>at your earliest convenience.</Text>
                 </div>
 
                 <div>
-                  <Text  c="dimmed" fz="sm" style={{ fontStyle: 'italic' }}>This website is not affiliated with, endorsed by,</Text>
-                  <Text  c="dimmed" fz="sm" style={{ fontStyle: 'italic' }}>or connected to any government agency.</Text>
+                  <Text c="dimmed" fz="sm" style={{ fontStyle: "italic" }}>
+                    This website is not affiliated with, endorsed by,
+                  </Text>
+                  <Text c="dimmed" fz="sm" style={{ fontStyle: "italic" }}>
+                    or connected to any government agency.
+                  </Text>
                   {/* <Button
                     bg="#fff"
                     c="#043873"
@@ -89,7 +122,7 @@ const Dashboard = () => {
                   </Button> */}
                 </div>
 
-                  <div>
+                <div>
                   <Text>Have a nice day!</Text>
                 </div>
               </Stack>
@@ -119,20 +152,22 @@ const Dashboard = () => {
               padding: 20,
               display: "flex",
               flexDirection: "column",
-              justifyContent: "start",
               alignContent: "center",
               alignItems: "center",
               textAlign: "center",
               margin: 10,
+              gap: 20,
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Text c="#043873" fw={700} size="sm" lh={1.3}>
-              OVERALL APPLICATION ID
-            </Text>
-            <Text c="#043873" fw={700} size="sm" mb={4}>
-              PERCENTAGE:
-            </Text>
+            <div>
+              <Text c="#043873" fw={700} size="sm" lh={1.3}>
+                OVERALL APPLICATION ID
+              </Text>
+              <Text c="#043873" fw={700} size="sm" mb={4}>
+                PERCENTAGE:
+              </Text>
+            </div>
             <RingProgress
               size={150}
               thickness={15}
@@ -151,23 +186,23 @@ const Dashboard = () => {
               borderRadius: 20,
               padding: 10,
               margin: 10,
-              height: '320px',
+              height: "320px",
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
             }}
             renderDay={(date) => {
-              const isToday = dayjs(date).isSame(dayjs(), 'day');
+              const isToday = dayjs(date).isSame(dayjs(), "day");
 
               return (
                 <Box
                   style={{
                     width: 34,
                     height: 34,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '50%',
-                    backgroundColor: isToday ? '#043873' : 'transparent',
-                    color: isToday ? 'white' : 'inherit',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50%",
+                    backgroundColor: isToday ? "#043873" : "transparent",
+                    color: isToday ? "white" : "inherit",
                     fontWeight: isToday ? 600 : 400,
                   }}
                 >
@@ -226,45 +261,116 @@ const Dashboard = () => {
             >
               <Flex
                 direction="row"
-                gap={10}
+                gap={30}
                 wrap="wrap"
                 mb={10}
-                justify="space-evenly"
+                justify="center"
               >
-                {images.slice(0, 5).map((src, index) => (
-                  <Image
-                    key={index}
-                    alt={`UMID Image ${index + 1}`}
-                    src={`${src}`}
-                    width={100}
-                    height={100}
-                    style={{ borderRadius: 8 }}
-                  />
+                {images.slice(0, 5).map((src) => (
+                  <Paper
+                    key={src.label}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      padding: 20,
+                      borderRadius: 12,
+                      backgroundColor: "white",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                      width: 110,
+                      height: 130,
+                      cursor: "default",
+                      gap: 10,
+                      justifyContent: "space-between",
+                    }}
+                    withBorder
+                    radius="md"
+                    p="md"
+                    shadow="sm"
+                  >
+                    <Image
+                      alt={src.label}
+                      src={`${src.image}`}
+                      width={70}
+                      height={60}
+                      style={{ borderRadius: 8, objectFit: "fill" }}
+                    />
+                    <Text
+                      size="sm"
+                      style={{
+                        whiteSpace: "normal",
+                        lineHeight: 1.2,
+                        textAlign: "center",
+                        color: "#043873",
+                        fontWeight: 700,
+                        fontSize: "10px",
+                      }}
+                    >
+                      {src.label}
+                    </Text>
+                  </Paper>
                 ))}
               </Flex>
 
-              <Flex direction="row" gap={10} wrap="wrap" justify="space-evenly">
-                {images.slice(5, 10).map((src, index) => (
-                  <Image
-                    key={index + 5}
-                    alt={`UMID Image ${index + 6}`}
-                    src={`${src}`}
-                    width={100}
-                    height={100}
-                    style={{ borderRadius: 8 }}
-                  />
+              <Flex direction="row" gap={30} wrap="wrap" justify="center">
+                {images.slice(5, 10).map((src) => (
+                  <Paper
+                    key={src.label}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      padding: 20,
+                      borderRadius: 12,
+                      backgroundColor: "white",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                      width: 110,
+                      height: 130,
+                      cursor: "default",
+                      gap: 10,
+                      justifyContent: "space-between",
+                    }}
+                    withBorder
+                    radius="md"
+                    p="md"
+                    shadow="sm"
+                  >
+                    <Image
+                      alt={src.label}
+                      src={`${src.image}`}
+                      width={70}
+                      height={60}
+                      style={{ borderRadius: 8 }}
+                    />
+                    <Text
+                      size="sm"
+                      style={{
+                        whiteSpace: "normal",
+                        lineHeight: 1.2,
+                        textAlign: "center",
+                        color: "#043873",
+                        fontWeight: 700,
+                        fontSize: "10px",
+                      }}
+                    >
+                      {src.label}
+                    </Text>
+                  </Paper>
                 ))}
               </Flex>
             </Box>
           </Stack>
 
           <Box
+            onClick={() => router.push("/user/progress")}
             style={{
               flex: "1 1 200px",
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
               minHeight: 120,
               padding: 10,
               margin: 10,
+              borderRadius: 30,
+              cursor: "pointer",
             }}
           >
             <Text>In Progress</Text>

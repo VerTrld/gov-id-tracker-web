@@ -41,8 +41,17 @@ ENV NEXT_PUBLIC_ILLUSTRATOR="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1
     NEXT_PUBLIC_UMID_CARD_12="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2012.png" \
     NEXT_PUBLIC_UMID_CARD_9="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%209.png" \
     NEXT_PUBLIC_UMID_CARD_6="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%206.png" \
-    NEXT_PUBLIC_UMID_CARD_7="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%207.png"
-
+    NEXT_PUBLIC_UMID_CARD_7="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%207.png" \
+    NEXT_PUBLIC_PHILID_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/phil-icon.png" \
+    NEXT_PUBLIC_TIN_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/tin-icon.png" \
+    NEXT_PUBLIC_SSS_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/sss-icon.png" \
+    NEXT_PUBLIC_PASSPORT_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/passport-icon.png" \
+    NEXT_PUBLIC_POSTAL_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/postal-icon.png" \
+    NEXT_PUBLIC_UMID_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/umid-icon.png" \
+    NEXT_PUBLIC_PHILHEALTH_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/philhealth-icon.png" \
+    NEXT_PUBLIC_PAGIBIG_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/pagibig-2-icon.png" \
+    NEXT_PUBLIC_NBI_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/nbiclearance-icon.png" \
+    NEXT_PUBLIC_DRIVERLICENSE_ICON="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/driverlicense-icon.png"
 
 
 COPY --from=deps /app/node_modules ./node_modules

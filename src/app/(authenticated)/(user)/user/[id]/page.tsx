@@ -263,23 +263,23 @@ export default function GovernmentIds() {
                       // defaultChecked={
                       //   item.UserRequirements?.[0]?.isActive || false
                       // }
-                      // onChange={() => {
-                      //   handleCheckToggle(
-                      //     item.id,
-                      //     item?.UserRequirements?.[0]?.id
-                      //   );
-                      // }}
+                      onChange={() => {
+                        handleCheckToggle(
+                          item.id,
+                          item?.UserRequirements?.[0]?.id
+                        );
+                      }}
                       defaultChecked={
                         item.UserRequirements?.find(
                           (v) => v.userAccountId === session.data?.user?.id
                         )?.isActive || false
                       }
-                      onChange={() => {
-                        const userReq = item.UserRequirements?.find(
-                          (v) => v.userAccountId === session.data?.user?.id
-                        );
-                        handleCheckToggle(item.id, String(userReq?.id));
-                      }}
+                      // onChange={() => {
+                      //   const userReq = item.UserRequirements?.find(
+                      //     (v) => v.userAccountId === session.data?.user?.id
+                      //   );
+                      //   handleCheckToggle(item.id, String(userReq?.id));
+                      // }}
                       styles={{
                         input: {
                           borderRadius: "50%",

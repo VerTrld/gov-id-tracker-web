@@ -14,30 +14,30 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import { IconMail, IconMapPin } from "@tabler/icons-react";
 
-export default function ContactSection() {
-  const isMobile = useMediaQuery('(max-width: 768px)');
+export default function ContactSection({ label }: { label: string }) {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
-    <Flex flex={1} direction={'column'} justify={'center'} gap={30}>
+    <Flex flex={1} direction={"column"} justify={"center"} gap={30}>
       {/* Header */}
       <Box
         style={{
           display: "flex",
           flexDirection: "column",
           textAlign: "center",
-          width: '100%',
+          width: "100%",
           // marginBottom: 30,
-
         }}
       >
         <Title
-          c={'#043873'} style={{
+          c={"#043873"}
+          style={{
             // fontWeight: 900,
             lineHeight: 1.15,
             fontSize: isMobile ? 32 : 48,
             marginBottom: 20,
           }}
         >
-          Contact Us
+          {label}
         </Title>
         <Text style={{ color: "#0A58BD" }}>
           Have questions, suggestions, or feedback? We are happy to hear from
@@ -45,8 +45,7 @@ export default function ContactSection() {
         </Text>
       </Box>
 
-
-      <Flex >
+      <Flex>
         <Paper
           shadow="xl"
           radius="md"
@@ -55,10 +54,9 @@ export default function ContactSection() {
             maxWidth: 1000,
             width: "100%",
             margin: "auto",
-            boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)"
+            boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
           }}
         >
-
           <Grid gutter={0}>
             {/* LEFT / BLUE */}
             <GridCol span={{ base: 12, md: 5, lg: 5 }}>
@@ -71,7 +69,7 @@ export default function ContactSection() {
                   position: "relative",
                   display: "flex",
                   flexDirection: "column",
-                  borderRadius: '10px'
+                  borderRadius: "10px",
                 }}
               >
                 <Title order={3}>Contact Information</Title>
@@ -124,23 +122,16 @@ export default function ContactSection() {
             {/* RIGHT / FORM */}
             <GridCol span={{ base: 12, md: 7, lg: 7 }}>
               <Box h="100%" p={40}>
-                <Group grow >
-                  <TextInput
-                    label="First Name"
-                    placeholder="First Name"
-                  />
-                  <TextInput
-                    label="Last Name"
-                    placeholder="Last Name"
-                  />
+                <Group grow>
+                  <TextInput label="First Name" placeholder="First Name" />
+                  <TextInput label="Last Name" placeholder="Last Name" />
                 </Group>
 
                 <TextInput
                   mt="md"
                   label="Email"
                   placeholder="Email"
-                  w={'50%'}
-
+                  w={"50%"}
                 />
 
                 <Textarea
@@ -151,7 +142,6 @@ export default function ContactSection() {
                   styles={{
                     input: {
                       borderBottom: "1px solid #ccc",
-
                     },
                   }}
                 />

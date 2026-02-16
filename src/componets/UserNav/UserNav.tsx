@@ -24,6 +24,7 @@ import {
   IconId,
   IconLogout,
   IconMenu2,
+  IconProgressCheck,
   IconSettings,
 } from "@tabler/icons-react";
 import Image from "next/image";
@@ -31,7 +32,7 @@ import { useQuery } from "@tanstack/react-query";
 import { get } from "@/utils/http-api";
 import { IGovernmentIds } from "@/entities/IGovernmentIds";
 
-interface ResponsiveNavLayoutProps extends PropsWithChildren { }
+interface ResponsiveNavLayoutProps extends PropsWithChildren {}
 
 export function UserNav({ children }: ResponsiveNavLayoutProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -58,6 +59,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
   const isIdsActive =
     active &&
     active !== "home" &&
+    active !== "progress" &&
     active !== "settings" &&
     active !== "support";
 
@@ -184,6 +186,39 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion>
+
+      {/* PROGRESS */}
+      <UnstyledButton
+        onClick={() => {
+          router.push("/user/progress");
+          close();
+        }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+          width: "100%",
+          padding: 10,
+          borderRadius: "20px",
+          fontSize: 14,
+          color: active === "progress" ? "#043873" : "#fff",
+          backgroundColor: active === "progress" ? "#F8FBFE" : "transparent",
+          boxShadow:
+            active === "progress" ? "0 4px 6px rgba(0, 0, 0, 0.25)" : "none",
+        }}
+        onMouseEnter={(e) => {
+          if (active !== "progress")
+            e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.15)";
+        }}
+        onMouseLeave={(e) => {
+          if (active !== "progress")
+            e.currentTarget.style.backgroundColor = "transparent";
+        }}
+      >
+        <IconProgressCheck size={30} />
+        {/* <Text c="inherit">Support</Text> */}
+      </UnstyledButton>
 
       {/* SETTINGS */}
       <UnstyledButton
