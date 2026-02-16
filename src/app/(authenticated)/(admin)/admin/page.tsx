@@ -4,37 +4,21 @@ import { ContactCardGrid } from "@/componets/ContactCard/ContactCard";
 import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal";
 import { LoginType } from "@/enum/dashboard.enum";
 import IPersonShcema, { PersonSchema } from "@/schema/PersonSchema";
-import { post } from "@/utils/http-api";
-import {
-    Avatar,
-    Button,
-    Card,
-    Center,
-    Flex,
-    Grid,
-    Group,
-    Loader,
-    Menu,
-    Paper,
-    Stack,
-    Text,
-    Title,
-} from "@mantine/core";
+import { post, get } from "@/utils/http-api";
+import { Avatar, Button, Card, Center, Flex, Grid, Group, Loader, Menu, Paper, ScrollArea, Stack, Tabs, Text, Title } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import {
-    IconChevronDown,
-    IconLogout,
-    IconRefresh,
-    IconSettings,
-    IconUserPlus,
-    IconUsers,
-} from "@tabler/icons-react";
-import { useQuery } from "@tanstack/react-query";
+import { IconChevronDown, IconLogout, IconRefresh, IconSettings, IconUserPlus, IconUsers } from "@tabler/icons-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { signOut } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+
+// --- ID types ---
+import { IGovernmentIds } from "@/entities/IGovernmentIds";
+import { GovernmentIdModal } from "@/componets/GovernmentIdModal/GovernmentIdModal";
+import IGovernmentIdsForm, { governmentIdsFormSchema } from "@/schema/GovIds";
 
 export default function Page() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -43,17 +27,18 @@ export default function Page() {
     const params = useSearchParams();
     const action = params.get("action");
 
-    const { data, isLoading, refetch } = useQuery({
+    const queryClient = useQueryClient();
+
+    // ---------------- USER QUERY ----------------
+    const { data: users, isLoading: usersLoading, refetch: refetchUsers } = useQuery({
         queryKey: ["getUser"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/user-account/users/list`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user-account/users/list`);
             return res.data?.data;
         },
     });
 
-    const filteredData = data?.filter((user: any) => {
+    const filteredUsers = users?.filter((user: any) => {
         const matchesSearch = searchQuery
             ? user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             user.email?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -62,6 +47,16 @@ export default function Page() {
         return matchesSearch && matchesFilter;
     });
 
+    // ---------------- GOVERNMENT IDS QUERY ----------------
+    const { data: governmentIds, isLoading: idsLoading, refetch: refetchIds } = useQuery({
+        queryKey: ["governmentIds"],
+        queryFn: async () => {
+            const res = await get(`/government-ids/read/all`);
+            return res.data || [];
+        },
+    });
+
+    // ---------------- USER FORM ----------------
     const registerForm = useForm<IPersonShcema>({
         validate: yupResolver(PersonSchema),
         initialValues: {
@@ -77,6 +72,8 @@ export default function Page() {
         name: "register",
     });
 
+
+
     const handleRegister = registerForm.onSubmit(async () => {
         try {
             const res = await post(`/user-account/create/one`, {
@@ -87,37 +84,89 @@ export default function Page() {
 
             if (res.status === 200 || res.status === 201) {
                 notifications.show({
-                    title: 'Registration Successful',
-                    message: 'Your account has been created! You can now log in.',
-                    color: 'green',
+                    title: "Registration Successful",
+                    message: "Your account has been created! You can now log in.",
+                    color: "green",
                 });
-                refetch();
+                refetchUsers();
                 registerForm.reset();
-                router.push("/admin"); // Redirect after successful registration
+                router.push("/admin");
             } else {
-                // Handle unexpected non-error responses
                 notifications.show({
-                    title: 'Registration Failed',
-                    message: 'Something went wrong. Please try again.',
-                    color: 'red',
+                    title: "Registration Failed",
+                    message: "Something went wrong. Please try again.",
+                    color: "red",
                 });
                 console.error("Unexpected response:", res);
             }
         } catch (error) {
-            // Catch network errors or exceptions
             notifications.show({
-                title: 'Error',
-                message: 'Registration failed. Please try again later.',
-                color: 'red',
+                title: "Error",
+                message: "Registration failed. Please try again later.",
+                color: "red",
             });
             console.error("Registration error:", error);
+        }
+    });
+
+    const govIdForm = useForm<IGovernmentIdsForm>({
+        validate: yupResolver(governmentIdsFormSchema),
+        initialValues: {
+            label: "",
+            code: "",
+            officialUrls: "",
+            description: "",
+            requirements: [{ label: "" }],
+        },
+    });
+
+
+    const handleIds = govIdForm.onSubmit(async () => {
+        try {
+            const res = await post(`/government-ids/create/one`, {
+                ...govIdForm.values,
+                officialUrls: [govIdForm.values.officialUrls],
+                Requirements: govIdForm.values.requirements?.map(r => ({
+                    id: r.id,
+                    label: r.label,
+                })),
+            });
+
+            if (res.status === 200 || res.status === 201) {
+                notifications.show({
+                    title: "Government ID Created",
+                    message: "The Government ID has been successfully created.",
+                    color: "green",
+                });
+
+                // Reset form and refresh query
+                refetchIds();
+                govIdForm.reset();
+                queryClient.invalidateQueries({ queryKey: ["governmentIds"] });
+
+                // Optional redirect if you want
+                router.push("/admin");
+            } else {
+                notifications.show({
+                    title: "Creation Failed",
+                    message: "Something went wrong. Please try again.",
+                    color: "red",
+                });
+                console.error("Unexpected response:", res);
+            }
+        } catch (error) {
+            notifications.show({
+                title: "Error",
+                message: "Failed to create Government ID. Please try again later.",
+                color: "red",
+            });
+            console.error("Creation error:", error);
         }
     });
 
 
     return (
         <>
-
             <RegisterUserModal
                 opened={action === LoginType.ADMIN_REGISTER}
                 onClose={() => {
@@ -126,10 +175,16 @@ export default function Page() {
                 }}
                 form={registerForm}
                 onSubmit={() => handleRegister()}
-            // onLoginClick={() =>
-            //     //WIP need to close before going
-            //     router.replace("/admin?action=login")
-            // }
+            />
+
+            <GovernmentIdModal
+                opened={action === LoginType.CREATE_ID}
+                onClose={() => {
+                    router.replace("/admin");
+                    govIdForm.reset();
+                }}
+                form={govIdForm}
+                onSubmit={() => handleIds()}
             />
 
             <Flex direction="column" style={{ backgroundColor: "#f8f9fa" }} flex={1}>
@@ -147,9 +202,8 @@ export default function Page() {
                         top: 0,
                         zIndex: 10,
                     }}
-                // flex={1}
                 >
-                    <Group gap="xs" style={{ display: 'flex', flex: 1 }}>
+                    <Group gap="xs" style={{ flex: 1 }}>
                         <Title order={3} style={{ color: "#2d4b81" }}>
                             Admin Dashboard
                         </Title>
@@ -165,8 +219,12 @@ export default function Page() {
                                     style={{ backgroundColor: "white", border: "1px solid #e9ecef" }}
                                 >
                                     <Group gap="xs">
-                                        <Avatar color="#2d4b81" size="sm" radius="xl">A</Avatar>
-                                        <Text size="sm" fw={500}>Admin</Text>
+                                        <Avatar color="#2d4b81" size="sm" radius="xl">
+                                            A
+                                        </Avatar>
+                                        <Text size="sm" fw={500}>
+                                            Admin
+                                        </Text>
                                     </Group>
                                 </Button>
                             </Menu.Target>
@@ -184,109 +242,127 @@ export default function Page() {
                 </Flex>
 
                 {/* Main Content */}
-                <Flex flex={1} p={30} style={{ height: "75vh", }}>
-                    <Flex gap="lg" flex={1} direction={'column'}>
-                        {/* Page Header */}
-                        <Paper
-                            p="xl"
-                            radius="md"
-                            style={{
-                                background: "linear-gradient(135deg, #2d4b81 0%, #3d5b91 100%)",
-                            }}
-                        >
-                            <Stack gap="xs">
-                                <Title order={2} style={{ color: "white" }}>
-                                    User Management
-                                </Title>
-                                <Text style={{ color: "white", opacity: 0.9 }}>
-                                    Manage and monitor all users in your system
+                <Flex flex={1} p={30} direction="column">
+                    {/* Page Header */}
+                    <Paper
+                        p="xl"
+                        radius="md"
+                        style={{
+                            background: "linear-gradient(135deg, #2d4b81 0%, #3d5b91 100%)",
+                        }}
+                    >
+                        <Stack gap="xs">
+                            <Title order={2} style={{ color: "white" }}>
+                                User & IDs Management
+                            </Title>
+                            <Text style={{ color: "white", opacity: 0.9 }}>
+                                Manage users and government IDs from one dashboard
+                            </Text>
+                        </Stack>
+                    </Paper>
+
+                    {/* Tabs for Users / IDs */}
+                    <Tabs defaultValue="users" mt="md">
+                        <Tabs.List>
+                            <Tabs.Tab value="users">Users</Tabs.Tab>
+                            <Tabs.Tab value="ids">Government IDs</Tabs.Tab>
+                        </Tabs.List>
+
+                        {/* --- USERS TAB --- */}
+                        <Tabs.Panel value="users" pt="md">
+                            <Flex justify="space-between" mb="md">
+                                <Text size="lg" fw={600} style={{ color: "#2d4b81" }}>
+                                    Users List
                                 </Text>
-                            </Stack>
-                        </Paper>
+                                <Group>
+                                    <Button variant="light" color="#2d4b81" leftSection={<IconRefresh size={16} />} onClick={() => refetchUsers()}>
+                                        Refresh
+                                    </Button>
+                                    <Button
+                                        variant="filled"
+                                        color="#2d4b81"
+                                        leftSection={<IconUserPlus size={16} />}
+                                        onClick={() => router.replace("/admin?action=admin_register")}
+                                    >
+                                        Add User
+                                    </Button>
+                                </Group>
+                            </Flex>
 
-                        {/* Stats Cards */}
-                        <Grid>
-                            {/* Total Users */}
-                            <Grid.Col span={{ base: 12, sm: 6, md: 6 }}>
-                                <Card shadow="xs" padding="lg" radius="md">
-
-                                    <Stack gap={4}>
-                                        <Text size="xs" c="dimmed" tt="uppercase" fw={700}>
-                                            Total Users
-                                        </Text>
-                                        <Text size="xl" fw={700} style={{ color: "#2d4b81" }}>
-                                            {data?.length || 0}
-                                        </Text>
-                                    </Stack>
-
-                                </Card>
-                            </Grid.Col>
-
-
-                            {/* Filters and Actions */}
-                            <Grid.Col span={{ base: 12, sm: 6, md: 6 }}>
-                                <Card shadow="xs" padding="lg" radius="md">
-                                    <Stack gap={4}>
-                                        <Flex justify="space-between">
-                                            <Text
-                                                size="lg"
-                                                fw={600}
-                                                style={{ color: "#2d4b81", alignSelf: 'center' }}>
-                                                Users List
-                                            </Text>
-                                            <Group gap="xs">
-                                                <Button
-                                                    variant="light"
-                                                    color="#2d4b81"
-                                                    leftSection={<IconRefresh
-                                                        size={16} />}
-                                                    onClick={() => refetch()}>
-                                                    Refresh
-                                                </Button>
-                                                <Button
-                                                    variant="filled"
-                                                    color="#2d4b81"
-                                                    leftSection={<IconUserPlus size={16}
-                                                    />}
-                                                    onClick={() => {
-                                                        router.replace("/admin?action=admin_register")
-                                                    }}
-                                                >
-                                                    Add User
-                                                </Button>
-                                            </Group>
-                                        </Flex>
-                                    </Stack>
-                                </Card>
-
-                            </Grid.Col>
-                        </Grid>
-
-
-
-                        {/* Users Grid */}
-                        {isLoading ? (
-                            <Center py="xl">
-                                <Loader color="#2d4b81" size="lg" />
-                            </Center>
-                        ) : filteredData && filteredData.length > 0 ? (
-                            <ContactCardGrid contacts={filteredData} />
-                        ) : (
-                            <Card shadow="xs" padding="xl" radius="md">
-                                <Center>
-                                    <Stack align="center" gap="xs">
-                                        <IconUsers size={48} color="#2d4b81" style={{ opacity: 0.3 }} />
-                                        <Text c="dimmed" size="lg">
-                                            No users found
-                                        </Text>
-                                        <Text c="dimmed" size="sm">
-                                            Try adjusting your search or filters
-                                        </Text>
-                                    </Stack>
+                            {usersLoading ? (
+                                <Center py="xl">
+                                    <Loader color="#2d4b81" size="lg" />
                                 </Center>
-                            </Card>
-                        )}
-                    </Flex>
+                            ) : filteredUsers?.length ? (
+                                <ContactCardGrid contacts={filteredUsers} />
+                            ) : (
+                                <Card shadow="xs" padding="xl" radius="md">
+                                    <Center>
+                                        <Stack align="center" gap="xs">
+                                            <IconUsers size={48} color="#2d4b81" style={{ opacity: 0.3 }} />
+                                            <Text c="dimmed" size="lg">
+                                                No users found
+                                            </Text>
+                                        </Stack>
+                                    </Center>
+                                </Card>
+                            )}
+                        </Tabs.Panel>
+
+                        {/* --- GOVERNMENT IDS TAB --- */}
+                        <Tabs.Panel value="ids" pt="md" style={{ display: "flex", flexDirection: "column", gap: 10, height: "100%" }}>
+                            {/* Header */}
+                            <Flex justify="space-between" mb="md">
+                                <Text size="lg" fw={600} style={{ color: "#2d4b81" }}>
+                                    ID List
+                                </Text>
+                                <Group>
+                                    <Button
+                                        variant="light"
+                                        color="#2d4b81"
+                                        leftSection={<IconRefresh size={16} />}
+                                        onClick={() => refetchIds()}
+                                    >
+                                        Refresh
+                                    </Button>
+                                    <Button
+                                        variant="filled"
+                                        color="#2d4b81"
+                                        leftSection={<IconUserPlus size={16} />}
+                                        onClick={() => router.replace("/admin?action=create_id")}
+                                    >
+                                        Create New Government ID
+                                    </Button>
+                                </Group>
+                            </Flex>
+
+                            {/* List */}
+                            {idsLoading ? (
+                                <Center py="xl">
+                                    <Loader color="#2d4b81" size="lg" />
+                                </Center>
+                            ) : governmentIds?.length ? (
+                                <ScrollArea style={{  minHeight: 400 , maxHeight: 500 }}>
+                                    <Stack gap="sm">
+                                        {governmentIds.map((id: IGovernmentIds, index: number) => (
+                                            <Card key={index} shadow="sm" padding="md">
+                                                <Text fw={600}>{id.label}</Text>
+                                                <Text size="sm" c="dimmed">
+                                                    Code: {id.code}
+                                                </Text>
+                                                <Text size="sm" c="dimmed">
+                                                    URL: {id.officialUrls?.[0]}
+                                                </Text>
+                                            </Card>
+                                        ))}
+                                    </Stack>
+                                </ScrollArea>
+                            ) : (
+                                <Text>No Government IDs found.</Text>
+                            )}
+                        </Tabs.Panel>
+
+                    </Tabs>
                 </Flex>
             </Flex>
         </>
