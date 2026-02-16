@@ -3,18 +3,21 @@ import { Avatar, Box, Button, Divider, Flex, Group, Modal, Paper, Select, Stack,
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconMoon, IconSun } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 
 export default function SettingsPage() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const { colorScheme, setColorScheme } = useMantineColorScheme();
 
+  const session = useSession();
 
   const [opened, setOpened] = useState(false);
 
+
   const [user, setUser] = useState({
-    name: 'Alexa Rawles',
-    email: 'alexarawles@gmail.com',
+    name: session.data?.user?.name || '',
+    email: session.data?.user?.email,
     newPassword: 'sample',
     confirmPassword: 'sample'
   });
@@ -45,11 +48,25 @@ export default function SettingsPage() {
     setOpened(false);
   };
 
+
+  const colors = [
+    'violet',
+    'indigo',
+    'blue',
+    'cyan',
+    'teal',
+    'green',
+    'lime',
+    'yellow',
+    'orange',
+    'red',
+    'pink',
+    'grape',
+  ];
+  const avatarColor = colors[user?.name.charCodeAt(0) % colors.length];
+
   return (
     <>
-
-
-
       <Flex
         direction="column"
         align="center"
@@ -78,9 +95,10 @@ export default function SettingsPage() {
                 <Group justify={isMobile ? 'center' : 'flex-start'}>
                   <Avatar
                     size={isMobile ? 60 : 80}
-                    radius="xl"
-                    src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91"
-                    alt={user.name}
+                    name={user?.name}
+                    radius="50%"
+                    color={avatarColor}
+                    fw={600}
                   />
 
                   <Box ta={isMobile ? 'center' : 'left'}>

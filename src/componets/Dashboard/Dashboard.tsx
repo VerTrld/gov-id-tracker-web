@@ -72,23 +72,25 @@ const Dashboard = () => {
             >
               <Stack justify="space-between" style={{ height: "100%" }}>
                 <div>
-                  <Text>Don't forget to complete your</Text>
-                  <Text>SSS ID Application</Text>
+                  <Text>Please ensure that you complete your in-progress IDs application</Text>
+                  <Text>at your earliest convenience.</Text>
                 </div>
 
                 <div>
-                  <Text>Have a nice day!</Text>
-                </div>
-
-                <div>
-                  <Button
+                  <Text  c="dimmed" fz="sm" style={{ fontStyle: 'italic' }}>This website is not affiliated with, endorsed by,</Text>
+                  <Text  c="dimmed" fz="sm" style={{ fontStyle: 'italic' }}>or connected to any government agency.</Text>
+                  {/* <Button
                     bg="#fff"
                     c="#043873"
                     radius="lg"
                     style={{ boxShadow: "rgba(0,0,0,0.25)" }}
                   >
                     Complete Application
-                  </Button>
+                  </Button> */}
+                </div>
+
+                  <div>
+                  <Text>Have a nice day!</Text>
                 </div>
               </Stack>
 
