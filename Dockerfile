@@ -15,26 +15,34 @@ RUN npm i -f
 FROM base AS builder
 WORKDIR /app
 
-ENV NEXT_PUBLIC_KARERAMO_LOGO=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/kareramo-logo.png
-ENV NEXT_PUBLIC_NATIONAL_ID=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/national-id.png
-ENV NEXT_PUBLIC_BIRTH_CERTIFICATE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/birth-cert.png
-ENV NEXT_PUBLIC_BRGY_CERTIFICATE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/brgy-cert.png
-ENV NEXT_PUBLIC_SSS=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/sss.png
-ENV NEXT_PUBLIC_PHILHEALTH=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/philhealth.png
-ENV NEXT_PUBLIC_TIN_ID=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/tin.png
+ENV NEXT_PUBLIC_ILLUSTRATOR="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/illustrator_1.png" \
+    NEXT_PUBLIC_KARERAMO_LOGO="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/kareramo-logo-2.png" \
+    NEXT_PUBLIC_LANDING_IMAGE="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/landing-image.png" \
+    NEXT_PUBLIC_NATIONAL_ID="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/national-id.png" \
+    NEXT_PUBLIC_TIN_ID="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/tin.png" \
+    NEXT_PUBLIC_SSS="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/sss.png" \
+    NEXT_PUBLIC_PHILHEALTH="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/philhealth.png" \
+    NEXT_PUBLIC_PAGIBIG="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/pagibig.png" \
+    NEXT_PUBLIC_NBI="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/nbi.png" \
+    NEXT_PUBLIC_PASSPORT="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/passport.png" \
+    NEXT_PUBLIC_POST_OFFICE="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/post-office.png" \
+    NEXT_PUBLIC_DRIVER_LICENSE="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/driver-license.png" \
+    NEXT_PUBLIC_BRGY_CERTIFICATE="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/brgy-cert.png" \
+    NEXT_PUBLIC_STEP_1="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/step-1.png" \
+    NEXT_PUBLIC_STEP_2="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/step-2.png" \
+    NEXT_PUBLIC_STEP_3="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/step-3.png" \
+    NEXT_PUBLIC_STEP_4="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/step-4.png" \
+    NEXT_PUBLIC_UMID_CARD_3="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%203.png" \
+    NEXT_PUBLIC_UMID_CARD_5="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%205.png" \
+    NEXT_PUBLIC_UMID_CARD_8="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%208.png" \
+    NEXT_PUBLIC_UMID_CARD_11="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2011.png" \
+    NEXT_PUBLIC_UMID_CARD_10="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2010.png" \
+    NEXT_PUBLIC_UMID_CARD_4="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%204.png" \
+    NEXT_PUBLIC_UMID_CARD_12="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2012.png" \
+    NEXT_PUBLIC_UMID_CARD_9="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%209.png" \
+    NEXT_PUBLIC_UMID_CARD_6="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%206.png" \
+    NEXT_PUBLIC_UMID_CARD_7="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%207.png"
 
-ENV NEXT_PUBLIC_ILLUSTRATOR=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/illustrator_1.png
-ENV NEXT_PUBLIC_KARERAMO_LOGO_2=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/kareramo-logo-2.png
-ENV NEXT_PUBLIC_UMID_CARD_3=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%203.png
-ENV NEXT_PUBLIC_UMID_CARD_4=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%204.png
-ENV NEXT_PUBLIC_UMID_CARD_5=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%205.png
-ENV NEXT_PUBLIC_UMID_CARD_6=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%206.png
-ENV NEXT_PUBLIC_UMID_CARD_7=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%207.png
-ENV NEXT_PUBLIC_UMID_CARD_8=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%208.png
-ENV NEXT_PUBLIC_UMID_CARD_9=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%209.png
-ENV NEXT_PUBLIC_UMID_CARD_10=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2010.png
-ENV NEXT_PUBLIC_UMID_CARD_11=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2011.png
-ENV NEXT_PUBLIC_UMID_CARD_12=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/UMID%20Card%20-%2012.png
 
 
 COPY --from=deps /app/node_modules ./node_modules
