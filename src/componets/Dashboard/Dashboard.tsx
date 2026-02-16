@@ -77,7 +77,7 @@ const Dashboard = () => {
           {/* Left Stack */}
           <Stack flex={1} gap={5}>
             <Title size={isMobile ? "10vw" : "5vw"} c="#043873">
-              Hello, {_.upperCase(String(session.data?.user?.name))} !
+              Hello, {_.upperCase(String(session.data?.user?.name)?.split(' ')[0])}!
             </Title>
 
             <Box
