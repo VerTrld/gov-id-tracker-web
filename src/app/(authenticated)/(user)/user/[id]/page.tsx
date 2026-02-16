@@ -9,12 +9,14 @@ import {
   Grid,
   GridCol,
   Group,
+  Loader,
   Paper,
   Stack,
   Text,
   Textarea,
   TextInput,
   Title,
+  UnstyledButton,
 } from "@mantine/core";
 
 import _ from "lodash";
@@ -26,12 +28,28 @@ import { IGovernmentIds } from "@/entities/IGovernmentIds";
 import { get, patch, post } from "@/utils/http-api";
 import { useDisclosure } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { IconMail, IconMapPin } from "@tabler/icons-react";
+import {
+  IconMail,
+  IconMapPin,
+  IconPhoto,
+  IconUpload,
+} from "@tabler/icons-react";
+import { useState } from "react";
+import { notifications } from "@mantine/notifications";
+import ViewImageModal from "@/componets/ViewImageModal/ViiewImageMoldal";
+import Image from "next/image";
+import { IViewImage } from "@/entities/IViewImage";
+import { useSession } from "next-auth/react";
 
 export default function GovernmentIds() {
   const params = useParams();
   const id = params.id;
   const router = useRouter();
+  const [userRequirementId, setUserRequirementId] = useState("");
+
+  const session = useSession();
+
+  console.log(session);
 
   const { data, refetch: refetchGovernmentIds } = useQuery({
     queryKey: ["selected-government-id"],
@@ -41,6 +59,15 @@ export default function GovernmentIds() {
       return res.data as IGovernmentIds;
     },
   });
+  const { data: imageView, refetch: refetchImageView } = useQuery<IViewImage[]>(
+    {
+      queryKey: ["upload", userRequirementId],
+      queryFn: async () => {
+        const res = await get(`/upload/view/${userRequirementId}`);
+        return res.data;
+      },
+    }
+  );
 
   const handleApplyGovernmentIds = async (governmentIdsId: string) => {
     try {
@@ -75,8 +102,10 @@ export default function GovernmentIds() {
       // alert('Error Updating Requirement: Try again later')
     }
   };
-
-  const [opened, { open, close }] = useDisclosure(false);
+  const [uploadOpened, { open: openUpload, close: closeUpload }] =
+    useDisclosure(false);
+  const [viewOpened, { open: openView, close: closeView }] =
+    useDisclosure(false);
 
   if (!data) {
     return (
@@ -85,6 +114,8 @@ export default function GovernmentIds() {
       </Flex>
     );
   }
+
+  console.log(data, imageView);
 
   return (
     <Flex
@@ -102,17 +133,65 @@ export default function GovernmentIds() {
         overflowY: "auto",
       }}
     >
-      {/* Upload modal */}
+      {/* Upload Modal */}
       <UploadModal
-        onSubmit={() => {}}
-        opened={opened}
-        onClose={close}
-        dropzoneProps={{
-          onDrop: (files) => console.log("Accepted files:", files),
-          onReject: (files) => console.log("Rejected files:", files),
-          maxSize: 5 * 1024 ** 2,
+        opened={uploadOpened} // separate state for upload modal
+        onClose={closeUpload}
+        onUpload={async (files) => {
+          if (!userRequirementId) return;
+
+          const formData = new FormData();
+          files.forEach((file) => formData.append("file", file));
+
+          try {
+            const res = await post(
+              `/upload/image/${userRequirementId}`,
+              formData
+            );
+
+            notifications.show({
+              title: res.status < 300 ? "Success" : "Error",
+              message:
+                res.status < 300 ? "Upload Successfully" : "Upload failed",
+              color: res.status < 300 ? "green" : "red",
+            });
+
+            // Refresh images after upload
+            await refetchImageView?.();
+            closeUpload();
+          } catch (err) {
+            console.error("Upload error:", err);
+            notifications.show({
+              title: "Error",
+              message: "Upload failed",
+              color: "red",
+            });
+          }
         }}
       />
+
+      {/* View Modal */}
+      <ViewImageModal opened={viewOpened} onClose={closeView}>
+        <Flex
+          direction="column"
+          w="100%"
+          h={400}
+          align="center"
+          justify="center"
+        >
+          {imageView?.[0]?.fileUrl ? (
+            <Image
+              src={imageView[0].fileUrl}
+              alt="image-view"
+              width={300}
+              height={400}
+              style={{ objectFit: "contain" }}
+            />
+          ) : (
+            <Text>No Image Upload</Text>
+          )}
+        </Flex>
+      </ViewImageModal>
 
       {/* Title and description */}
       {/* <Box>
@@ -174,48 +253,76 @@ export default function GovernmentIds() {
             }}
           >
             <Stack gap="lg" style={{ flex: 1 }}>
-              {data.RequirementLists?.[0]?.Requirements.map((item, i) => (
-                <Flex w={"100%"} gap={20} justify={"space-between"} key={i}>
-                  <Checkbox
-                    key={`${item.id + 34}`}
-                    label={`${item.label}`}
-                    size="lg"
-                    // checked={item.UserRequirements?.[0]?.isActive || false}
-                    defaultChecked={
-                      item.UserRequirements?.[0]?.isActive || false
-                    }
-                    onChange={async (event) => {
-                      console.log({
-                        sta: item,
-                        reqId: item.id,
-                        userReq: item.UserRequirements?.[0]?.id || "",
-                      });
-                      handleCheckToggle(
-                        item.id,
-                        item?.UserRequirements?.[0]?.id
-                      );
-                    }}
-                    styles={{
-                      input: {
-                        borderRadius: "50%", // 🔥 makes the box circular
-                        width: 30,
-                        height: 30,
-                      },
-                      icon: {
-                        borderRadius: "50%", // makes the check mark fit inside circle
-                      },
-                    }}
-                  />
+              {data.RequirementLists?.[0]?.Requirements.map((item) => (
+                <Flex w="100%" gap={20} align="center" key={item.id}>
+                  {/* LEFT SIDE (Checkbox + Label) */}
+                  <Flex style={{ flex: 1, minWidth: 0 }}>
+                    <Checkbox
+                      label={item.label}
+                      size="lg"
+                      // defaultChecked={
+                      //   item.UserRequirements?.[0]?.isActive || false
+                      // }
+                      // onChange={() => {
+                      //   handleCheckToggle(
+                      //     item.id,
+                      //     item?.UserRequirements?.[0]?.id
+                      //   );
+                      // }}
+                      defaultChecked={
+                        item.UserRequirements?.find(
+                          (v) => v.userAccountId === session.data?.user?.id
+                        )?.isActive || false
+                      }
+                      onChange={() => {
+                        const userReq = item.UserRequirements?.find(
+                          (v) => v.userAccountId === session.data?.user?.id
+                        );
+                        handleCheckToggle(item.id, String(userReq?.id));
+                      }}
+                      styles={{
+                        input: {
+                          borderRadius: "50%",
+                          width: 30,
+                          height: 30,
+                        },
+                        icon: {
+                          borderRadius: "50%",
+                        },
+                      }}
+                    />
+                  </Flex>
 
-                  <Button
-                    size="xs"
-                    variant="outline"
-                    color="blue"
-                    // onClick={uploadImage}
-                    style={{ width: 80, flexShrink: 0 }}
-                  >
-                    Upload
-                  </Button>
+                  {/* RIGHT SIDE (Buttons) */}
+                  <Flex gap={10}>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        const userReq = item.UserRequirements.find(
+                          (v) => v.userAccountId === session.data?.user?.id
+                        );
+                        if (!userReq) return;
+                        setUserRequirementId(userReq.id);
+                        openUpload();
+                      }}
+                    >
+                      <IconUpload color="#4F9CF9" size={20} />
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        const userReq = item.UserRequirements.find(
+                          (v) => v.userAccountId === session.data?.user?.id
+                        );
+                        if (!userReq) return;
+                        setUserRequirementId(userReq.id);
+                        openView();
+                      }}
+                    >
+                      <IconPhoto color="#4F9CF9" size={20} />
+                    </Button>
+                  </Flex>
                 </Flex>
               ))}
             </Stack>
