@@ -308,7 +308,7 @@ const page = () => {
                 <Flex
                     direction={"column"}
                     // bg={"#E6F1FE"}
-                    gap={50}
+                    gap={20}
                     style={{
                         // flex: 1,
                         padding: isMobile ? "60px 20px" : "100px",
@@ -329,7 +329,29 @@ const page = () => {
                         RA 11261
                     </Title>
 
-                    <Flex wrap="wrap" gap="md" p={20} justify={'center'} align={'center'}>
+                    <Flex align={'center'} justify={'center'}>
+                        <Image
+                            alt='saadds'
+                            src={`${process.env.NEXT_PUBLIC_UMID_CARD_3}`}
+                            height={isMobile ? 60 : 90}
+                            width={isMobile ? 60 : 90}
+                            style={{
+                                // flex: 1,
+                                //   width: "100%",
+                                //   height: isMobile ? 220 : 340,
+                                // background: "linear-gradient(135deg, #f1f3f5, #e9ecef)",
+                                // borderRadius: 16,
+                                // display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontWeight: 600,
+                                color: "#868e96",
+                            }}
+                        />
+                    </Flex>
+
+
+                    <Flex wrap="wrap" gap="md" pb={20} justify={'center'} align={'center'}>
                         {data.map((v, index) => (
                             <Flex
                                 align={'center'}

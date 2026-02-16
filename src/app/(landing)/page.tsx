@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Flex, Text, Title } from "@mantine/core";
+import { Box, Button, Divider, Flex, Text, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRef } from "react";
 import { Carousel } from "@mantine/carousel";
@@ -24,7 +24,7 @@ export default function Login() {
 
   return (
     <>
-      <Flex direction={"column"} flex={1} style={{ zIndex: -1 }}>
+      <Flex direction={"column"} flex={1} >
 
         {/* 1st Section */}
         <Flex
@@ -135,6 +135,7 @@ export default function Login() {
             >
               What ID Mo, Karera Mo Does
             </Title>
+            {/* <Divider color="rgb(4, 56, 115)" size="md" /> */}
 
             <Text ta="center" c="#0A58BD" style={{ maxWidth: 700 }}>
               ID Mo, Karera Mo helps first-time jobseekers organize and track
