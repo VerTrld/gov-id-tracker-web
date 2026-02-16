@@ -2,14 +2,19 @@
 import {
   Box,
   Button,
+  Center,
   CloseButton,
   Flex,
+  Grid,
+  GridCol,
   Group,
   Paper,
   Progress,
   RingProgress,
   Stack,
   Text,
+  Textarea,
+  TextInput,
   Title,
 } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
@@ -20,7 +25,7 @@ import Image from "next/image";
 import React from "react";
 import { IGovernmentIds } from "@/entities/IGovernmentIds";
 import { useParams } from "next/navigation";
-import { IconX } from "@tabler/icons-react";
+import { IconMail, IconMapPin, IconX } from "@tabler/icons-react";
 
 export default function ProgressPage() {
   const params = useParams();
@@ -40,112 +45,140 @@ export default function ProgressPage() {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <Flex flex={1} justify="center" align="center">
-      <Paper
-        withBorder
-        shadow="xl"
-        radius="lg"
-        w="95%"
-        h={isMobile ? "98vh" : "95vh"}
-        style={{
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Flex
-          direction="row"
-          align={"center"}
-          justify={"space-between"}
-          flex={1}
-          p={20}
-        >
-          <RingProgress
-            size={150}
-            thickness={15}
-            sections={[{ value: 87.5, color: "#0A58BD" }]}
-            rootColor="#B4B4B4"
-            label={
-              <Text c="black" fw={700} ta="center" size="md">
-                87.5%
-              </Text>
-            }
-          />
-
-          <Box
+    <Flex
+      direction="column"
+      gap={80}
+      style={{
+        flex: 1,
+        padding: isMobile ? "60px 20px" : "100px",
+      }}
+    >
+      <Flex flex={1} direction={"column"} justify={"center"} gap={30}>
+        <Flex>
+          <Paper
+            shadow="xl"
+            radius="md"
+            withBorder
             style={{
-              backgroundColor: "#e3e3e3", // light gray background
-              borderRadius: 12,
-              //   padding: 20,
-              maxWidth: 350,
-              position: "relative",
-              boxSizing: "border-box",
+              maxWidth: 1000,
+              width: "100%",
+              margin: "auto",
+              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Flex
-              direction={"column"}
-              style={{
-                padding: "20px 20px 0px 20px",
-              }}
-            >
-              {/* Close icon top right */}
+            <Grid gutter={0}>
+              {/* LEFT / BLUE */}
+              <GridCol span={{ base: 12, md: 5, lg: 5 }}>
+                <Box
+                  h="100%"
+                  p={40}
+                  bg="#0b5ed7"
+                  c="white"
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <Box
+                    style={{
+                      width: 120,
+                      height: 120,
+                      background: "#fff",
+                      borderRadius: "50%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      position: "relative",
+                    }}
+                  >
+                    <RingProgress
+                      size={180}
+                      thickness={15}
+                      roundCaps
+                      sections={[{ value: 70, color: "#4dabf7" }]}
+                      rootColor="#B4B4B4"
+                      label={
+                        <Center>
+                          <Text fw={700} size="30px" c="#043873">
+                            {70}%
+                          </Text>
+                        </Center>
+                      }
+                    />
+                  </Box>
 
-              <IconX style={{ position: "absolute", top: 10, right: 10 }} />
+                  {/* Decorative circles */}
+                  {/* <Box
+                    style={{
+                      position: "absolute",
+                      bottom: -20,
+                      right: 40,
+                      width: 120,
+                      height: 120,
+                      borderRadius: "50%",
+                      background: "rgba(255,255,255,0.25)",
+                    }}
+                  />
+                  <Box
+                    style={{
+                      position: "absolute",
+                      bottom: -90,
+                      right: -40,
+                      width: 160,
+                      height: 160,
+                      borderRadius: "50%",
+                      background: "rgba(255,255,255,0.15)",
+                    }}
+                  /> */}
+                </Box>
+              </GridCol>
 
-              {/* Text content */}
-              <Text fw={500} size="md" mb={8}>
-                Reminder!
-              </Text>
-              <Text size="sm" mb={20}>
-                You have not yet completed your National ID application.
-              </Text>
-            </Flex>
+              {/* RIGHT / FORM */}
+              <GridCol span={{ base: 12, md: 7, lg: 7 }}>
+                <Box h="100%">
+                  {/* Container for the progress items, centered vertically */}
 
-            {/* Button */}
-            <Button
-              fullWidth
-              radius="md"
-              style={{
-                backgroundColor: "#9ccaff",
-                color: "black",
-                height: 70,
-              }}
-            >
-              Complete Now
-            </Button>
-          </Box>
+                  <Flex flex={1} justify={"center"}>
+                    <Flex
+                      direction="column"
+                      w="90%"
+                      p={30}
+                      gap={10}
+                      align="center"
+                      justify="center"
+                      mih={350}
+                    >
+                      {Array.from({ length: 7 }).map((_, index) => (
+                        <Group
+                          key={index}
+                          gap={70}
+                          style={{
+                            width: "100%",
+                            justifyContent: "center",
+                          }} // center horizontally inside Group
+                        >
+                          <Title order={2}>Id</Title>
+                          <Progress
+                            value={50}
+                            radius="md"
+                            color="#A7CEFC"
+                            h={20}
+                            style={{ flex: 1 }}
+                          />
+                        </Group>
+                      ))}
+                    </Flex>
+                  </Flex>
+                </Box>
+              </GridCol>
+            </Grid>
+          </Paper>
         </Flex>
-
-        {/* Container for the progress items, centered vertically */}
-
-        <Flex flex={1} justify={"center"}>
-          <Flex
-            direction="column"
-            w="70%"
-            p={30}
-            gap={10}
-            align="center"
-            justify="center"
-          >
-            {Array.from({ length: 7 }).map((_, index) => (
-              <Group
-                key={index}
-                gap={70}
-                style={{ width: "100%", justifyContent: "center" }} // center horizontally inside Group
-              >
-                <Title>Id</Title>
-                <Progress
-                  value={50}
-                  radius="md"
-                  color="#A7CEFC"
-                  h={30}
-                  style={{ flex: 1 }}
-                />
-              </Group>
-            ))}
-          </Flex>
-        </Flex>
-      </Paper>
+      </Flex>
     </Flex>
   );
 }

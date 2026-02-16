@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
+  GridCol,
   Group,
   Indicator,
   Paper,
@@ -259,105 +261,157 @@ const Dashboard = () => {
               }}
               p={10}
             >
-              <Flex
-                direction="row"
-                gap={30}
-                wrap="wrap"
-                mb={10}
-                justify="center"
-              >
-                {images.slice(0, 5).map((src) => (
-                  <Paper
-                    key={src.label}
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      padding: 20,
-                      borderRadius: 12,
-                      backgroundColor: "white",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                      width: 110,
-                      height: 130,
-                      cursor: "default",
-                      gap: 10,
-                      justifyContent: "space-between",
-                    }}
-                    withBorder
-                    radius="md"
-                    p="md"
-                    shadow="sm"
-                  >
-                    <Image
-                      alt={src.label}
-                      src={`${src.image}`}
-                      width={70}
-                      height={60}
-                      style={{ borderRadius: 8, objectFit: "fill" }}
-                    />
-                    <Text
-                      size="sm"
-                      style={{
-                        whiteSpace: "normal",
-                        lineHeight: 1.2,
-                        textAlign: "center",
-                        color: "#043873",
-                        fontWeight: 700,
-                        fontSize: "10px",
-                      }}
-                    >
-                      {src.label}
-                    </Text>
-                  </Paper>
-                ))}
-              </Flex>
+              {isMobile ? (
+                <>
+                  <Grid justify="center" gutter="xl" p={10}>
+                    {images.map((src) => (
+                      <GridCol key={src.label} span={{ base: 6, sm: 4, md: 3 }}>
+                        <Paper
+                          withBorder
+                          radius="md"
+                          shadow="sm"
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            padding: 20,
+                            height: 130,
+                            gap: 10,
+                          }}
+                        >
+                          <Image
+                            alt={src.label}
+                            src={`${src.image}`}
+                            width={70}
+                            height={60}
+                            style={{
+                              objectFit: "contain",
+                            }}
+                          />
 
-              <Flex direction="row" gap={30} wrap="wrap" justify="center">
-                {images.slice(5, 10).map((src) => (
-                  <Paper
-                    key={src.label}
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      padding: 20,
-                      borderRadius: 12,
-                      backgroundColor: "white",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                      width: 110,
-                      height: 130,
-                      cursor: "default",
-                      gap: 10,
-                      justifyContent: "space-between",
-                    }}
-                    withBorder
-                    radius="md"
-                    p="md"
-                    shadow="sm"
+                          <Text
+                            ta="center"
+                            fw={700}
+                            c="#043873"
+                            size="xs"
+                            style={{
+                              width: 100,
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {src.label}
+                          </Text>
+                        </Paper>
+                      </GridCol>
+                    ))}
+                  </Grid>
+                </>
+              ) : (
+                <>
+                  <Flex
+                    direction="row"
+                    gap={30}
+                    wrap="wrap"
+                    mb={10}
+                    justify="center"
                   >
-                    <Image
-                      alt={src.label}
-                      src={`${src.image}`}
-                      width={70}
-                      height={60}
-                      style={{ borderRadius: 8 }}
-                    />
-                    <Text
-                      size="sm"
-                      style={{
-                        whiteSpace: "normal",
-                        lineHeight: 1.2,
-                        textAlign: "center",
-                        color: "#043873",
-                        fontWeight: 700,
-                        fontSize: "10px",
-                      }}
-                    >
-                      {src.label}
-                    </Text>
-                  </Paper>
-                ))}
-              </Flex>
+                    {images.slice(0, 5).map((src) => (
+                      <Paper
+                        key={src.label}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          padding: 20,
+                          borderRadius: 12,
+                          backgroundColor: "white",
+                          boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                          width: 110,
+                          height: 130,
+                          cursor: "default",
+                          gap: 10,
+                          justifyContent: "space-between",
+                        }}
+                        withBorder
+                        radius="md"
+                        p="md"
+                        shadow="sm"
+                      >
+                        <Image
+                          alt={src.label}
+                          src={`${src.image}`}
+                          width={70}
+                          height={60}
+                          style={{ borderRadius: 8, objectFit: "fill" }}
+                        />
+                        <Text
+                          size="sm"
+                          style={{
+                            whiteSpace: "normal",
+                            lineHeight: 1.2,
+                            textAlign: "center",
+                            color: "#043873",
+                            fontWeight: 700,
+                            fontSize: "10px",
+                          }}
+                        >
+                          {src.label}
+                        </Text>
+                      </Paper>
+                    ))}
+                  </Flex>
+
+                  <Flex direction="row" gap={30} wrap="wrap" justify="center">
+                    {images.slice(5, 10).map((src) => (
+                      <Paper
+                        key={src.label}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          padding: 20,
+                          borderRadius: 12,
+                          backgroundColor: "white",
+                          boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                          width: 110,
+                          height: 130,
+                          cursor: "default",
+                          gap: 10,
+                          justifyContent: "space-between",
+                        }}
+                        withBorder
+                        radius="md"
+                        p="md"
+                        shadow="sm"
+                      >
+                        <Image
+                          alt={src.label}
+                          src={`${src.image}`}
+                          width={70}
+                          height={60}
+                          style={{ borderRadius: 8 }}
+                        />
+                        <Text
+                          size="sm"
+                          style={{
+                            whiteSpace: "normal",
+                            lineHeight: 1.2,
+                            textAlign: "center",
+                            color: "#043873",
+                            fontWeight: 700,
+                            fontSize: "10px",
+                          }}
+                        >
+                          {src.label}
+                        </Text>
+                      </Paper>
+                    ))}
+                  </Flex>
+                </>
+              )}
             </Box>
           </Stack>
 
