@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   Group,
+  Indicator,
   Paper,
   Progress,
   RingProgress,
@@ -12,9 +13,10 @@ import {
   Title,
 } from "@mantine/core";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { Calendar } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
+import dayjs from "dayjs";
 
 const Dashboard = () => {
   const images = [
@@ -145,8 +147,31 @@ const Dashboard = () => {
           <Calendar
             style={{
               borderRadius: 20,
+              padding: 10,
               margin: 10,
+              height: '320px',
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
+            }}
+            renderDay={(date) => {
+              const isToday = dayjs(date).isSame(dayjs(), 'day');
+
+              return (
+                <Box
+                  style={{
+                    width: 34,
+                    height: 34,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '50%',
+                    backgroundColor: isToday ? '#043873' : 'transparent',
+                    color: isToday ? 'white' : 'inherit',
+                    fontWeight: isToday ? 600 : 400,
+                  }}
+                >
+                  {dayjs(date).date()}
+                </Box>
+              );
             }}
           />
         </Flex>
