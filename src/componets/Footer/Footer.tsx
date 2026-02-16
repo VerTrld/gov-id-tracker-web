@@ -12,10 +12,12 @@ import {
     IconBrandTwitterFilled,
 } from '@tabler/icons-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const Footer = () => {
     const isMobile = useMediaQuery('(max-width: 768px)');
+    const router = useRouter();
 
     return (
         <Flex
@@ -55,15 +57,7 @@ const Footer = () => {
                             maxWidth: isMobile ? '100%' : 600,
                         }}
                     >
-                        ID Mo, Karera Mo is an independent platform created to
-                        guide first time job seekers.
-                        <br />
-                        The developers and owners of this website are not
-                        affiliated with any government
-                        <br />
-                        agency. All applications are completed through official government websites
-                        <br />
-                        and offices.
+                        ID Mo, Karera Mo is an independent platform created to guide first time job seekers. The developers and owners of this website are not affiliated with any government agency. All applications are completed through official government websites and offices.
                     </Text>
                 </Flex>
             </Flex>
@@ -81,7 +75,7 @@ const Footer = () => {
                         direction={isMobile ? 'column' : 'row'}
                         align={'center'}
                     >
-                        <Button variant="subtle">
+                        <Button variant="subtle" onClick={() => router.push("/terms&condition")}>
                             <Text c="#FFFFFF">Terms & Privacy</Text>
                         </Button>
 

@@ -20,8 +20,10 @@ const RegisterUserModal = ({
   onLoginClick
 }: IRegisterUser) => {
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams.get('action');
+
   return (
     <Modal
       opened={opened}
@@ -105,11 +107,13 @@ const RegisterUserModal = ({
             :
             <Checkbox
               color="#334E68"
-
               size="xs"
               label={
-                <Text c='#334E68' fz={'12px'}> I agree to the Terms and Conditions. I understand that ID Mo,
-                  Karera Mo provides guidance only and is not connected to any government agency.</Text>
+
+                <>
+                  <Flex align={'center'} gap={5}> <Text c='#334E68' fz={'12px'}>I agree to the </Text><Text c='#043873' fz={'12px'} onClick={() => router.push("/terms&condition")} style={{ cursor: 'pointer' }}>  Terms and Conditions.</Text> <Text c='#334E68' fz={'12px'}> I understand that ID Mo,</Text></Flex>
+
+                  <Text c='#334E68' fz={'12px'}>Karera Mo provides guidance only and is not connected to any government agency.</Text>  </>
               }
               {...form.getInputProps('isTerms')}
             />}

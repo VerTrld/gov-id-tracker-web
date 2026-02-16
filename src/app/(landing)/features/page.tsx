@@ -79,10 +79,6 @@ const page = () => {
                     >
                         <Flex direction={'column'}
                             flex={1}
-                        // style={{
-                        //     borderRadius: 12, boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-
-                        // }}
                         >
                             <Paper
                                 shadow="xl"
