@@ -69,6 +69,8 @@ export default function GovernmentIds() {
     }
   );
 
+  console.log(data?.RequirementLists[0].Requirements.map((v) => v));
+
   const handleApplyGovernmentIds = async (governmentIdsId: string) => {
     try {
       const res = await post(`/user-government-ids/create/one`, {
@@ -78,29 +80,48 @@ export default function GovernmentIds() {
 
       if (res.status === 200 || res.status === 201) {
         refetchGovernmentIds();
-        alert(`Success Applying for ${data?.label}`);
+
+        await Promise.all(
+          data?.RequirementLists?.[0]?.Requirements?.map(async (v) => {
+            return await post("/user-requirement", {
+              requirementsId: v.id,
+            });
+          }) || []
+        );
       }
     } catch (error) {
       alert(`Error Applying for ${data?.label}: Try again later`);
+    } finally {
+      notifications.show({
+        title: "Success",
+        message: `Success Applying for ${data?.label}`,
+        color: "green",
+      });
     }
   };
 
-  const handleCheckToggle = async (
-    requirementsId: string,
-    userRequirementId: string
-  ) => {
+  // const handleCheckToggle = async (requirementsId: string) => {
+  //   try {
+  //     const res = await patch(`/user-requirement/update/toggle`, {
+  //       requirementsId,
+  //       id: userRequirementId || null,
+  //     });
+  //     if (res.status === 200 || res.status === 201) {
+  //       refetchGovernmentIds();
+  //       // alert('Success Updating Requirement')
+  //     }
+  //   } catch (error) {
+  //     // alert('Error Updating Requirement: Try again later')
+  //   }
+  // };
+
+  const handleCheckToggle = async (useRequirementId: string) => {
     try {
-      const res = await patch(`/user-requirement/update/toggle`, {
-        requirementsId,
-        id: userRequirementId || null,
-      });
+      const res = await patch(`/user-requirement/update/${useRequirementId}`);
       if (res.status === 200 || res.status === 201) {
         refetchGovernmentIds();
-        // alert('Success Updating Requirement')
       }
-    } catch (error) {
-      // alert('Error Updating Requirement: Try again later')
-    }
+    } catch (error) {}
   };
   const [uploadOpened, { open: openUpload, close: closeUpload }] =
     useDisclosure(false);
@@ -231,15 +252,9 @@ export default function GovernmentIds() {
                 </Button>
               </>
             }
-            items={
-              data?.RequirementLists?.[0]?.Requirements?.map((r) => {
-                return {
-                  id: r.id,
-                  isActive: r.UserRequirements?.[0]?.isActive || false,
-                  label: r.label,
-                };
-              }) || []
-            }
+            items={data?.RequirementLists?.[0]?.Requirements?.map((item) => {
+              return item;
+            })}
             uploadImage={open}
             onComplete={() => {
               const total = data?.RequirementLists?.[0].Requirements.reduce(
@@ -263,11 +278,16 @@ export default function GovernmentIds() {
                       // defaultChecked={
                       //   item.UserRequirements?.[0]?.isActive || false
                       // }
-                      onChange={() => {
-                        handleCheckToggle(
-                          item.id,
-                          item?.UserRequirements?.[0]?.id
-                        );
+                      onChange={async () => {
+                        // handleCheckToggle(
+                        //   item.id,
+                        //   item?.UserRequirements?.[0]?.id
+                        // );
+                        const userRequirementId = item.UserRequirements?.find(
+                          (v) => v.userAccountId === session.data?.user?.id
+                        )?.id;
+
+                        handleCheckToggle(String(userRequirementId));
                       }}
                       defaultChecked={
                         item.UserRequirements?.find(

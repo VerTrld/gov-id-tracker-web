@@ -15,16 +15,12 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import _ from "lodash";
+import { useSession } from "next-auth/react";
 import { PropsWithChildren, useMemo } from "react";
 
-export type ChecklistItem = {
-  id: string;
-  label: string;
-  isActive: boolean;
-};
-
 interface ChecklistModuleProps extends PropsWithChildren {
-  items: ChecklistItem[];
+  items: any[];
   buttonLabel?: string;
   onComplete?: () => void;
   uploadImage?: () => void;
@@ -42,17 +38,40 @@ export function ChecklistModule({
   // IMPORTANT: start empty, do NOT derive from items
   // const [checked, setChecked] = useState<Record<string, boolean>>({});
 
+  // const progress = useMemo(() => {
+  //   return Math.min(
+  //     items.reduce(
+  //       (sum, item) => (item.isActive ? sum + (1 / items.length) * 100 : sum),
+  //       0
+  //     ),
+  //     100
+  //   );
+  // }, [items]);
+
+  // console.log(items);
+
+  // const isComplete = progress === 100;
+
+  const session = useSession();
+
   const progress = useMemo(() => {
-    return Math.min(
-      items.reduce(
-        (sum, item) => (item.isActive ? sum + (1 / items.length) * 100 : sum),
-        0
-      ),
-      100
-    );
-  }, [items]);
+    const userId = session?.data?.user?.id;
+    if (!items || !userId) return 0;
+
+    const total = items.length;
+    if (total === 0) return 0;
+
+    const activeCount = _.filter(items, (item) =>
+      _.some(item.UserRequirements, { userAccountId: userId, isActive: true })
+    ).length;
+
+    return _.round((activeCount / total) * 100);
+  }, [items, session.data?.user?.id]);
 
   const isComplete = progress === 100;
+  console.log(progress);
+
+  console.log(progress);
 
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -119,7 +138,9 @@ export function ChecklistModule({
                   size={220}
                   thickness={15}
                   roundCaps
-                  sections={[{ value: progress, color: "#4dabf7" }]}
+                  sections={
+                    progress > 0 ? [{ value: progress, color: "#4dabf7" }] : []
+                  }
                   rootColor="#B4B4B4"
                   label={
                     <Center>

@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  Divider,
   Flex,
   Grid,
   GridCol,
@@ -15,13 +16,15 @@ import {
   Title,
 } from "@mantine/core";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Calendar } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { get } from "@/utils/http-api";
 
 const Dashboard = () => {
   const images = [
@@ -58,9 +61,40 @@ const Dashboard = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
 
+  const { data } = useQuery({
+    queryKey: ["user-governmentId"],
+    queryFn: async () => {
+      const res = await get(`/government-ids/read/all`);
+      return res.data;
+    },
+  });
+
   const session = useSession();
 
-  console.log(session.data?.user?.name);
+  const userId = session?.data?.user?.id;
+
+  // Compute overall progress
+  const overallProgress = useMemo(() => {
+    if (!data || !userId || data.length === 0) return 0;
+
+    // Map each GovernmentId to its progress
+    const itemProgresses = data.map((v: any) => {
+      const requirements =
+        v.RequirementLists?.flatMap((rl: any) => rl.Requirements || []) || [];
+
+      if (requirements.length === 0) return 0;
+
+      const completedCount = _.filter(requirements, (req) =>
+        _.some(req.UserRequirements, { userAccountId: userId, isActive: true })
+      ).length;
+
+      return (completedCount / requirements.length) * 100;
+    });
+
+    // Average all item progresses
+    const total = _.sum(itemProgresses);
+    return _.round(total / itemProgresses.length);
+  }, [data, userId]);
 
   return (
     <Paper
@@ -79,7 +113,8 @@ const Dashboard = () => {
           {/* Left Stack */}
           <Stack flex={1} gap={5}>
             <Title size={isMobile ? "10vw" : "5vw"} c="#043873">
-              Hello, {_.upperCase(String(session.data?.user?.name)?.split(' ')[0])}!
+              Hello,{" "}
+              {_.upperCase(String(session.data?.user?.name)?.split(" ")[0])}!
             </Title>
 
             <Box
@@ -170,17 +205,34 @@ const Dashboard = () => {
                 PERCENTAGE:
               </Text>
             </div>
-            <RingProgress
-              size={150}
-              thickness={15}
-              sections={[{ value: 87.5, color: "#0A58BD" }]}
-              rootColor="#B4B4B4"
-              label={
-                <Text c="black" fw={700} ta="center" size="md">
-                  87.5%
-                </Text>
-              }
-            />
+            <Box
+              style={{
+                width: 120,
+                height: 120,
+                background: "#fff",
+                borderRadius: "50%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                position: "relative",
+              }}
+            >
+              <RingProgress
+                size={150}
+                thickness={15}
+                sections={
+                  overallProgress > 0
+                    ? [{ value: overallProgress, color: "#4dabf7" }]
+                    : []
+                }
+                rootColor="#B4B4B4"
+                label={
+                  <Text c="black" fw={700} ta="center" size="md">
+                    {overallProgress}%
+                  </Text>
+                }
+              />
+            </Box>
           </Box>
 
           <Calendar
@@ -427,24 +479,41 @@ const Dashboard = () => {
               cursor: "pointer",
             }}
           >
-            <Text>In Progress</Text>
+            <Flex
+              direction="column"
+              w="100%"
+              p={10}
+              gap={15}
+              // align="stretch"
+              mih={350}
+            >
+              <Text>INPROGRESS</Text>
+              {data?.map((v: any, index: number) => {
+                const itemProgress = _.round(
+                  (_.filter(
+                    v.RequirementLists?.flatMap(
+                      (rl: any) => rl.Requirements || []
+                    ),
+                    (req) =>
+                      _.some(req.UserRequirements, {
+                        userAccountId: userId,
+                        isActive: true,
+                      })
+                  ).length /
+                    (v.RequirementLists?.flatMap(
+                      (rl: any) => rl.Requirements || []
+                    ).length || 1)) *
+                    100
+                );
 
-            <Group style={{ width: "100%" }}>
-              <Text>Id</Text>
-              <Progress value={50} style={{ flex: 1 }} />
-            </Group>
-            <Group style={{ width: "100%" }}>
-              <Text>Id</Text>
-              <Progress value={50} style={{ flex: 1 }} />
-            </Group>
-            <Group style={{ width: "100%" }}>
-              <Text>Id</Text>
-              <Progress value={50} style={{ flex: 1 }} />
-            </Group>
-            <Group style={{ width: "100%" }}>
-              <Text>Id</Text>
-              <Progress value={50} style={{ flex: 1 }} />
-            </Group>
+                return (
+                  <Group key={index} style={{ width: "100%" }}>
+                    <Text>{v.label}</Text>
+                    <Progress value={itemProgress} style={{ flex: 1 }} />
+                  </Group>
+                );
+              })}
+            </Flex>
           </Box>
         </Flex>
       </Flex>

@@ -22,27 +22,52 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { get, patch, post } from "@/utils/http-api";
 import Image from "next/image";
-import React from "react";
+import React, { useMemo } from "react";
 import { IGovernmentIds } from "@/entities/IGovernmentIds";
 import { useParams } from "next/navigation";
 import { IconMail, IconMapPin, IconX } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
+import _ from "lodash";
 
 export default function ProgressPage() {
   const params = useParams();
   const id = params.id;
 
-  const { data, refetch: refetchGovernmentIds } = useQuery({
-    queryKey: ["selected-government-id"],
+  const { data } = useQuery({
+    queryKey: ["user-governmentId"],
     queryFn: async () => {
-      const res = await get(`/government-ids/read/${id}`);
-      console.log({ data: res.data });
-      return res.data as IGovernmentIds;
+      const res = await get(`/government-ids/read/all`);
+      return res.data;
     },
   });
 
-  console.log(data);
-
   const isMobile = useMediaQuery("(max-width: 768px)");
+
+  const session = useSession();
+  const userId = session?.data?.user?.id;
+
+  // Compute overall progress
+  const overallProgress = useMemo(() => {
+    if (!data || !userId || data.length === 0) return 0;
+
+    // Map each GovernmentId to its progress
+    const itemProgresses = data.map((v: any) => {
+      const requirements =
+        v.RequirementLists?.flatMap((rl: any) => rl.Requirements || []) || [];
+
+      if (requirements.length === 0) return 0;
+
+      const completedCount = _.filter(requirements, (req) =>
+        _.some(req.UserRequirements, { userAccountId: userId, isActive: true })
+      ).length;
+
+      return (completedCount / requirements.length) * 100;
+    });
+
+    // Average all item progresses
+    const total = _.sum(itemProgresses);
+    return _.round(total / itemProgresses.length);
+  }, [data, userId]);
 
   return (
     <Flex
@@ -99,12 +124,16 @@ export default function ProgressPage() {
                       size={180}
                       thickness={15}
                       roundCaps
-                      sections={[{ value: 70, color: "#4dabf7" }]}
+                      sections={
+                        overallProgress > 0
+                          ? [{ value: overallProgress, color: "#4dabf7" }]
+                          : []
+                      }
                       rootColor="#B4B4B4"
                       label={
                         <Center>
                           <Text fw={700} size="30px" c="#043873">
-                            {70}%
+                            {overallProgress}%
                           </Text>
                         </Center>
                       }
@@ -142,35 +171,55 @@ export default function ProgressPage() {
                 <Box h="100%">
                   {/* Container for the progress items, centered vertically */}
 
-                  <Flex flex={1} justify={"center"}>
+                  <Flex justify="center">
                     <Flex
                       direction="column"
                       w="90%"
-                      p={30}
-                      gap={10}
-                      align="center"
+                      p={10}
+                      gap={20}
+                      align="stretch"
                       justify="center"
                       mih={350}
                     >
-                      {Array.from({ length: 7 }).map((_, index) => (
-                        <Group
-                          key={index}
-                          gap={70}
-                          style={{
-                            width: "100%",
-                            justifyContent: "center",
-                          }} // center horizontally inside Group
-                        >
-                          <Title order={2}>Id</Title>
-                          <Progress
-                            value={50}
-                            radius="md"
-                            color="#A7CEFC"
-                            h={20}
-                            style={{ flex: 1 }}
-                          />
-                        </Group>
-                      ))}
+                      {data?.map((v: any, index: number) => {
+                        const itemProgress = _.round(
+                          (_.filter(
+                            v.RequirementLists?.flatMap(
+                              (rl: any) => rl.Requirements || []
+                            ),
+                            (req) =>
+                              _.some(req.UserRequirements, {
+                                userAccountId: userId,
+                                isActive: true,
+                              })
+                          ).length /
+                            (v.RequirementLists?.flatMap(
+                              (rl: any) => rl.Requirements || []
+                            ).length || 1)) *
+                            100
+                        );
+
+                        return (
+                          <Flex key={v.id || index} align="center" gap={20}>
+                            <Text
+                              fz="20px"
+                              fw={700}
+                              style={{
+                                textAlign: "left",
+                              }}
+                            >
+                              {v.label}
+                            </Text>
+                            <Progress
+                              value={itemProgress}
+                              radius="md"
+                              color="#A7CEFC"
+                              h={20}
+                              style={{ flex: 1 }}
+                            />
+                          </Flex>
+                        );
+                      })}
                     </Flex>
                   </Flex>
                 </Box>
