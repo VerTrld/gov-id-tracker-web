@@ -15,7 +15,7 @@ const DocumentCard = ({ img, title }: IDocumentCard) => {
             gap={10}
             align={'center'}
             p={20}
-            justify={'space-around'}
+            justify={'space-evenly'}
             style={{
                 borderRadius: "20px",
                 boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
@@ -46,6 +46,7 @@ const DocumentCard = ({ img, title }: IDocumentCard) => {
             <Text ta={"center"}
                 style={{
                     fontWeight: 600,
+                    width: '130px',
                     // lineHeight: 1.15,
                     fontSize: 24,
                     color: "#043873",

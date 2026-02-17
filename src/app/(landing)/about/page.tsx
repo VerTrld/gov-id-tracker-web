@@ -391,7 +391,7 @@ const page = () => {
                     gap={80}
                     style={{
                         flex: 1,
-                        padding: isMobile ? '60px 20px' : '100px',
+                        padding: isMobile ? '60px 20px' : '50px 100px',
                     }}
                     bg={'#A7CEFC'}
                 >
@@ -413,11 +413,8 @@ const page = () => {
                             // marginBottom: 20,
                         }}>Disclaimer
                         </Title>
-                        <Text c={'#FFFFFF'} ta={'center'}>ID Mo, Karera Mo is an independent platform created by student developers. The developers and
-                            <br />
-                            owners of this website are not affiliated with any government agency. All applications and
-                            <br />
-                            certifications are completed through official government offices and websites.</Text>
+                        <Text c={'#FFFFFF'} ta={'center'}>ID Mo Karera Mo is an independent website created by student developers to help first-time job seekers organize and monitor their employment requirements. The platform functions solely as a reference and tracking tool. It is not affiliated with any government agency. All official applications, registrations, and certifications must be
+                            processed directly through the appropriate government offices and their authorized websites.</Text>
                     </Flex>
 
                 </Flex>

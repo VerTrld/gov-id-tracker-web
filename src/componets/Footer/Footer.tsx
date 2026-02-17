@@ -38,12 +38,13 @@ const Footer = () => {
                 gap={isMobile ? 20 : 0}
             >
                 <Flex align="center" gap={10} justify={'center'} direction={isMobile ? 'column' : "row"}>
-                    <Image alt="Logo"
-                        src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
-                        style={{ borderRadius: "50%" }}
-                        width={isMobile ? 40 : 60}
-                        height={isMobile ? 40 : 60}
-                    />
+                    <Flex style={{ borderRadius: "50%", backgroundColor: 'white', padding: '10px' }}>
+                        <Image alt="Logo"
+                            src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+                            width={isMobile ? 40 : 80}
+                            height={isMobile ? 40 : 80}
+                        /></Flex>
+
                     <Title c="#FFFFFF" style={{
                         lineHeight: 1.15,
                     }}>ID Mo, Karera Mo</Title>
@@ -84,11 +85,11 @@ const Footer = () => {
                         </Text>
                     </Flex>
 
-                    <Flex gap={5} align={'center'} justify={'center'}>
+                    {/* <Flex gap={5} align={'center'} justify={'center'}>
                         <IconBrandFacebookFilled color="#FFFFFF" />
                         <IconBrandTwitterFilled color="#FFFFFF" />
                         <IconBrandLinkedinFilled color="#FFFFFF" />
-                    </Flex>
+                    </Flex> */}
                 </Flex>
 
                 <Divider color='#FFFFFF' />

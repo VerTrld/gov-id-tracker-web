@@ -147,7 +147,7 @@ const page = () => {
                     gap={80}
                     style={{
                         flex: 1,
-                        padding: isMobile ? '30px' : '20px 100px 40px 100px',
+                        padding: isMobile ? '30px' : '20px 100px 60px 100px',
                     }}
                 >
                     {/* Hero */}
@@ -210,45 +210,6 @@ const page = () => {
 
                 </Flex>
 
-
-                {/* 6th Section */}
-                <Flex
-                    direction="column"
-                    gap={80}
-                    style={{
-                        flex: 1,
-                        padding: isMobile ? '60px 20px' : '50px',
-                    }}
-                    bg={'#A7CEFC'}
-                >
-                    {/* Hero */}
-                    <Flex
-                        gap={20}
-                        align="center"
-                        justify="space-between"
-                        direction={'column'}
-                        style={{ flex: 1 }}
-
-
-
-                    >
-                        <Title c={'#043873'} style={{
-                            // fontWeight: 900,
-                            lineHeight: 1.15,
-                            fontSize: isMobile ? 32 : 48,
-                            // marginBottom: 20,
-                        }}>
-                            Disclaimer
-                        </Title>
-
-                        <Text c={'#FFFFFF'} ta={'center'}>ID Mo, Karera Mo is an independent platform created by student developers. The developers and
-                            <br />
-                            owners of this website are not affiliated with any government agency. All applications and
-                            <br />
-                            certifications are completed through official government offices and websites.</Text>
-                    </Flex>
-
-                </Flex>
 
                 <Flex flex={1}>
                     <Footer />

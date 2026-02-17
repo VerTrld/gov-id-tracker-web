@@ -43,10 +43,11 @@ const DashboardNav = ({ children }: IDashboardNav) => {
           <Flex gap={"xs"} align={"center"}>
             <Image
               alt="Logo"
-              style={{ borderRadius: "50%" }}
+              style={{padding: '5px' }}
               src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
-              width={isMobile ? 40 : 50}
-              height={isMobile ? 40 : 50}
+              
+              width={isMobile ? 60 : 90}
+              height={isMobile ? 60 : 90}
             />
             <Title
               c={"#043873"}
@@ -65,34 +66,34 @@ const DashboardNav = ({ children }: IDashboardNav) => {
             <Flex gap={80} align={"center"}>
               <Flex gap={15} align={"center"}>
                 <Button variant="subtle" onClick={() => router.push("/")}>
-                  <Text c={navColor("/")} fw={600} ff={'Helvetica'}>Home</Text>
+                  <Text c={navColor("/")} fw={600} ff={'Helvetica'} >Home</Text>
                 </Button>
 
                 <Button variant="subtle" onClick={() => router.push("/about")}>
-                  <Text c={navColor("/about")} fw={600} ff={'Helvetica'}>About</Text>
+                  <Text c={navColor("/about")} fw={600} ff={'Helvetica'} >About</Text>
                 </Button>
 
                 <Button
                   variant="subtle"
                   onClick={() => router.push("/features")}
                 >
-                  <Text c={navColor("/features")} fw={600} ff={'Helvetica'}>Features</Text>
+                  <Text c={navColor("/features")} fw={600} ff={'Helvetica'} >Features</Text>
                 </Button>
 
                 <Button
                   variant="subtle"
                   onClick={() => router.push("/contact")}
                 >
-                  <Text c={navColor("/contact")} fw={600} ff={'Helvetica'}>Contact</Text>
+                  <Text c={navColor("/contact")} fw={600} ff={'Helvetica'} >Contact</Text>
                 </Button>
               </Flex>
 
               {session.data?.user?.name ? (
                 <Flex gap={15}>
                   <Button bg={"#A7CEFC"} onClick={() => router.push("/user/home")} >
-                    <Text c={"#4F9CF9"} fw={600} ff={'Helvetica'}>{session.data.user.name}</Text>
+                    <Text c={"#4F9CF9"} fw={600} ff={'Helvetica'} >{session.data.user.name}</Text>
                   </Button>
-                  <Button onClick={() => signOut()} fw={600} ff={'Helvetica'}>Logout</Button>
+                  <Button onClick={() => signOut()} fw={600} ff={'Helvetica'} >Logout</Button>
                 </Flex>
               ) : (
                 <Flex gap={15}>
@@ -101,7 +102,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                     bg={"#A7CEFC"}
                     radius={5}
                   >
-                    <Text c={"#043873"} fw={600} ff={'Helvetica'}>Log In</Text>
+                    <Text c={"#043873"} fw={600} ff={'Helvetica'} >Log In</Text>
                   </Button>
 
                   <Button
@@ -110,7 +111,7 @@ const DashboardNav = ({ children }: IDashboardNav) => {
                     radius={5}
                   >
                     <Flex gap={10} align={"center"}>
-                      <Text c="#FFFFFF" ta={"center"} fw={600} ff={'Helvetica'}>
+                      <Text c="#FFFFFF" ta={"center"} fw={600} ff={'Helvetica'} >
                         Sign Up
                       </Text>
                       <IconArrowNarrowRight color="#FFFFFF" stroke={3} />
