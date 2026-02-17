@@ -89,7 +89,7 @@ const Dashboard = () => {
         _.some(req.userRequirements, {
           userId,
           isCompleted: true,
-        }),
+        })
       ).length;
 
       return (completedCount / requirements.length) * 100;
@@ -197,6 +197,7 @@ const Dashboard = () => {
               alignContent: "center",
               alignItems: "center",
               textAlign: "center",
+              justifyContent: "center",
               margin: 10,
               gap: 20,
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
@@ -227,7 +228,7 @@ const Dashboard = () => {
                 thickness={15}
                 sections={
                   overallProgress > 0
-                    ? [{ value: overallProgress, color: "#4dabf7" }]
+                    ? [{ value: overallProgress, color: "#0A58BD" }]
                     : []
                 }
                 rootColor="#B4B4B4"
@@ -314,9 +315,10 @@ const Dashboard = () => {
                 justifyContent: "center",
                 gap: 10,
                 minHeight: 200,
+
                 boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
               }}
-              p={10}
+              p={isMobile ? "10px" : "20px  50px 20px 50px"}
             >
               {isMobile ? (
                 <>
@@ -374,6 +376,7 @@ const Dashboard = () => {
                     wrap="wrap"
                     mb={10}
                     justify="center"
+                    flex={1}
                   >
                     {images.slice(0, 5).map((src) => (
                       <Paper
@@ -383,11 +386,12 @@ const Dashboard = () => {
                           flexDirection: "column",
                           alignItems: "center",
                           padding: 20,
-                          borderRadius: 12,
+                          borderRadius: 20,
                           backgroundColor: "white",
                           boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                          width: 110,
-                          height: 130,
+                          // width: 110,
+                          // height: 130,
+                          flex: 1,
                           cursor: "default",
                           gap: 10,
                           justifyContent: "space-between",
@@ -397,31 +401,45 @@ const Dashboard = () => {
                         p="md"
                         shadow="sm"
                       >
-                        <Image
-                          alt={src.label}
-                          src={`${src.image}`}
-                          width={70}
-                          height={60}
-                          style={{ borderRadius: 8, objectFit: "fill" }}
-                        />
-                        <Text
-                          size="sm"
-                          style={{
-                            whiteSpace: "normal",
-                            lineHeight: 1.2,
-                            textAlign: "center",
-                            color: "#043873",
-                            fontWeight: 700,
-                            fontSize: "10px",
-                          }}
+                        <Flex
+                          style={{ height: "100%" }}
+                          justify={"center"}
+                          align={"center"}
+                          direction={"column"}
+                          gap={20}
                         >
-                          {src.label}
-                        </Text>
+                          <Image
+                            alt={src.label}
+                            src={`${src.image}`}
+                            width={70}
+                            height={60}
+                            style={{ borderRadius: 8, objectFit: "fill" }}
+                          />
+                          <Text
+                            size="sm"
+                            style={{
+                              whiteSpace: "normal",
+                              lineHeight: 1.2,
+                              textAlign: "center",
+                              color: "#043873",
+                              fontWeight: 700,
+                              fontSize: "10px",
+                            }}
+                          >
+                            {src.label}
+                          </Text>
+                        </Flex>
                       </Paper>
                     ))}
                   </Flex>
 
-                  <Flex direction="row" gap={30} wrap="wrap" justify="center">
+                  <Flex
+                    direction="row"
+                    gap={30}
+                    wrap="wrap"
+                    justify="center"
+                    flex={1}
+                  >
                     {images.slice(5, 10).map((src) => (
                       <Paper
                         key={src.label}
@@ -430,11 +448,12 @@ const Dashboard = () => {
                           flexDirection: "column",
                           alignItems: "center",
                           padding: 20,
-                          borderRadius: 12,
+                          borderRadius: 20,
                           backgroundColor: "white",
                           boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                          width: 110,
-                          height: 130,
+                          // width: 110,
+                          // height: 130,
+                          flex: 1,
                           cursor: "default",
                           gap: 10,
                           justifyContent: "space-between",
@@ -444,26 +463,34 @@ const Dashboard = () => {
                         p="md"
                         shadow="sm"
                       >
-                        <Image
-                          alt={src.label}
-                          src={`${src.image}`}
-                          width={70}
-                          height={60}
-                          style={{ borderRadius: 8 }}
-                        />
-                        <Text
-                          size="sm"
-                          style={{
-                            whiteSpace: "normal",
-                            lineHeight: 1.2,
-                            textAlign: "center",
-                            color: "#043873",
-                            fontWeight: 700,
-                            fontSize: "10px",
-                          }}
+                        <Flex
+                          style={{ height: "100%" }}
+                          justify={"center"}
+                          align={"center"}
+                          direction={"column"}
+                          gap={20}
                         >
-                          {src.label}
-                        </Text>
+                          <Image
+                            alt={src.label}
+                            src={`${src.image}`}
+                            width={70}
+                            height={60}
+                            style={{ borderRadius: 8 }}
+                          />
+                          <Text
+                            size="sm"
+                            style={{
+                              whiteSpace: "normal",
+                              lineHeight: 1.2,
+                              textAlign: "center",
+                              color: "#043873",
+                              fontWeight: 700,
+                              fontSize: "10px",
+                            }}
+                          >
+                            {src.label}
+                          </Text>
+                        </Flex>
                       </Paper>
                     ))}
                   </Flex>
@@ -501,11 +528,11 @@ const Dashboard = () => {
                       _.some(req.userRequirements, {
                         userId,
                         isCompleted: true,
-                      }),
+                      })
                   ).length /
                     (v.requirements?.flatMap((rl: any) => rl.requirement || [])
                       .length || 1)) *
-                    100,
+                    100
                 );
 
                 console.log({ itemProgress });
