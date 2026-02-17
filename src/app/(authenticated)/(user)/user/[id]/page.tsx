@@ -137,23 +137,23 @@ export default function GovernmentIds() {
 
   const openModal = () => modals.openConfirmModal({
     centered: true,
+    size: 'sm',
     radius: '15px',
     withCloseButton: false,
     groupProps: {
       align: 'center',
       justify: 'center',
+      p: 'md'
     },
     styles: {
-      root: {
-        padding: '100px'
-      },
+     
       title: {
         width: '100%',
         textAlign: 'center',
       },
     },
     title: (
-      <Flex direction={'column'} align={'center'} justify={'center'} ta={'center'} gap={10}>
+      <Flex direction={'column'} align={'center'} justify={'center'} ta={'center'} gap={10} p={'15px'}>
         <Image
           alt="Logo"
           style={{ padding: '5px' }}
@@ -166,7 +166,7 @@ export default function GovernmentIds() {
       </Flex>
     ),
     children: (
-      <Text size="sm" ta={'center'} c='#4F9CF9'>
+      <Text size="sm" ta={'center'} c='#4F9CF9' p={'20px'}>
         You have completed the required documents. You are now ready to apply for this ID.
       </Text>
     ),
