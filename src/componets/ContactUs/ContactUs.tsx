@@ -1,3 +1,4 @@
+import { post } from "@/utils/http-api";
 import {
   Box,
   Paper,
@@ -11,11 +12,54 @@ import {
   GridCol,
   Textarea,
 } from "@mantine/core";
+import { useForm, yupResolver } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { IconMail, IconMapPin } from "@tabler/icons-react";
+import * as y from "yup";
+
+const contactFormSchema = y
+  .object({
+    message: y.string().min(20).required(),
+    email: y.string().email().required(),
+    firstName: y.string().required(),
+    lastName: y.string().required(),
+  })
+  .required();
+
+type IContactForm = y.InferType<typeof contactFormSchema>;
 
 export default function ContactSection({ label }: { label: string }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
+
+  const contactForm = useForm<IContactForm>({
+    validate: yupResolver(contactFormSchema),
+    initialValues: {
+      message: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+    },
+  });
+
+  const handleSendMessage = contactForm.onSubmit(async (values) => {
+    try {
+      const { firstName, lastName, ...resValue } = values;
+      const res = await post("/email/create/one", {
+        ...resValue,
+        name: `${firstName} ${lastName}`,
+      });
+
+      if (res.status === 200 || res.status === 201) {
+        notifications.show({
+          message: "Successfuly send a message",
+        });
+        contactForm.reset();
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  });
   return (
     <Flex flex={1} direction={"column"} justify={"center"} gap={30}>
       {/* Header */}
@@ -123,8 +167,16 @@ export default function ContactSection({ label }: { label: string }) {
             <GridCol span={{ base: 12, md: 7, lg: 7 }}>
               <Box h="100%" p={40}>
                 <Group grow>
-                  <TextInput label="First Name" placeholder="First Name" />
-                  <TextInput label="Last Name" placeholder="Last Name" />
+                  <TextInput
+                    label="First Name"
+                    placeholder="First Name"
+                    {...contactForm.getInputProps("firstName")}
+                  />
+                  <TextInput
+                    label="Last Name"
+                    placeholder="Last Name"
+                    {...contactForm.getInputProps("lastName")}
+                  />
                 </Group>
 
                 <TextInput
@@ -132,6 +184,7 @@ export default function ContactSection({ label }: { label: string }) {
                   label="Email"
                   placeholder="Email"
                   w={"50%"}
+                  {...contactForm.getInputProps("email")}
                 />
 
                 <Textarea
@@ -144,10 +197,17 @@ export default function ContactSection({ label }: { label: string }) {
                       borderBottom: "1px solid #ccc",
                     },
                   }}
+                  {...contactForm.getInputProps("message")}
                 />
 
                 <Flex w={"100%"} justify={"end"}>
-                  <Button mt="xl" radius="md">
+                  <Button
+                    mt="xl"
+                    radius="md"
+                    onClick={() => {
+                      handleSendMessage();
+                    }}
+                  >
                     Send Message
                   </Button>
                 </Flex>
