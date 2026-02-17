@@ -18,7 +18,7 @@ interface IGovernmentIdModal extends ModalProps {
 
 export const GovernmentIdModal = ({ opened, onClose, form, onSubmit }: IGovernmentIdModal) => {
     // Fetch existing requirements
-    const { data: requirements } = useQuery({
+    const { data: requirements, refetch } = useQuery({
         queryKey: ["requirements"],
         queryFn: async () => {
             const res = await get(`/requirements/read/all`);
@@ -55,7 +55,7 @@ export const GovernmentIdModal = ({ opened, onClose, form, onSubmit }: IGovernme
 
             <Box
                 component="form"
-                onSubmit={form.onSubmit(() => onSubmit())}
+                onSubmit={form.onSubmit(() => { onSubmit(), refetch() })}
                 style={{
                     width: '100%',
                     maxWidth: 400,

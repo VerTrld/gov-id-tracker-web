@@ -49,7 +49,6 @@ export default function Page() {
     //     return matchesSearch && matchesFilter;
     // });
 
-    console.log({filteredUsers})
 
     // ---------------- GOVERNMENT IDS QUERY ----------------
     const { data: idTypes, isLoading: idsLoading, refetch: refetchIds } = useQuery({
