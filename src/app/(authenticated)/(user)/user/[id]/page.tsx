@@ -146,7 +146,7 @@ export default function GovernmentIds() {
       p: 'md'
     },
     styles: {
-     
+
       title: {
         width: '100%',
         textAlign: 'center',
@@ -411,7 +411,16 @@ export default function GovernmentIds() {
           </ChecklistModule>
         </Box>
       ) : (
-        <Flex>
+        <Flex direction={'column'} align={'center'} justify={'center'} p={20} gap={10} w={'60%'}>
+          <Title c={'#043873'}
+            style={{
+              fontWeight: 900,
+              lineHeight: 1.15,
+              fontSize: 32,
+              marginBottom: 20,
+              textAlign:'center'
+            }}> Are you sure you wanna go through with this ID application?
+          </Title>
           <Button onClick={() => handleApplyGovernmentIds(data.id)}>
             Apply
           </Button>
