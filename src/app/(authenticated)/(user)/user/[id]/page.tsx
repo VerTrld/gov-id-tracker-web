@@ -66,7 +66,7 @@ export default function GovernmentIds() {
         const res = await get(`/upload/view/${userRequirementId}`);
         return res.data;
       },
-    },
+    }
   );
 
   const handleApplyGovernmentIds = async (governmentIdsId: string) => {
@@ -162,7 +162,7 @@ export default function GovernmentIds() {
           try {
             const res = await post(
               `/upload/image/${userRequirementId}`,
-              formData,
+              formData
             );
 
             notifications.show({
@@ -201,7 +201,14 @@ export default function GovernmentIds() {
               alt="image-view"
               width={300}
               height={400}
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "contain", cursor: "pointer" }}
+              onClick={() =>
+                window.open(
+                  imageView[0].fileUrl,
+                  "_blank",
+                  "noopener,noreferrer"
+                )
+              }
             />
           ) : (
             <Text>No Image Upload</Text>
@@ -256,7 +263,7 @@ export default function GovernmentIds() {
             onComplete={() => {
               const total = data?.requirements?.reduce(
                 (sum: any, item: any) => sum + item.value,
-                0,
+                0
               );
 
               if (total === 100 && data?.officialUrls) {
@@ -280,7 +287,7 @@ export default function GovernmentIds() {
                       }}
                       defaultChecked={
                         r.requirement.userRequirements?.find(
-                          (v) => v.userId === session.data?.user?.id,
+                          (v) => v.userId === session.data?.user?.id
                         )?.isCompleted || false
                       }
                       // onChange={() => {
@@ -307,12 +314,17 @@ export default function GovernmentIds() {
                     <Button
                       variant="outline"
                       onClick={() => {
-                        const userReq = r.userRequirements.find(
-                          (v) => v.userId === session.data?.user?.id,
+                        // const userReq = r.userRequirements.find(
+                        //   (v) => v.userId === session.data?.user?.id,
+                        // );
+                        // if (!userReq) return;
+                        setUserRequirementId(
+                          r.requirement.userRequirements?.[0]?.id
                         );
-                        if (!userReq) return;
-                        setUserRequirementId(userReq.id);
+
                         openUpload();
+
+                        console.log(r.userRequirements?.[0].id);
                       }}
                     >
                       <IconUpload color="#4F9CF9" size={20} />
@@ -321,11 +333,13 @@ export default function GovernmentIds() {
                     <Button
                       variant="outline"
                       onClick={() => {
-                        const userReq = r.userRequirements.find(
-                          (v) => v.userId === session.data?.user?.id,
+                        // const userReq = r.userRequirements.find(
+                        //   (v) => v.userId === session.data?.user?.id
+                        // );
+                        // if (!userReq) return;
+                        setUserRequirementId(
+                          r.requirement.userRequirements?.[0]?.id
                         );
-                        if (!userReq) return;
-                        setUserRequirementId(userReq.id);
                         openView();
                       }}
                     >
