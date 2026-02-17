@@ -5,7 +5,7 @@ export const governmentIdsFormSchema = y.object({
     code: y.string().required(),
     officialUrls: y.string().required(),
     description: y.string().optional(),
-    requirements: y.array(
+    requirementIds: y.array(
         y.object({
             id: y.string().optional(),
             label: y.string().required(),

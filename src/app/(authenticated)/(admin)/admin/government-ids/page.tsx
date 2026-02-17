@@ -1,6 +1,6 @@
 "use client";
 import { SelectCreatable } from "@/componets/SelectCreatable/SelectCreateble";
-import { IGovernmentIds } from "@/entities/IGovernmentIds";
+import { IdTypes } from "@/entities/IdTypes";
 import { IRequirement } from "@/entities/IRequirement";
 import { get, post } from "@/utils/http-api";
 import { ActionIcon, Button, Flex, Input, Text } from "@mantine/core";
@@ -25,7 +25,8 @@ const governmentIdsFormSchema = y
             label: y.string().required(),
           })
           .required(),
-      ).min(1)
+      )
+      .min(1)
       .required(),
   })
   .required();
@@ -42,17 +43,17 @@ const page = () => {
       description: "",
       requirements: [
         {
-          label: '',
-        }
+          label: "",
+        },
       ],
     },
   });
   const { data: governemntIds } = useQuery({
     queryKey: ["governmentIds"],
     queryFn: async () => {
-      const allGovernmentIds = await get(`/government-ids/read/all`);
+      const allGovernmentIds = await get(`/id-types/read/all`);
       console.log({ allGovernmentIds });
-      return (allGovernmentIds.data || []) as IGovernmentIds[];
+      return (allGovernmentIds.data || []) as IdTypes[];
     },
   });
 
@@ -82,10 +83,8 @@ const page = () => {
         alert("Created Government Ids");
         query.invalidateQueries({ queryKey: ["governmentIds"] });
       }
-    } catch (error) { }
+    } catch (error) {}
   });
-
-
 
   useEffect(() => {
     console.log({ governmentIdsForm });
@@ -172,30 +171,54 @@ const page = () => {
                   gap: 10,
                   padding: 10,
                   backgroundColor: "ghostwhite",
-                  border: "1px solid black",
+                  border: "1px sol1black",
                   borderRadius: 10,
                 }}
               >
                 <Flex gap={10}>
                   <SelectCreatable
-                    inputValue={governmentIdsForm.getInputProps(`.requirements.${reqI}.label`).value}
+                    inputValue={
+                      governmentIdsForm.getInputProps(
+                        `.requirements.${reqI}.label`,
+                      ).value
+                    }
                     onChangeOptionSelect={(e) => {
-                      const val = governmentIdsForm.getInputProps(`requirements.${reqI}.label`).value
-                      console.log({ e, val, isTrue: e === val })
+                      const val = governmentIdsForm.getInputProps(
+                        `requirements.${reqI}.label`,
+                      ).value;
+                      console.log({ e, val, isTrue: e === val });
                       if (e === val) {
-                        console.log({ tang: '' })
-                        governmentIdsForm.setFieldValue(`requirements.${reqI}.label`, '');
-                        governmentIdsForm.setFieldValue(`requirements.${reqI}.id`, undefined);
+                        console.log({ tang: "" });
+                        governmentIdsForm.setFieldValue(
+                          `requirements.${reqI}.label`,
+                          "",
+                        );
+                        governmentIdsForm.setFieldValue(
+                          `requirements.${reqI}.id`,
+                          undefined,
+                        );
                       }
                       if (requirements?.map((v) => v.label).includes(e)) {
                         const selected = requirements.find(
-                          (v) => v.label === e
+                          (v) => v.label === e,
                         );
-                        governmentIdsForm.setFieldValue(`requirements.${reqI}.label`, selected?.label);
-                        governmentIdsForm.setFieldValue(`requirements.${reqI}.id`, selected?.id);
+                        governmentIdsForm.setFieldValue(
+                          `requirements.${reqI}.label`,
+                          selected?.label,
+                        );
+                        governmentIdsForm.setFieldValue(
+                          `requirements.${reqI}.id`,
+                          selected?.id,
+                        );
                       } else {
-                        governmentIdsForm.setFieldValue(`requirements.${reqI}.label`, e);
-                        governmentIdsForm.setFieldValue(`requirements.${reqI}.id`, '');
+                        governmentIdsForm.setFieldValue(
+                          `requirements.${reqI}.label`,
+                          e,
+                        );
+                        governmentIdsForm.setFieldValue(
+                          `requirements.${reqI}.id`,
+                          "",
+                        );
                       }
                     }}
                     data={requirements?.map((v) => v.label) || []}

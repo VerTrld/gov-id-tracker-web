@@ -96,25 +96,25 @@ export const GovernmentIdModal = ({ opened, onClose, form, onSubmit }: IGovernme
                     <Flex direction={'column'} gap={5}>
                         <Text fz={'12px'} mt="sm" c='#334E68' fw={700}>Requirements</Text>
 
-                        {form.values?.requirements?.map((req, idx) => (
+                        {form.values?.requirementIds?.map((req, idx) => (
                             <Flex key={idx} gap="sm" align="center">
                                 <SelectCreatable
-                                    inputValue={form.getInputProps(`requirements.${idx}.label`).value}
+                                    inputValue={form.getInputProps(`requirementIds.${idx}.label`).value}
                                     onChangeOptionSelect={(value) => {
                                         const selected = requirements?.find((r: any) => r.label === value);
-                                        form.setFieldValue(`requirements.${idx}.label`, value);
-                                        form.setFieldValue(`requirements.${idx}.id`, selected?.id || "");
+                                        form.setFieldValue(`requirementIds.${idx}.label`, value);
+                                        form.setFieldValue(`requirementIds.${idx}.id`, selected?.id || "");
                                     }}
                                     data={requirements?.map((r: any) => r.label) || []}
                                     w="100%"
                                 />
-                                <ActionIcon onClick={() => form.removeListItem("requirements", idx)} color="red">
+                                <ActionIcon onClick={() => form.removeListItem("requirementIds", idx)} color="red">
                                     <IconMinus size={20} />
                                 </ActionIcon>
                             </Flex>
                         ))}
 
-                        <ActionIcon onClick={() => form.insertListItem("requirements", { label: "" })} color="green">
+                        <ActionIcon onClick={() => form.insertListItem("requirementIds", { label: "" })} color="green">
                             <IconPlus size={20} />
                         </ActionIcon>
                         <Button type="submit" radius={10} >Save</Button>

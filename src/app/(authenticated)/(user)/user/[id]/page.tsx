@@ -24,7 +24,7 @@ import { useParams, useRouter } from "next/navigation";
 // import { governmentIds } from "@/componets/UserNav/govenmentIds";
 import { ChecklistModule } from "@/componets/ChecklistModule/ChecklistModule";
 import UploadModal from "@/componets/UploadModal/UploadModal";
-import { IGovernmentIds } from "@/entities/IGovernmentIds";
+import { IdTypes } from "@/entities/IdTypes";
 import { get, patch, post } from "@/utils/http-api";
 import { useDisclosure } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
@@ -52,11 +52,11 @@ export default function GovernmentIds() {
   console.log(session);
 
   const { data, refetch: refetchGovernmentIds } = useQuery({
-    queryKey: ["selected-government-id"],
+    queryKey: ["selected-id-type"],
     queryFn: async () => {
-      const res = await get(`/government-ids/read/${id}`);
+      const res = await get(`/id-types/read/${id}`);
       console.log({ data: res.data });
-      return res.data as IGovernmentIds;
+      return res.data as IdTypes;
     },
   });
   const { data: imageView, refetch: refetchImageView } = useQuery<IViewImage[]>(
@@ -66,28 +66,23 @@ export default function GovernmentIds() {
         const res = await get(`/upload/view/${userRequirementId}`);
         return res.data;
       },
-    }
+    },
   );
-
-  console.log(data?.RequirementLists[0].Requirements.map((v) => v));
 
   const handleApplyGovernmentIds = async (governmentIdsId: string) => {
     try {
-      const res = await post(`/user-government-ids/create/one`, {
-        isActive: true,
-        governmentIdsId,
-      });
+      const res = await post(`/applications/create/${governmentIdsId}`);
 
       if (res.status === 200 || res.status === 201) {
         refetchGovernmentIds();
 
-        await Promise.all(
-          data?.RequirementLists?.[0]?.Requirements?.map(async (v) => {
-            return await post("/user-requirement", {
-              requirementsId: v.id,
-            });
-          }) || []
-        );
+        // await Promise.all(
+        //   data?.RequirementLists?.[0]?.Requirements?.map(async (v) => {
+        //     return await post("/user-requirement", {
+        //       requirementsId: v.id,
+        //     });
+        //   }) || [],
+        // );
       }
     } catch (error) {
       alert(`Error Applying for ${data?.label}: Try again later`);
@@ -117,7 +112,7 @@ export default function GovernmentIds() {
 
   const handleCheckToggle = async (useRequirementId: string) => {
     try {
-      const res = await patch(`/user-requirement/update/${useRequirementId}`);
+      const res = await patch(`/user-requirements/update/${useRequirementId}`);
       if (res.status === 200 || res.status === 201) {
         refetchGovernmentIds();
       }
@@ -167,7 +162,7 @@ export default function GovernmentIds() {
           try {
             const res = await post(
               `/upload/image/${userRequirementId}`,
-              formData
+              formData,
             );
 
             notifications.show({
@@ -225,7 +220,7 @@ export default function GovernmentIds() {
       {/* <Divider my="sm" /> */}
 
       {/* Requirements checklist */}
-      {!_.isEmpty(data.UserGovernmentIds) ? (
+      {!_.isEmpty(data.applications) ? (
         <Box
           style={{
             display: "flex",
@@ -252,14 +247,16 @@ export default function GovernmentIds() {
                 </Button>
               </>
             }
-            items={data?.RequirementLists?.[0]?.Requirements?.map((item) => {
-              return item;
+            items={data?.requirements.map((r) => {
+              return {
+                ...r.requirement,
+              };
             })}
             uploadImage={open}
             onComplete={() => {
-              const total = data?.RequirementLists?.[0].Requirements.reduce(
+              const total = data?.requirements?.reduce(
                 (sum: any, item: any) => sum + item.value,
-                0
+                0,
               );
 
               if (total === 100 && data?.officialUrls) {
@@ -268,31 +265,23 @@ export default function GovernmentIds() {
             }}
           >
             <Stack gap="lg" style={{ flex: 1 }}>
-              {data.RequirementLists?.[0]?.Requirements.map((item) => (
-                <Flex w="100%" gap={20} align="center" key={item.id}>
+              {data.requirements?.map((r) => (
+                <Flex w="100%" gap={20} align="center" key={r.id}>
                   {/* LEFT SIDE (Checkbox + Label) */}
                   <Flex style={{ flex: 1, minWidth: 0 }}>
                     <Checkbox
-                      label={item.label}
+                      label={r.requirement.label}
                       size="lg"
                       // defaultChecked={
                       //   item.UserRequirements?.[0]?.isActive || false
                       // }
                       onChange={async () => {
-                        // handleCheckToggle(
-                        //   item.id,
-                        //   item?.UserRequirements?.[0]?.id
-                        // );
-                        const userRequirementId = item.UserRequirements?.find(
-                          (v) => v.userAccountId === session.data?.user?.id
-                        )?.id;
-
-                        handleCheckToggle(String(userRequirementId));
+                        handleCheckToggle(r.requirement.id);
                       }}
                       defaultChecked={
-                        item.UserRequirements?.find(
-                          (v) => v.userAccountId === session.data?.user?.id
-                        )?.isActive || false
+                        r.requirement.userRequirements?.find(
+                          (v) => v.userId === session.data?.user?.id,
+                        )?.isCompleted || false
                       }
                       // onChange={() => {
                       //   const userReq = item.UserRequirements?.find(
@@ -318,8 +307,8 @@ export default function GovernmentIds() {
                     <Button
                       variant="outline"
                       onClick={() => {
-                        const userReq = item.UserRequirements.find(
-                          (v) => v.userAccountId === session.data?.user?.id
+                        const userReq = r.userRequirements.find(
+                          (v) => v.userId === session.data?.user?.id,
                         );
                         if (!userReq) return;
                         setUserRequirementId(userReq.id);
@@ -332,8 +321,8 @@ export default function GovernmentIds() {
                     <Button
                       variant="outline"
                       onClick={() => {
-                        const userReq = item.UserRequirements.find(
-                          (v) => v.userAccountId === session.data?.user?.id
+                        const userReq = r.userRequirements.find(
+                          (v) => v.userId === session.data?.user?.id,
                         );
                         if (!userReq) return;
                         setUserRequirementId(userReq.id);

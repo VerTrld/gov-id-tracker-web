@@ -1,3 +1,4 @@
+import { IRequirement } from "@/entities/IRequirement";
 import {
   Box,
   Button,
@@ -20,7 +21,7 @@ import { useSession } from "next-auth/react";
 import { PropsWithChildren, useMemo } from "react";
 
 interface ChecklistModuleProps extends PropsWithChildren {
-  items: any[];
+  items: IRequirement[];
   buttonLabel?: string;
   onComplete?: () => void;
   uploadImage?: () => void;
@@ -62,7 +63,10 @@ export function ChecklistModule({
     if (total === 0) return 0;
 
     const activeCount = _.filter(items, (item) =>
-      _.some(item.UserRequirements, { userAccountId: userId, isActive: true })
+      _.some(item.userRequirements, {
+        userId: userId,
+        isCompleted: true,
+      }),
     ).length;
 
     return _.round((activeCount / total) * 100);

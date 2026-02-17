@@ -25,6 +25,7 @@ import _ from "lodash";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { get } from "@/utils/http-api";
+import { IdTypes } from "@/entities/IdTypes";
 
 const Dashboard = () => {
   const images = [
@@ -62,10 +63,10 @@ const Dashboard = () => {
   const router = useRouter();
 
   const { data } = useQuery({
-    queryKey: ["user-governmentId"],
+    queryKey: ["id-types"],
     queryFn: async () => {
-      const res = await get(`/government-ids/read/all`);
-      return res.data;
+      const res = await get(`/id-types/read/all`);
+      return res.data as IdTypes[];
     },
   });
 
@@ -78,14 +79,17 @@ const Dashboard = () => {
     if (!data || !userId || data.length === 0) return 0;
 
     // Map each GovernmentId to its progress
-    const itemProgresses = data.map((v: any) => {
+    const itemProgresses = data.map((v) => {
       const requirements =
-        v.RequirementLists?.flatMap((rl: any) => rl.Requirements || []) || [];
+        v.requirements?.flatMap((rl) => rl.requirement || []) || [];
 
       if (requirements.length === 0) return 0;
 
       const completedCount = _.filter(requirements, (req) =>
-        _.some(req.UserRequirements, { userAccountId: userId, isActive: true })
+        _.some(req.userRequirements, {
+          userId,
+          isCompleted: true,
+        }),
       ).length;
 
       return (completedCount / requirements.length) * 100;
@@ -93,6 +97,7 @@ const Dashboard = () => {
 
     // Average all item progresses
     const total = _.sum(itemProgresses);
+    console.log({ itemProgresses });
     return _.round(total / itemProgresses.length);
   }, [data, userId]);
 
@@ -491,20 +496,19 @@ const Dashboard = () => {
               {data?.map((v: any, index: number) => {
                 const itemProgress = _.round(
                   (_.filter(
-                    v.RequirementLists?.flatMap(
-                      (rl: any) => rl.Requirements || []
-                    ),
+                    v.requirements?.flatMap((rl: any) => rl.requirement || []),
                     (req) =>
-                      _.some(req.UserRequirements, {
-                        userAccountId: userId,
-                        isActive: true,
-                      })
+                      _.some(req.userRequirements, {
+                        userId,
+                        isCompleted: true,
+                      }),
                   ).length /
-                    (v.RequirementLists?.flatMap(
-                      (rl: any) => rl.Requirements || []
-                    ).length || 1)) *
-                    100
+                    (v.requirements?.flatMap((rl: any) => rl.requirement || [])
+                      .length || 1)) *
+                    100,
                 );
+
+                console.log({ itemProgress });
 
                 return (
                   <Group key={index} style={{ width: "100%" }}>

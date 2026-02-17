@@ -1,10 +1,8 @@
-import { IRequirementList } from "./IRequirementList"
-import { IUserRequirement } from "./IUserRequirement"
+import { IUserRequirement } from "./IUserRequirement";
 
-export interface IRequirement extends IDefault{
-    label: string
-    UserRequirements: IUserRequirement[]
-    RequireRequirementLists: any
-    RequirementList?: IRequirementList
-    requirementListId?: string
+export interface IRequirement extends IDefault {
+  label: string;
+  desription?: string;
+  requirement: IRequirement;
+  userRequirements: IUserRequirement[];
 }

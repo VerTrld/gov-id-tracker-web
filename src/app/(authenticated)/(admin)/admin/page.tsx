@@ -16,7 +16,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 // --- ID types ---
-import { IGovernmentIds } from "@/entities/IGovernmentIds";
+import { IdTypes } from "@/entities/IdTypes";
 import { GovernmentIdModal } from "@/componets/GovernmentIdModal/GovernmentIdModal";
 import IGovernmentIdsForm, { governmentIdsFormSchema } from "@/schema/GovIds";
 
@@ -48,10 +48,10 @@ export default function Page() {
     });
 
     // ---------------- GOVERNMENT IDS QUERY ----------------
-    const { data: governmentIds, isLoading: idsLoading, refetch: refetchIds } = useQuery({
-        queryKey: ["governmentIds"],
+    const { data: idTypes, isLoading: idsLoading, refetch: refetchIds } = useQuery({
+        queryKey: ["id-types"],
         queryFn: async () => {
-            const res = await get(`/government-ids/read/all`);
+            const res = await get(`/id-types/read/all`);
             return res.data || [];
         },
     });
@@ -116,17 +116,17 @@ export default function Page() {
             code: "",
             officialUrls: "",
             description: "",
-            requirements: [{ label: "" }],
+            requirementIds: [{ label: "" }],
         },
     });
 
 
     const handleIds = govIdForm.onSubmit(async () => {
         try {
-            const res = await post(`/government-ids/create/one`, {
+            const res = await post(`/id-types/create/one`, {
                 ...govIdForm.values,
                 officialUrls: [govIdForm.values.officialUrls],
-                Requirements: govIdForm.values.requirements?.map(r => ({
+                requirementIds: govIdForm.values.requirementIds?.map(r => ({
                     id: r.id,
                     label: r.label,
                 })),
@@ -341,10 +341,10 @@ export default function Page() {
                                 <Center py="xl">
                                     <Loader color="#2d4b81" size="lg" />
                                 </Center>
-                            ) : governmentIds?.length ? (
+                            ) : idTypes?.length ? (
                                 <ScrollArea style={{  minHeight: 400 , maxHeight: 500 }}>
                                     <Stack gap="sm">
-                                        {governmentIds.map((id: IGovernmentIds, index: number) => (
+                                        {idTypes.map((id: IdTypes, index: number) => (
                                             <Card key={index} shadow="sm" padding="md">
                                                 <Text fw={600}>{id.label}</Text>
                                                 <Text size="sm" c="dimmed">

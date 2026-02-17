@@ -1,9 +1,14 @@
-import { IRequirement } from "./IRequirement"
+import { IRequirement } from "./IRequirement";
+import { IUserAccount } from "./IUserAccount";
 
-export interface IUserRequirement extends IDefault{
-    isActive: boolean
-  requirementsId: string
-  Requirement : IRequirement
-  userAccountId: string
-  UserAccount : any
+export interface IUserRequirement extends IDefault {
+  userId: string;
+  requirementId: string;
+
+  isCompleted: boolean;
+  fileUrl: string;
+  verified: boolean;
+
+  user: IUserAccount;
+  requirement: IRequirement;
 }

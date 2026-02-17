@@ -23,21 +23,21 @@ import { useQuery } from "@tanstack/react-query";
 import { get, patch, post } from "@/utils/http-api";
 import Image from "next/image";
 import React, { useMemo } from "react";
-import { IGovernmentIds } from "@/entities/IGovernmentIds";
 import { useParams } from "next/navigation";
 import { IconMail, IconMapPin, IconX } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import _ from "lodash";
+import { IdTypes } from "@/entities/IdTypes";
 
 export default function ProgressPage() {
   const params = useParams();
   const id = params.id;
 
   const { data } = useQuery({
-    queryKey: ["user-governmentId"],
+    queryKey: ["id-types"],
     queryFn: async () => {
-      const res = await get(`/government-ids/read/all`);
-      return res.data;
+      const res = await get(`/id-types/read/all`);
+      return res.data as IdTypes[];
     },
   });
 
@@ -53,12 +53,12 @@ export default function ProgressPage() {
     // Map each GovernmentId to its progress
     const itemProgresses = data.map((v: any) => {
       const requirements =
-        v.RequirementLists?.flatMap((rl: any) => rl.Requirements || []) || [];
+        v.requirements?.flatMap((rl: any) => rl.requirement || []) || [];
 
       if (requirements.length === 0) return 0;
 
       const completedCount = _.filter(requirements, (req) =>
-        _.some(req.UserRequirements, { userAccountId: userId, isActive: true })
+        _.some(req.userRequirements, { userId, isCompleted: true }),
       ).length;
 
       return (completedCount / requirements.length) * 100;
@@ -184,19 +184,19 @@ export default function ProgressPage() {
                       {data?.map((v: any, index: number) => {
                         const itemProgress = _.round(
                           (_.filter(
-                            v.RequirementLists?.flatMap(
-                              (rl: any) => rl.Requirements || []
+                            v.requirements?.flatMap(
+                              (rl: any) => rl.requirement || [],
                             ),
                             (req) =>
-                              _.some(req.UserRequirements, {
-                                userAccountId: userId,
-                                isActive: true,
-                              })
+                              _.some(req.userRequirements, {
+                                userId,
+                                isCompleted: true,
+                              }),
                           ).length /
-                            (v.RequirementLists?.flatMap(
-                              (rl: any) => rl.Requirements || []
+                            (v.requirements?.flatMap(
+                              (rl: any) => rl.requirement || [],
                             ).length || 1)) *
-                            100
+                            100,
                         );
 
                         return (

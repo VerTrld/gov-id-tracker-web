@@ -30,7 +30,7 @@ import {
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { get } from "@/utils/http-api";
-import { IGovernmentIds } from "@/entities/IGovernmentIds";
+import { IdTypes } from "@/entities/IdTypes";
 
 interface ResponsiveNavLayoutProps extends PropsWithChildren {}
 
@@ -43,10 +43,10 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
   const session = useSession();
 
   const { data } = useQuery({
-    queryKey: ["government-ids"],
+    queryKey: ["id-types"],
     queryFn: async () => {
-      const res = await get(`/government-ids/read/all`);
-      return res.data as IGovernmentIds[];
+      const res = await get(`/id-types/read/all`);
+      return res.data as IdTypes[];
     },
   });
 
