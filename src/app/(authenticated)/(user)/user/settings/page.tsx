@@ -16,68 +16,79 @@ import {
   TextInput,
   useMantineColorScheme,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { useForm, yupResolver } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { IconMoon, IconSun } from "@tabler/icons-react";
-import { useSession } from "next-auth/react";
+import { IconMoon, IconSun, IconYinYang } from "@tabler/icons-react";
+import { signOut, useSession } from "next-auth/react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
+import * as y from "yup";
+
+const userSchema = y
+  .object({
+    name: y.string().required(),
+    email: y.string().email().required(),
+    currentPassword: y.string().required(),
+    newPassword: y.string().required("New password is required"),
+    confirmPassword: y
+      .string()
+      .required("Confirm password is required")
+      .oneOf([y.ref("newPassword")], "Passwords must match"),
+  })
+  .required();
+
+type IUserForm = y.InferType<typeof userSchema>;
 
 export default function SettingsPage() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const { colorScheme, setColorScheme } = useMantineColorScheme();
 
   const session = useSession();
+  const router = useRouter();
+  const params = useSearchParams();
+  const action = params.get("action");
+  const baseUrl = usePathname();
 
-  console.log(session);
-
-  const [opened, setOpened] = useState(false);
-
-  const [user, setUser] = useState({
-    name: session.data?.user?.name || "",
-    email: session.data?.user?.email,
-    newPassword: "",
-    confirmPassword: "",
-  });
-
-  const form = useForm({
+  const userForm = useForm<IUserForm>({
     initialValues: {
-      name: user.name,
-      email: user.email,
-      // newPassword: user.newPassword,
-      // confirmPassword: user.confirmPassword,
+      name: session?.data?.user?.name || "",
+      email: session?.data?.user?.email || "",
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
     },
-
-    // validate: {
-    //   fullName: (value) => (value.trim().length === 0 ? 'Full Name is required' : null),
-    //   gender: (value) => (value ? null : 'Select a gender'),
-    //   country: (value) => (value ? null : 'Select a country'),
-    //   language: (value) => (value ? null : 'Select a language'),
-    //   timeZone: (value) => (value ? null : 'Select a time zone'),
-    // },
+    validate: yupResolver(userSchema),
   });
 
-  const handleSubmit = async (values: any) => {
-    // setUser((prev) => ({
-    //   ...prev,
-    //   ...values,
-    // }));
+  const handleSubmit = userForm.onSubmit(async (values) => {
+    try {
+      const res = await put("/user-account/update", {
+        name: values.name,
+        email: values.email,
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword,
+      });
 
-    const res = await put("/user-account/update", {
-      name: values.name,
-      email: values.email,
-      password: values.newPassword,
-    });
-
-    if (res.status === 200 || res.status === 201) {
+      if (res.status === 200 || res.status === 201) {
+        notifications.show({
+          title: "Update",
+          message: "Update Successfully",
+          color: "green",
+        });
+        userForm.reset();
+        router.replace(baseUrl);
+        signOut();
+      }
+    } catch (error) {
       notifications.show({
         title: "Update",
-        message: "Update Successfully",
-        color: "green",
+        message: "Update Failed",
+        color: "red",
       });
-      setOpened(false);
+      console.log({ error });
     }
-  };
+  });
 
   const colors = [
     "violet",
@@ -93,7 +104,8 @@ export default function SettingsPage() {
     "pink",
     "grape",
   ];
-  const avatarColor = colors[user?.name.charCodeAt(0) % colors.length];
+  const avatarColor =
+    colors[userForm.values.name.charCodeAt(0) % colors.length];
 
   return (
     <>
@@ -119,7 +131,7 @@ export default function SettingsPage() {
                 <Group justify={isMobile ? "center" : "flex-start"}>
                   <Avatar
                     size={isMobile ? 60 : 80}
-                    name={user?.name}
+                    name={session?.data?.user?.name || ""}
                     radius="50%"
                     color={avatarColor}
                     fw={600}
@@ -127,15 +139,18 @@ export default function SettingsPage() {
 
                   <Box ta={isMobile ? "center" : "left"}>
                     <Text fw={700} size="lg">
-                      {user.name}
+                      {session?.data?.user?.name || ""}
                     </Text>
                     <Text c="dimmed" size="sm" mt={2}>
-                      {user.email}
+                      {session?.data?.user?.email || ""}
                     </Text>
                   </Box>
                 </Group>
 
-                <Button onClick={() => setOpened(true)} fullWidth={isMobile}>
+                <Button
+                  onClick={() => router.push(`?action=edit`)}
+                  fullWidth={isMobile}
+                >
                   Edit
                 </Button>
               </Flex>
@@ -146,22 +161,23 @@ export default function SettingsPage() {
                   <Text size="xs" c="dimmed" mb={4}>
                     Full Name
                   </Text>
-                  <Text>{user.name}</Text>
+                  <Text>{session.data?.user?.name || ""}</Text>
                 </Box>
 
                 <Box>
                   <Text size="xs" c="dimmed" mb={4}>
                     Email
                   </Text>
-                  <Text>{user.email || "-"}</Text>
+                  <Text>{session.data?.user?.email || "-"}</Text>
                 </Box>
 
-                <TextInput
+                {/* <TextInput
                   label="Password"
                   type="password"
                   disabled
-                  value={user.newPassword}
-                />
+                  // value={userForm.values.newPassword}
+                  {...userForm.getInputProps("newPassword")}
+                /> */}
               </Flex>
 
               <Divider color="rgb(4, 56, 115)" size="md" />
@@ -175,7 +191,7 @@ export default function SettingsPage() {
                   checked={colorScheme === "dark"}
                   onChange={(event) =>
                     setColorScheme(
-                      event.currentTarget.checked ? "dark" : "light"
+                      event.currentTarget.checked ? "dark" : "light",
                     )
                   }
                 />
@@ -186,36 +202,44 @@ export default function SettingsPage() {
       </Flex>
 
       <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
+        opened={action === "edit"}
+        onClose={() => router.replace(baseUrl)}
         title="Edit Profile"
         centered
         size={isMobile ? "90%" : 600}
       >
-        <form onSubmit={form.onSubmit(handleSubmit)}>
+        <form onSubmit={handleSubmit}>
           <Stack>
             <TextInput
               label="Full Name"
               placeholder="Your Full Name"
-              {...form.getInputProps("name")}
+              {...userForm.getInputProps("name")}
             />
 
             <TextInput
               label="Email"
               placeholder="Email"
-              {...form.getInputProps("email")}
+              {...userForm.getInputProps("email")}
             />
 
             <TextInput
-              label="Password"
+              label="Current Password"
               placeholder="Enter you New Password"
-              {...form.getInputProps("newPassword")}
+              type="password"
+              {...userForm.getInputProps("currentPassword")}
+            />
+            <TextInput
+              label="New Password"
+              placeholder="Enter you New Password"
+              type="password"
+              {...userForm.getInputProps("newPassword")}
             />
 
             <TextInput
               label="Confirm Password"
               placeholder="Confirm Password"
-              {...form.getInputProps("confirmPassword")}
+              type="password"
+              {...userForm.getInputProps("confirmPassword")}
             />
 
             {/* <Select
@@ -227,7 +251,7 @@ export default function SettingsPage() {
             /> */}
 
             <Group mt="md">
-              <Button variant="default" onClick={() => setOpened(false)}>
+              <Button variant="default" onClick={() => router.replace(baseUrl)}>
                 Cancel
               </Button>
               <Button type="submit">Save</Button>

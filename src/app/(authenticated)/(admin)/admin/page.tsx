@@ -4,11 +4,11 @@ import { ContactCardGrid } from "@/componets/ContactCard/ContactCard";
 import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal";
 import { LoginType } from "@/enum/dashboard.enum";
 import IPersonShcema, { PersonSchema } from "@/schema/PersonSchema";
-import { post, get } from "@/utils/http-api";
-import { Avatar, Button, Card, Center, Flex, Grid, Group, Loader, Menu, Paper, ScrollArea, Stack, Tabs, Text, Title } from "@mantine/core";
+import { post, get, del } from "@/utils/http-api";
+import { ActionIcon, Avatar, Button, Card, Center, Flex, Grid, Group, Loader, Menu, Paper, ScrollArea, Stack, Tabs, Text, Title } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import { IconChevronDown, IconLogout, IconRefresh, IconSettings, IconUserPlus, IconUsers } from "@tabler/icons-react";
+import { IconChevronDown, IconLogout, IconRefresh, IconSettings, IconTrash, IconUserPlus, IconUsers } from "@tabler/icons-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { signOut } from "next-auth/react";
@@ -19,6 +19,8 @@ import { useState } from "react";
 import { IdTypes } from "@/entities/IdTypes";
 import { GovernmentIdModal } from "@/componets/GovernmentIdModal/GovernmentIdModal";
 import IGovernmentIdsForm, { governmentIdsFormSchema } from "@/schema/GovIds";
+import { openConfirmModal } from "@mantine/modals";
+import { IUserAccount } from "@/entities/IUserAccount";
 
 export default function Page() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -31,21 +33,21 @@ export default function Page() {
 
     // ---------------- USER QUERY ----------------
     const { data: users, isLoading: usersLoading, refetch: refetchUsers } = useQuery({
-        queryKey: ["getUser"],
+        queryKey: ["user-accounts"],
         queryFn: async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user-account/users/list`);
-            return res.data?.data;
+            const res = await get(`/user-account/users/list`);
+            return (res.data.data || []) as IUserAccount[];
         },
     });
 
-    const filteredUsers = users?.filter((user: any) => {
-        const matchesSearch = searchQuery
-            ? user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.email?.toLowerCase().includes(searchQuery.toLowerCase())
-            : true;
-        const matchesFilter = filterStatus ? user.status === filterStatus : true;
-        return matchesSearch && matchesFilter;
-    });
+    // const filteredUsers = users?.filter((user: any) => {
+    //     const matchesSearch = searchQuery
+    //         ? user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    //         user.email?.toLowerCase().includes(searchQuery.toLowerCase())
+    //         : true;
+    //     const matchesFilter = filterStatus ? user.status === filterStatus : true;
+    //     return matchesSearch && matchesFilter;
+    // });
 
     console.log({filteredUsers})
 
@@ -74,6 +76,35 @@ export default function Page() {
         name: "register",
     });
 
+    const handleDeleteIdTypes = (idType: IdTypes) => {
+            openConfirmModal({
+                centered: true,
+                title: `Confirming will delete Id Type: ${idType.label}`,
+                labels: {
+                    cancel: "Cancel",
+                    confirm: 'Confirm'
+                },
+                onConfirm:async () => {
+                    try {
+                        const res = await del(`/id-types/delete/${idType.id}`)
+
+                        if(res.status === 200 || res.status === 201){
+                            notifications.show({
+                                title: "Deletion Successful",
+                                message: `${idType.label} has been deleted!`,
+                                color: 'green'
+                            })
+                            refetchIds()
+                        }
+                    } catch (error) {
+                        console.log({error})
+                    }
+                },
+                // confirmProps
+            })
+    }
+
+       
 
 
     const handleRegister = registerForm.onSubmit(async () => {
@@ -295,8 +326,13 @@ export default function Page() {
                                 <Center py="xl">
                                     <Loader color="#2d4b81" size="lg" />
                                 </Center>
-                            ) : filteredUsers?.length ? (
-                                <ContactCardGrid contacts={filteredUsers} />
+                            ) : users?.length ? (
+                                <ContactCardGrid contacts={users.map(u => {
+                                    return{
+                                        user: u,
+                                        onClick: () => {}
+                                    }
+                                })} />
                             ) : (
                                 <Card shadow="xs" padding="xl" radius="md">
                                     <Center>
@@ -347,7 +383,8 @@ export default function Page() {
                                 <ScrollArea style={{  minHeight: 400 , maxHeight: 500 }}>
                                     <Stack gap="sm">
                                         {idTypes.map((id: IdTypes, index: number) => (
-                                            <Card key={index} shadow="sm" padding="md">
+                                            <Card key={index} shadow="sm" padding="md" style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                <Flex style={{flexDirection: 'column'}}>
                                                 <Text fw={600}>{id.label}</Text>
                                                 <Text size="sm" c="dimmed">
                                                     Code: {id.code}
@@ -355,6 +392,12 @@ export default function Page() {
                                                 <Text size="sm" c="dimmed">
                                                     URL: {id.officialUrls?.[0]}
                                                 </Text>
+                                                </Flex>
+                                                <Flex>
+                                                    <ActionIcon variant="light" c={'red'} onClick={() => {handleDeleteIdTypes(id)}}>
+                                                        <IconTrash />
+                                                    </ActionIcon>
+                                                </Flex>
                                             </Card>
                                         ))}
                                     </Stack>
