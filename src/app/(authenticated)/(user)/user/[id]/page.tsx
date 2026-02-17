@@ -40,6 +40,7 @@ import ViewImageModal from "@/componets/ViewImageModal/ViiewImageMoldal";
 import Image from "next/image";
 import { IViewImage } from "@/entities/IViewImage";
 import { useSession } from "next-auth/react";
+import { modals } from "@mantine/modals";
 
 export default function GovernmentIds() {
   const params = useParams();
@@ -116,7 +117,7 @@ export default function GovernmentIds() {
       if (res.status === 200 || res.status === 201) {
         refetchGovernmentIds();
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const [uploadOpened, { open: openUpload, close: closeUpload }] =
     useDisclosure(false);
@@ -132,6 +133,62 @@ export default function GovernmentIds() {
   }
 
   console.log(data, imageView);
+
+
+  const openModal = () => modals.openConfirmModal({
+    centered: true,
+    radius: '15px',
+    withCloseButton: false,
+    groupProps: {
+      align: 'center',
+      justify: 'center',
+    },
+    styles: {
+      root: {
+        padding: '100px'
+      },
+      title: {
+        width: '100%',
+        textAlign: 'center',
+      },
+    },
+    title: (
+      <Flex direction={'column'} align={'center'} justify={'center'} ta={'center'} gap={10}>
+        <Image
+          alt="Logo"
+          style={{ padding: '5px' }}
+          src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+
+          width={60}
+          height={60}
+        />
+        <Text ta={'center'} c='#0B69A3'>You’re all set!</Text>
+      </Flex>
+    ),
+    children: (
+      <Text size="sm" ta={'center'} c='#4F9CF9'>
+        You have completed the required documents. You are now ready to apply for this ID.
+      </Text>
+    ),
+    labels: { confirm: 'Apply for other ID', cancel: 'Back to Home' },
+    cancelProps: {
+      radius: '10px',
+      style: {
+        color: 'white',
+        backgroundColor: '#0A58BD',
+      }
+    },
+    onCancel: () => router.push("/user/home"),
+
+    confirmProps: {
+      radius: '10px',
+      style: {
+        color: 'white',
+        backgroundColor: '#4F9CF9',
+      }
+    },
+    onConfirm: () => router.push("/user/home"),
+  });
 
   return (
     <Flex
@@ -269,6 +326,8 @@ export default function GovernmentIds() {
               if (total === 100 && data?.officialUrls) {
                 window.open(data?.officialUrls?.[0], "_blank");
               }
+
+              openModal()
             }}
           >
             <Stack gap="lg" style={{ flex: 1 }}>
