@@ -33,7 +33,7 @@ import { useQuery } from "@tanstack/react-query";
 import { get } from "@/utils/http-api";
 import { IdTypes } from "@/entities/IdTypes";
 
-interface ResponsiveNavLayoutProps extends PropsWithChildren { }
+interface ResponsiveNavLayoutProps extends PropsWithChildren {}
 
 export function UserNav({ children }: ResponsiveNavLayoutProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -313,14 +313,27 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
               align="center"
               style={{ margin: "20px 20px 10px 20px" }}
             >
-              <Flex style={{ borderRadius: "50%", backgroundColor: 'white', padding: '10px' }}>
+              {/* <Flex
+                style={{
+                  borderRadius: "50%",
+                  backgroundColor: "white",
+                  padding: "10px",
+                }}
+              >
                 <Image
                   alt="logo"
                   width={70}
                   height={70}
                   src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
                 />
-              </Flex>
+              </Flex> */}
+
+              <Image
+                alt="logo"
+                width={90}
+                height={90}
+                src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+              />
               {/* <Text size="lg" fw={700} c="white" ta="center">
                 Government IDs
               </Text> */}
@@ -367,14 +380,26 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
             withCloseButton={false}
             title={
               <Flex justify={"center"} align={"center"} gap={20}>
-                <Flex style={{ borderRadius: "50%", backgroundColor: 'white', padding: '10px' }}>
+                {/* <Flex
+                  style={{
+                    borderRadius: "50%",
+                    backgroundColor: "white",
+                    padding: "10px",
+                  }}
+                >
                   <Image
                     alt="logo"
                     width={60}
                     height={60}
                     src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
                   />
-                </Flex>
+                </Flex> */}
+                <Image
+                  alt="logo"
+                  width={85}
+                  height={85}
+                  src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+                />
               </Flex>
             }
             overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
