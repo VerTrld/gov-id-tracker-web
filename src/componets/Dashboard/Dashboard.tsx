@@ -190,7 +190,7 @@ const Dashboard = () => {
           <Box
             bg={"#d3e4f9"}
             style={{
-              width: isMobile ? '100%' : 250,
+              width: isMobile ? "100%" : 250,
               borderRadius: 30,
               padding: 30,
               display: "flex",
@@ -277,7 +277,11 @@ const Dashboard = () => {
 
         {/* 2nd */}
         <Flex direction="row" gap={30} wrap="wrap" flex={1}>
-          <Stack gap={5} style={{ flex: "1 1 60%", minWidth: 280 }} pl={isMobile ? '' : 20}>
+          <Stack
+            gap={5}
+            style={{ flex: "1 1 60%", minWidth: 280 }}
+            pl={isMobile ? "" : 20}
+          >
             <Group gap={0} style={{ width: "fit-content" }}>
               <Button
                 size="xs"
@@ -503,7 +507,6 @@ const Dashboard = () => {
 
           <Box
             onClick={() => router.push("/user/progress")}
-
             style={{
               flex: "1 1 100px",
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
@@ -511,9 +514,8 @@ const Dashboard = () => {
               // width: 280,
               // padding: 10,
               margin: 10,
-              borderRadius: '30px',
+              borderRadius: "30px",
               cursor: "pointer",
-
             }}
           >
             <Flex
@@ -521,11 +523,12 @@ const Dashboard = () => {
               w="100%"
               p={10}
               gap={15}
-              bg={'rgba(4, 56, 115, 0.73)'}
-
-              style={{ borderRadius: '30px 30px 0 0' }}
+              bg={"rgba(4, 56, 115, 0.73)"}
+              style={{ borderRadius: "30px 30px 0 0" }}
             >
-              <Text ta={'center'} c={'white'} fw={700} fz={'lg'}>INPROGRESS</Text>
+              <Text ta={"center"} c={"white"} fw={700} fz={"lg"}>
+                INPROGRESS
+              </Text>
             </Flex>
             <Flex
               direction="column"
@@ -547,7 +550,7 @@ const Dashboard = () => {
                   ).length /
                     (v.requirements?.flatMap((rl: any) => rl.requirement || [])
                       .length || 1)) *
-                  100
+                    100
                 );
 
                 console.log({ itemProgress });

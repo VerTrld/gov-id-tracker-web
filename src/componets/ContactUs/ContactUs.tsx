@@ -114,6 +114,7 @@ export default function ContactSection({ label }: { label: string }) {
                   display: "flex",
                   flexDirection: "column",
                   borderRadius: "10px",
+                  overflow: "hidden",
                 }}
               >
                 <Title order={3}>Contact Information</Title>
