@@ -186,12 +186,13 @@ const Dashboard = () => {
           </Stack>
 
           {/* Right Boxes */}
+          {/* <Flex align={'center'} justify={'center'}> */}
           <Box
             bg={"#d3e4f9"}
             style={{
-              width: 250,
+              width: isMobile ? '100%' : 250,
               borderRadius: 30,
-              padding: 20,
+              padding: 30,
               display: "flex",
               flexDirection: "column",
               alignContent: "center",
@@ -199,7 +200,7 @@ const Dashboard = () => {
               textAlign: "center",
               justifyContent: "center",
               margin: 10,
-              gap: 20,
+              gap: 40,
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
             }}
           >
@@ -224,8 +225,8 @@ const Dashboard = () => {
               }}
             >
               <RingProgress
-                size={150}
-                thickness={15}
+                size={180}
+                thickness={20}
                 sections={
                   overallProgress > 0
                     ? [{ value: overallProgress, color: "#0A58BD" }]
@@ -240,6 +241,7 @@ const Dashboard = () => {
               />
             </Box>
           </Box>
+          {/* </Flex> */}
 
           <Calendar
             style={{
@@ -274,8 +276,8 @@ const Dashboard = () => {
         </Flex>
 
         {/* 2nd */}
-        <Flex direction="row" gap={10} wrap="wrap" flex={1}>
-          <Stack gap={5} style={{ flex: "1 1 60%", minWidth: 280 }}>
+        <Flex direction="row" gap={30} wrap="wrap" flex={1}>
+          <Stack gap={5} style={{ flex: "1 1 60%", minWidth: 280 }} pl={isMobile ? '' : 20}>
             <Group gap={0} style={{ width: "fit-content" }}>
               <Button
                 size="xs"
@@ -372,7 +374,7 @@ const Dashboard = () => {
                 <>
                   <Flex
                     direction="row"
-                    gap={30}
+                    gap={70}
                     wrap="wrap"
                     mb={10}
                     justify="center"
@@ -406,12 +408,12 @@ const Dashboard = () => {
                           justify={"center"}
                           align={"center"}
                           direction={"column"}
-                          gap={20}
+                          gap={30}
                         >
                           <Image
                             alt={src.label}
                             src={`${src.image}`}
-                            width={70}
+                            width={60}
                             height={60}
                             style={{ borderRadius: 8, objectFit: "fill" }}
                           />
@@ -423,7 +425,7 @@ const Dashboard = () => {
                               textAlign: "center",
                               color: "#043873",
                               fontWeight: 700,
-                              fontSize: "10px",
+                              fontSize: "12px",
                             }}
                           >
                             {src.label}
@@ -435,7 +437,7 @@ const Dashboard = () => {
 
                   <Flex
                     direction="row"
-                    gap={30}
+                    gap={70}
                     wrap="wrap"
                     justify="center"
                     flex={1}
@@ -468,12 +470,12 @@ const Dashboard = () => {
                           justify={"center"}
                           align={"center"}
                           direction={"column"}
-                          gap={20}
+                          gap={30}
                         >
                           <Image
                             alt={src.label}
                             src={`${src.image}`}
-                            width={70}
+                            width={60}
                             height={60}
                             style={{ borderRadius: 8 }}
                           />
@@ -485,7 +487,7 @@ const Dashboard = () => {
                               textAlign: "center",
                               color: "#043873",
                               fontWeight: 700,
-                              fontSize: "10px",
+                              fontSize: "12px",
                             }}
                           >
                             {src.label}
@@ -501,14 +503,17 @@ const Dashboard = () => {
 
           <Box
             onClick={() => router.push("/user/progress")}
+
             style={{
-              flex: "1 1 200px",
+              flex: "1 1 100px",
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
               minHeight: 120,
-              padding: 10,
+              // width: 280,
+              // padding: 10,
               margin: 10,
-              borderRadius: 30,
+              borderRadius: '30px',
               cursor: "pointer",
+
             }}
           >
             <Flex
@@ -516,10 +521,20 @@ const Dashboard = () => {
               w="100%"
               p={10}
               gap={15}
+              bg={'rgba(4, 56, 115, 0.73)'}
+
+              style={{ borderRadius: '30px 30px 0 0' }}
+            >
+              <Text ta={'center'} c={'white'} fw={700} fz={'lg'}>INPROGRESS</Text>
+            </Flex>
+            <Flex
+              direction="column"
+              w="100%"
+              p={20}
+              gap={15}
               // align="stretch"
               mih={350}
             >
-              <Text>INPROGRESS</Text>
               {data?.map((v: any, index: number) => {
                 const itemProgress = _.round(
                   (_.filter(
@@ -532,7 +547,7 @@ const Dashboard = () => {
                   ).length /
                     (v.requirements?.flatMap((rl: any) => rl.requirement || [])
                       .length || 1)) *
-                    100
+                  100
                 );
 
                 console.log({ itemProgress });

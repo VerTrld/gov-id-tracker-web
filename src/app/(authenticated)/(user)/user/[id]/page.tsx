@@ -418,8 +418,9 @@ export default function GovernmentIds() {
               lineHeight: 1.15,
               fontSize: 32,
               marginBottom: 20,
-              textAlign:'center'
-            }}> Are you sure you wanna go through with this ID application?
+              textAlign: 'center'
+            }}> 
+            Are you sure you want to proceed with this ID application?
           </Title>
           <Button onClick={() => handleApplyGovernmentIds(data.id)}>
             Apply

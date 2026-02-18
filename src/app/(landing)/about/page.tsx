@@ -44,6 +44,8 @@ const page = () => {
         'Official government websites for accurate information',
     ];
 
+ 
+
 
     return (
         <>
@@ -257,6 +259,7 @@ const page = () => {
 
                 {/* 4th Section */}
                 <Flex direction={'column'} bg={'#E6F1FE'} gap={80}
+                    id="section2"
                     style={{
                         flex: 1,
                         padding: isMobile ? '60px 20px' : '100px',
@@ -386,7 +389,7 @@ const page = () => {
                 </Flex>
 
                 {/* 6th Section */}
-                <Flex
+                {/* <Flex
                     direction="column"
                     gap={80}
                     style={{
@@ -395,7 +398,6 @@ const page = () => {
                     }}
                     bg={'#A7CEFC'}
                 >
-                    {/* Hero */}
                     <Flex
                         gap={40}
                         align="center"
@@ -407,17 +409,16 @@ const page = () => {
 
                     >
                         <Title c={'#043873'} style={{
-                            // fontWeight: 900,
                             lineHeight: 1.15,
                             fontSize: isMobile ? 32 : 48,
-                            // marginBottom: 20,
+                            
                         }}>Disclaimer
                         </Title>
                         <Text c={'#FFFFFF'} ta={'center'}>ID Mo Karera Mo is an independent website created by student developers to help first-time job seekers organize and monitor their employment requirements. The platform functions solely as a reference and tracking tool. It is not affiliated with any government agency. All official applications, registrations, and certifications must be
                             processed directly through the appropriate government offices and their authorized websites.</Text>
                     </Flex>
 
-                </Flex>
+                </Flex> */}
 
 
                 {/* Footer */}

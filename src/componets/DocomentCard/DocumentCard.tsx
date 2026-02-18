@@ -43,7 +43,8 @@ const DocumentCard = ({ img, title }: IDocumentCard) => {
                 }}
             />
 
-            <Text ta={"center"}
+            <Text 
+            // ta={"center"}
                 style={{
                     fontWeight: 600,
                     width: '130px',
