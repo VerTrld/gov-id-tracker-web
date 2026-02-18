@@ -25,7 +25,9 @@ export default function Login() {
 
   return (
     <>
-      <Flex direction={"column"} flex={1} style={{ zIndex: -1 }}>
+      <Flex direction={"column"} flex={1}
+        style={{ zIndex: -1 }}
+      >
 
         {/* 1st Section */}
         <Flex
@@ -42,7 +44,7 @@ export default function Login() {
             align="center"
             justify="space-around"
             direction={isMobile ? "column" : "row"}
-            style={{ flex: 1 }}
+          // style={{ flex: 1 }}
           >
             {/* Left Content */}
             <Box
@@ -80,8 +82,8 @@ export default function Login() {
                 size={isMobile ? "md" : "lg"}
                 c="#0A58BD"
                 style={{
-                  maxWidth: 520,
-                  margin: isMobile ? "0 auto 28px" : "0 0 36px",
+                  // maxWidth: 520,
+                  // margin: isMobile ? "0 auto 28px" : "0 0 36px",
                 }}
               >
                 Understand what documents you need, track your progress, and
@@ -111,7 +113,7 @@ export default function Login() {
               alt='saadds'
               src={`${process.env.NEXT_PUBLIC_LANDING_IMAGE}`}
               height={isMobile ? 220 : 400}
-              width={isMobile ? 430 : 690}
+              width={isMobile ? 330 : 690}
               style={{
                 borderRadius: "145px",
                 boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
@@ -157,6 +159,7 @@ export default function Login() {
           style={{
             flex: 1,
             padding: isMobile ? "60px 20px" : "100px",
+
           }}
         >
           <Title
@@ -177,11 +180,11 @@ export default function Login() {
             loop
             align="start"
             withIndicators
-            flex={1}
+            // flex={1}
             plugins={[autoplay.current]}
             onMouseEnter={autoplay.current.stop}
             onMouseLeave={autoplay.current.reset}
-          // style={{ border: "1px solid black" }}
+            style={{ width: isMobile ? '320px' : '100%', alignSelf: 'center', justifySelf: 'center' }}
           >
             {/* First Slide: Full-screen Hero */}
             {chunkedData.map((slideItems, slideIndex) => (
@@ -189,16 +192,18 @@ export default function Login() {
                 <Flex
                   direction="column"
                   style={{
-                    flex: 1,
-                    height: isMobile ? '100vh' : '50vh',
+                    // flex: 1,
+                    height: isMobile ? '150vh' : '50vh',
+
                   }}
                 >
                   <Flex
                     style={{
-                      flex: 1,
+                      // flex: 1,
                       padding: isMobile ? '40px 10px' : '80px',
                       flexDirection: isMobile ? 'column' : 'row',
-                      flexWrap: isMobile ? 'nowrap' : 'wrap',
+                      flexWrap: 'wrap',
+
                     }}
                     gap={isMobile ? 10 : 20}
                     justify={isMobile ? 'center' : 'space-evenly'}

@@ -23,7 +23,7 @@ const IDsCard = ({ desc, title, logo, color }: IIDsInfo) => {
       style={{
         borderRadius: "20px",
         boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
-        width: isMobile ? "75%" : "200px",
+        width: isMobile ? "95%" : "200px",
         height: isMobile ? "auto" : "300px", // auto height on mobile
         backgroundColor: color ? color : "#FFFFFF",
       }}
@@ -59,7 +59,7 @@ const IDsCard = ({ desc, title, logo, color }: IIDsInfo) => {
       {desc ? (
         <Text
           fz={isMobile ? "12px" : "14px"}
-          w={isMobile ? "80%" : "140px"}
+          w={isMobile ? "50%" : "140px"}
           ta="center"
           h={"110px"}
         >
