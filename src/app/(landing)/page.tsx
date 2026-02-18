@@ -13,6 +13,7 @@ import { IDInfo, idsInfo } from "@/componets/UserNav/govenmentIds";
 import _, { chunk } from "lodash";
 import IDsCard from "@/componets/IDsCard/IDsCard";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Login() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -24,7 +25,7 @@ export default function Login() {
 
   return (
     <>
-      <Flex direction={"column"} flex={1} >
+      <Flex direction={"column"} flex={1} style={{ zIndex: -1 }}>
 
         {/* 1st Section */}
         <Flex
@@ -298,7 +299,9 @@ export default function Login() {
               <Button
                 size="md"
                 radius="md"
-                onClick={() => router.push("/about")}
+                component={Link}
+                href="/about#section2"
+              // onClick={() => router.push("/about")}
               >
                 <Flex gap={10}>
                   <Text>Learn About the Certificate </Text>
