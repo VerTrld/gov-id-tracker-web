@@ -7,4 +7,5 @@ export interface IdTypes extends IDefault {
   description?: string;
   requirements: IRequirement[];
   applications: any[];
+  logoUrl: string;
 }
