@@ -60,16 +60,17 @@ const page = () => {
   const { data: requirements } = useQuery({
     queryKey: ["requirements"],
     queryFn: async () => {
-      const allGovernmentIds = await get(`/government-ids/read/all`);
+      const allGovernmentIds = await get(`/requirement/read/all`);
       console.log({ allGovernmentIds });
       return (allGovernmentIds.data || []) as IRequirement[];
     },
   });
 
   const handleCreateGovernmentIds = governmentIdsForm.onSubmit(async (e) => {
+    const { requirements, ...resReq } = e
     try {
       const res = await post(`/government-ids/create/one`, {
-        ...e,
+        ...resReq,
         officialUrls: [e.officialUrls],
         Requirements: e.requirements.map((r) => {
           return {

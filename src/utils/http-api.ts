@@ -1,9 +1,10 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { getSession } from "next-auth/react";
 
 const i = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 i.interceptors.request.use(async (request) => {
   const session: any = await getSession();
+  console.log({session})
   if (session) {
     request.headers.Authorization = `Bearer ${session.accessToken}`;
   }
@@ -16,8 +17,13 @@ export async function get(url: string) {
   return res;
 }
 
-export async function post<T>(url: string, data?: T) {
-  const res = await i.post<T>(url, data);
+export async function post<T>(url: string, data?: T, config?: AxiosRequestConfig<any>) {
+  const res = await i.post<T>(url, data, {
+    headers: {
+      ...config?.headers,
+    },
+    ...config,
+  });
   return res;
 }
 
@@ -30,15 +36,15 @@ export async function postAnonymous<T>(url: string, data?: T) {
   return res;
 }
 
-// export async function postForm<T>(url: string, data?: any) {
-//   const res = await i.post<T>(url, data, {
-//     headers: {
-//       ...data.getHeaders(),
-//       'Content-Type': 'multipart/form-data',
-//     }
-//   });
-//   return res;
-// }
+export async function postForm<T>(url: string, data?: any) {
+  const res = await i.post<T>(url, data, {
+    headers: {
+      ...data.getHeaders(),
+      'Content-Type': 'multipart/form-data',
+    }
+  });
+  return res;
+}
 
 export async function patch(url: string, data?: any) {
   const res = await i.patch(url, data);

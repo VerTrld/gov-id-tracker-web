@@ -4,23 +4,22 @@ import { ContactCardGrid } from "@/componets/ContactCard/ContactCard";
 import RegisterUserModal from "@/componets/RegisterUserModal/RegisterUserModal";
 import { LoginType } from "@/enum/dashboard.enum";
 import IPersonShcema, { PersonSchema } from "@/schema/PersonSchema";
-import { post, get, del } from "@/utils/http-api";
-import { ActionIcon, Avatar, Button, Card, Center, Flex, Grid, Group, Loader, Menu, Paper, ScrollArea, Stack, Tabs, Text, Title } from "@mantine/core";
+import { del, get, post } from "@/utils/http-api";
+import { ActionIcon, Avatar, Button, Card, Center, Flex, Group, Loader, Menu, Paper, ScrollArea, Stack, Tabs, Text, Title } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import { IconChevronDown, IconLogout, IconRefresh, IconSettings, IconTrash, IconUserPlus, IconUsers } from "@tabler/icons-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { signOut } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 // --- ID types ---
-import { IdTypes } from "@/entities/IdTypes";
 import { GovernmentIdModal } from "@/componets/GovernmentIdModal/GovernmentIdModal";
+import { IdTypes } from "@/entities/IdTypes";
+import { IUserAccount } from "@/entities/IUserAccount";
 import IGovernmentIdsForm, { governmentIdsFormSchema } from "@/schema/GovIds";
 import { openConfirmModal } from "@mantine/modals";
-import { IUserAccount } from "@/entities/IUserAccount";
 
 export default function Page() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -76,34 +75,34 @@ export default function Page() {
     });
 
     const handleDeleteIdTypes = (idType: IdTypes) => {
-            openConfirmModal({
-                centered: true,
-                title: `Confirming will delete Id Type: ${idType.label}`,
-                labels: {
-                    cancel: "Cancel",
-                    confirm: 'Confirm'
-                },
-                onConfirm:async () => {
-                    try {
-                        const res = await del(`/id-types/delete/${idType.id}`)
+        openConfirmModal({
+            centered: true,
+            title: `Confirming will delete Id Type: ${idType.label}`,
+            labels: {
+                cancel: "Cancel",
+                confirm: 'Confirm'
+            },
+            onConfirm: async () => {
+                try {
+                    const res = await del(`/id-types/delete/${idType.id}`)
 
-                        if(res.status === 200 || res.status === 201){
-                            notifications.show({
-                                title: "Deletion Successful",
-                                message: `${idType.label} has been deleted!`,
-                                color: 'green'
-                            })
-                            refetchIds()
-                        }
-                    } catch (error) {
-                        console.log({error})
+                    if (res.status === 200 || res.status === 201) {
+                        notifications.show({
+                            title: "Deletion Successful",
+                            message: `${idType.label} has been deleted!`,
+                            color: 'green'
+                        })
+                        refetchIds()
                     }
-                },
-                // confirmProps
-            })
+                } catch (error) {
+                    console.log({ error })
+                }
+            },
+            // confirmProps
+        })
     }
 
-       
+
 
 
     const handleRegister = registerForm.onSubmit(async () => {
@@ -149,20 +148,28 @@ export default function Page() {
             officialUrls: "",
             description: "",
             requirementIds: [{ label: "" }],
+            file: null,
         },
     });
 
 
     const handleIds = govIdForm.onSubmit(async () => {
+        let formData = new FormData();
+        formData.append("label", govIdForm.values.label);
+        formData.append("code", govIdForm.values.code);
+        [govIdForm.values.officialUrls].forEach((url, index) => {
+            formData.append(`officialUrls[${index}]`, url);
+        });
+        formData.append("description", govIdForm.values.description || '');
+        govIdForm.values.requirementIds?.forEach((r, index) => {
+            formData.append(`requirementIds[${index}][id]`, r.id || "");
+            formData.append(`requirementIds[${index}][label]`, r.label || "");
+        });
+        formData.append("file", govIdForm.values.file || '');
         try {
-            const res = await post(`/id-types/create/one`, {
-                ...govIdForm.values,
-                officialUrls: [govIdForm.values.officialUrls],
-                requirementIds: govIdForm.values.requirementIds?.map(r => ({
-                    id: r.id,
-                    label: r.label,
-                })),
-            });
+            const res = await post(`/id-types/create/one`,
+                formData
+            );
 
             if (res.status === 200 || res.status === 201) {
                 notifications.show({
@@ -327,9 +334,9 @@ export default function Page() {
                                 </Center>
                             ) : users?.length ? (
                                 <ContactCardGrid contacts={users.map(u => {
-                                    return{
+                                    return {
                                         user: u,
-                                        onClick: () => {}
+                                        onClick: () => { }
                                     }
                                 })} />
                             ) : (
@@ -379,21 +386,21 @@ export default function Page() {
                                     <Loader color="#2d4b81" size="lg" />
                                 </Center>
                             ) : idTypes?.length ? (
-                                <ScrollArea style={{  minHeight: 400 , maxHeight: 500 }}>
+                                <ScrollArea style={{ minHeight: 400, maxHeight: 500 }}>
                                     <Stack gap="sm">
                                         {idTypes.map((id: IdTypes, index: number) => (
-                                            <Card key={index} shadow="sm" padding="md" style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                                <Flex style={{flexDirection: 'column'}}>
-                                                <Text fw={600}>{id.label}</Text>
-                                                <Text size="sm" c="dimmed">
-                                                    Code: {id.code}
-                                                </Text>
-                                                <Text size="sm" c="dimmed">
-                                                    URL: {id.officialUrls?.[0]}
-                                                </Text>
+                                            <Card key={index} shadow="sm" padding="md" style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                <Flex style={{ flexDirection: 'column' }}>
+                                                    <Text fw={600}>{id.label}</Text>
+                                                    <Text size="sm" c="dimmed">
+                                                        Code: {id.code}
+                                                    </Text>
+                                                    <Text size="sm" c="dimmed">
+                                                        URL: {id.officialUrls?.[0]}
+                                                    </Text>
                                                 </Flex>
                                                 <Flex>
-                                                    <ActionIcon variant="light" c={'red'} onClick={() => {handleDeleteIdTypes(id)}}>
+                                                    <ActionIcon variant="light" c={'red'} onClick={() => { handleDeleteIdTypes(id) }}>
                                                         <IconTrash />
                                                     </ActionIcon>
                                                 </Flex>

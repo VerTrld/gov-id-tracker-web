@@ -1,14 +1,13 @@
 "use client";
 
-import { Modal, Button, Flex, ActionIcon, Text, ModalProps, TextInput, Box } from "@mantine/core";
+import { SelectCreatable } from "@/componets/SelectCreatable/SelectCreateble";
+import IGovernmentIdsForm from "@/schema/GovIds";
+import { get } from "@/utils/http-api";
+import { ActionIcon, Box, Button, FileInput, Flex, Modal, ModalProps, Text, TextInput } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
-import { SelectCreatable } from "@/componets/SelectCreatable/SelectCreateble";
-import { get, post } from "@/utils/http-api";
-import { useState } from "react";
 import Image from "next/image";
-import IGovernmentIdsForm from "@/schema/GovIds";
 
 interface IGovernmentIdModal extends ModalProps {
     onSubmit: () => void;
@@ -92,6 +91,7 @@ export const GovernmentIdModal = ({ opened, onClose, form, onSubmit }: IGovernme
                         mb="sm"
                         {...form.getInputProps("description")}
                     />
+                    <FileInput  {...form.getInputProps("file")} />
 
                     <Flex direction={'column'} gap={5}>
                         <Text fz={'12px'} mt="sm" c='#334E68' fw={700}>Requirements</Text>
