@@ -3,6 +3,7 @@
 import {
   Box,
   Button,
+  Center,
   Checkbox,
   Divider,
   Flex,
@@ -25,7 +26,7 @@ import { useParams, useRouter } from "next/navigation";
 import { ChecklistModule } from "@/componets/ChecklistModule/ChecklistModule";
 import UploadModal from "@/componets/UploadModal/UploadModal";
 import { IdTypes } from "@/entities/IdTypes";
-import { get, patch, post } from "@/utils/http-api";
+import { del, get, patch, post } from "@/utils/http-api";
 import { useDisclosure } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -33,6 +34,7 @@ import {
   IconMapPin,
   IconPhoto,
   IconUpload,
+  IconX,
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { notifications } from "@mantine/notifications";
@@ -47,6 +49,7 @@ export default function GovernmentIds() {
   const id = params.id;
   const router = useRouter();
   const [userRequirementId, setUserRequirementId] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   const session = useSession();
 
@@ -245,33 +248,74 @@ export default function GovernmentIds() {
 
       {/* View Modal */}
       <ViewImageModal opened={viewOpened} onClose={closeView}>
-        <Flex
-          direction="column"
-          w="100%"
-          h={400}
-          align="center"
-          justify="center"
-        >
-          {imageView?.[0]?.fileUrl ? (
-            <Image
-              src={imageView[0].fileUrl}
-              alt="image-view"
-              width={300}
-              height={400}
-              style={{ objectFit: "contain", cursor: "pointer" }}
-              onClick={() =>
-                window.open(
-                  imageView[0].fileUrl,
-                  "_blank",
-                  "noopener,noreferrer"
-                )
-              }
-            />
-          ) : (
-            <Text>No Image Upload</Text>
-          )}
+  <Stack gap="md">
+
+    {imageView?.[0]?.fileUrl ? (
+      <>
+        <Flex justify="center">
+          <Paper
+            shadow="md"
+            radius="md"
+            p="xs"
+            withBorder
+            style={{ maxWidth: 320 }}
+          >
+          <Image src={imageView[0].fileUrl} alt="image-view" width={300} height={400} style={{ objectFit: "contain", cursor: "pointer" }} onClick={() => window.open( imageView[0].fileUrl, "_blank", "noopener,noreferrer" ) } />
+          </Paper>
         </Flex>
-      </ViewImageModal>
+
+        <Divider />
+
+        <Flex justify="end" align="center">
+    
+
+          <Button
+  color="red"
+  variant="light"
+  leftSection={<IconX size={16} />}
+  loading={deleting}
+  disabled={deleting}
+  onClick={async () => {
+    try {
+      setDeleting(true);
+
+      const res = await del(`/upload/${imageView[0].id}`);
+
+      if (res.status === 200 || res.status === 201) {
+        notifications.show({
+          title: "Deleted",
+          message: "Image deleted successfully",
+          color: "green",
+        });
+
+        await refetchImageView?.();
+        closeView();
+      }
+    } catch (error) {
+      notifications.show({
+        title: "Error",
+        message: "Failed to delete image",
+        color: "red",
+      });
+    } finally {
+      setDeleting(false);
+    }
+  }}
+>
+  Delete
+</Button>
+        </Flex>
+      </>
+    ) : (
+      <Center h={300}>
+        <Stack align="center" gap="xs">
+          <IconPhoto size={48} stroke={1.2} color="gray" />
+          <Text c="dimmed">No image uploaded</Text>
+        </Stack>
+      </Center>
+    )}
+  </Stack>
+</ViewImageModal>
 
       {/* Title and description */}
       {/* <Box>
