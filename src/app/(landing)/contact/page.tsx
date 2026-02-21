@@ -17,6 +17,11 @@ const page = () => {
           style={{
             flex: 1,
             padding: isMobile ? "60px 20px" : "100px",
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_CONTACT_1})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            // opacity: 0.1
           }}
         >
           <ContactSection label="Contact Us" />

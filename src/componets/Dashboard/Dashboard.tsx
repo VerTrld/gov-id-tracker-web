@@ -107,19 +107,22 @@ const Dashboard = () => {
     <Paper
       withBorder
       shadow="xl"
-      radius="lg"
+      radius="50px"
       w="95%"
       h={isMobile ? "98vh" : "95vh"}
       style={{
         position: "relative",
         overflowY: "auto",
+        backgroundColor: "rgba(255, 255, 255, 0.6)", // semi-transparent white
+        backdropFilter: "blur(10px)", // frosted glass effect
+        border: "1px solid rgba(255, 255, 255, 0.3)", // subtle border to enhance glass effect
       }}
     >
       <Flex direction={"column"} h={"100%"} p={30} gap={20}>
         <Flex direction="row" gap={10} wrap="wrap">
           {/* Left Stack */}
           <Stack flex={1} gap={5}>
-            <Title size={isMobile ? "10vw" : "5vw"} c="#043873">
+            <Title size={isMobile ? "10vw" : "5vw"} c="#043873" fw={900} style={{ fontStyle: "italic" }} pl={'md'}>
               Hello,{" "}
               {_.upperCase(String(session.data?.user?.name)?.split(" ")[0])}!
             </Title>
@@ -314,19 +317,22 @@ const Dashboard = () => {
             </Group>
 
             <Box
-              bg="#8ea5c0"
               flex={1}
               style={{
-                borderRadius: 40,
+                borderRadius: 50,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 gap: 10,
                 minHeight: 200,
 
-                boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
+                // Glass effect
+                backgroundColor: "rgba(74, 81, 89, 0.3)", // semi-transparent layer
+                backdropFilter: "blur(8px)", // frosted effect
+                border: "1px solid rgba(255, 255, 255, 0.25)", // subtle glass border
+                boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)", // slightly lifted shadow
               }}
-              p={isMobile ? "10px" : "20px  50px 20px 50px"}
+              p={isMobile ? "10px" : "20px 50px 20px 50px"}
             >
               <Grid flex={1} align="stretch" gutter="xl">
                 {data?.map((v) => (
@@ -406,6 +412,7 @@ const Dashboard = () => {
               borderRadius: "30px",
               cursor: "pointer",
             }}
+            bg={'#FFFFFF'}
           >
             <Flex
               direction="column"
@@ -424,7 +431,7 @@ const Dashboard = () => {
               w="100%"
               p={20}
               gap={15}
-              // align="stretch"
+
               mih={350}
             >
               {data?.map((v: any, index: number) => {
@@ -439,7 +446,7 @@ const Dashboard = () => {
                   ).length /
                     (v.requirements?.flatMap((rl: any) => rl.requirement || [])
                       .length || 1)) *
-                    100
+                  100
                 );
 
                 console.log({ itemProgress });

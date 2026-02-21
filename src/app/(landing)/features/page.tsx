@@ -30,10 +30,14 @@ const page = () => {
                 {/* 1st Section */}
                 <Flex
                     direction="column"
-                    gap={80}
+                    gap={40}
                     style={{
                         flex: 1,
                         padding: isMobile ? '60px 20px' : '100px 100px 30px 100px',
+                        backgroundImage: `url(${process.env.NEXT_PUBLIC_CONTACT_1})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
                     }}
                 >
                     {/* Hero */}
@@ -60,44 +64,25 @@ const page = () => {
                             jobseekers can focus on getting hired, not getting lost in requirements.
                         </Text>
                     </Flex>
+
+                    <Paper
+                        shadow="xl"
+                        radius="md"
+                        withBorder
+                        style={{
+                            maxWidth: 1000,
+                            width: "100%",
+                            margin: "auto",
+                            boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)"
+                        }}
+                    >
+                        <Accordion style={{ flex: 1, }}>
+                            {items}
+                        </Accordion>
+                    </Paper>
                 </Flex>
 
-                {/* 2nd Section */}
-                <Flex
-                    direction="column"
-                    gap={80}
-                    style={{
-                        flex: 1,
-                        padding: isMobile ? '60px 20px' : '20px 100px 60px 100px',
-                    }}
-                >
-                    {/* Hero */}
-                    <Flex
-                        align="center"
-                        direction={'column'}
-                        style={{ flex: 1 }}
-                    >
-                        <Flex direction={'column'}
-                            flex={1}
-                        >
-                            <Paper
-                                shadow="xl"
-                                radius="md"
-                                withBorder
-                                style={{
-                                    maxWidth: 1000,
-                                    width: "100%",
-                                    margin: "auto",
-                                    boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)"
-                                }}
-                            >
-                                <Accordion style={{ flex: 1, }}>
-                                    {items}
-                                </Accordion>
-                            </Paper>
-                        </Flex>
-                    </Flex>
-                </Flex>
+
 
 
                 <Flex flex={1}>

@@ -44,7 +44,7 @@ const page = () => {
         'Official government websites for accurate information',
     ];
 
- 
+
 
 
     return (
@@ -62,6 +62,10 @@ const page = () => {
                     style={{
                         flex: 1,
                         padding: isMobile ? '60px 20px' : '100px',
+                        backgroundImage: `url(${process.env.NEXT_PUBLIC_ABOUT_1})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
                     }}
                 >
                     {/* Hero */}
@@ -80,12 +84,17 @@ const page = () => {
                             fontSize: isMobile ? 32 : 48,
                             marginBottom: 20,
                         }}>About</Title>
-                        <Title c={'#4F9CF9'} ta={'center'}>
+                        <Title c={'#043873'} ta={'center'}>
                             ID Mo, Karera Mo is a web-based guide and tracking
                             platform created to help first-time jobseekers prepare their
                             government ID requirements for employment.</Title>
 
-                        <Text c={'#0A58BD'} ta={'center'}>
+                        <Text c={'#FFFFFF'} ta={'center'} style={{
+                            textShadow: `
+      2px 2px 4px rgba(0, 0, 0, 0.7),   /* dark shadow bottom-right */
+      -1px -1px 3px rgba(255, 255, 255, 0.5) /* light highlight top-left */
+    `,
+                        }}>
                             Applying for government IDs can be confusing when information is scattered, and steps are unclear.
                             This platform brings everything together in one place to make the process easier to understand and manage.
                         </Text>
@@ -102,6 +111,10 @@ const page = () => {
                     style={{
                         flex: 1,
                         padding: isMobile ? '60px 20px' : '40px',
+                        backgroundImage: `url(${process.env.NEXT_PUBLIC_ABOUT_2})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
                     }}
                 >
                     {/* Hero */}
@@ -158,10 +171,16 @@ const page = () => {
                 {/* 3rd Section */}
                 <Flex
                     direction="column"
+                    h={1200}
                     gap={80}
                     style={{
                         flex: 1,
+
                         padding: isMobile ? '60px 20px' : '100px',
+                        backgroundImage: `url(${process.env.NEXT_PUBLIC_ABOUT_3})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
                     }}
                 >
                     {/* Hero */}
@@ -258,9 +277,12 @@ const page = () => {
                 </Flex>
 
                 {/* 4th Section */}
-                <Flex direction={'column'} bg={'#E6F1FE'} gap={80}
+                <Flex
+                    direction={'column'}
+                    gap={80}
                     id="section2"
                     style={{
+
                         flex: 1,
                         padding: isMobile ? '60px 20px' : '100px',
                     }}>
@@ -310,11 +332,14 @@ const page = () => {
                 {/* 5th Section */}
                 <Flex
                     direction={"column"}
-                    // bg={"#E6F1FE"}
                     gap={20}
                     style={{
                         // flex: 1,
                         padding: isMobile ? "60px 20px" : "100px",
+                        backgroundImage: `url(${process.env.NEXT_PUBLIC_ABOUT_4})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
                     }}
                 >
                     <Title
@@ -354,7 +379,7 @@ const page = () => {
                     </Flex>
 
 
-                    <Flex wrap="wrap" gap="md" pb={20} justify={'center'} align={'center'}>
+                    <Flex wrap="wrap" gap="md" justify={'center'} align={'center'} p={'0px 100px 20px 100px'}>
                         {data.map((v, index) => (
                             <Flex
                                 align={'center'}

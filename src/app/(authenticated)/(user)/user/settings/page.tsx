@@ -116,6 +116,10 @@ export default function SettingsPage() {
         style={{
           flex: 1,
           padding: isMobile ? "40px 16px" : "80px",
+          backgroundImage: `url(${process.env.NEXT_PUBLIC_DASH_2})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}
       >
         <Flex direction="column" gap={30} w={isMobile ? "100%" : "70%"}>

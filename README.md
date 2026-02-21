@@ -1,4 +1,4 @@
-AUTH_TRUST_HOST=true
+<!-- AUTH_TRUST_HOST=true
 
 AUTH_TRUST_HOST=true
 
@@ -79,11 +79,37 @@ NEXT_PUBLIC_NBI_ICON=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/
 NEXT_PUBLIC_DRIVERLICENSE_ICON=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/driverlicense-icon.png
 
 
+ -->
 
 
 
+# LANDING PAGE
+NEXT_PUBLIC_LANDING_IMAGE=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/landing_1.png
+
+# LADING HOME PAGE
+NEXT_PUBLIC_HOME_1=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/background-blur-1.png
+NEXT_PUBLIC_HOME_2=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/backgroud-blur-2.png
+NEXT_PUBLIC_HOME_3=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/background-blur-3.png
+
+# ABOUT PAGE
+NEXT_PUBLIC_ABOUT_1=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/backgroud-blur-4.png
+NEXT_PUBLIC_ABOUT_2=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/backgroud-blur-5.png
+NEXT_PUBLIC_ABOUT_3=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/backgroud-blur-6-1.png
+NEXT_PUBLIC_ABOUT_4=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/backgroud-blur-7-2.png
+
+# TERMS PAGE
+NEXT_PUBLIC_TERMS_1=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/terms-1.png
+
+# CONTACT PAGE
+NEXT_PUBLIC_CONTACT_1=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/background-contacts.png
+
+# FEATURES PAGE
+NEXT_PUBLIC_FEATURES_1=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/terms-1.png
 
 
+# DASHBOARD 
+NEXT_PUBLIC_DASH_1=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/background-contacts.png
+NEXT_PUBLIC_DASH_2=https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/terms-1.png
 
 
 

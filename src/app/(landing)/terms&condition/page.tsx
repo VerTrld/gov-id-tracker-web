@@ -42,11 +42,14 @@ const page = () => {
                 {/* 1st Section */}
                 <Flex
                     direction="column"
-                    bg={'#E6F1FE'}
-                    gap={80}
+                    gap={40}
                     style={{
                         flex: 1,
                         padding: isMobile ? '30px' : '100px 100px 40px 100px',
+                        backgroundImage: `url(${process.env.NEXT_PUBLIC_TERMS_1})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
                     }}
                 >
                     {/* Hero */}
@@ -67,57 +70,27 @@ const page = () => {
                             }}>
                             TERMS AND CONDITIONS
                         </Title>
-                        {/* <Divider size="lg" style={{ color: '#043873', zIndex: 2 }}  my="md" /> */}
+
+
+
                     </Flex>
-                </Flex>
 
-
-                {/* 2nd Section */}
-                <Flex
-                    direction="column"
-                    bg={'#E6F1FE'}
-                    gap={80}
-                    style={{
-                        flex: 1,
-                        padding: isMobile ? '30px' : '20px 100px 40px 100px',
-                    }}
-                >
-                    {/* Hero */}
-                    <Flex
-                        align="center"
-                        direction={'column'}
-                        style={{ flex: 1 }}
+                    <Paper
+                        shadow="xl"
+                        radius="md"
+                        withBorder
+                        style={{
+                            maxWidth: 1000,
+                            width: "100%",
+                            margin: "auto",
+                            boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)"
+                        }}
                     >
-                        <Paper
-                            shadow="xl"
-                            radius="md"
-                            withBorder
-                            style={{
-                                maxWidth: 1000,
-                                width: "100%",
-                                margin: "auto",
-                                boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)"
-                            }}
-                        >
-                            <Accordion style={{ flex: 1, }}>
-                                {terms}
-                            </Accordion>
-                        </Paper>
+                        <Accordion style={{ flex: 1, }}>
+                            {terms}
+                        </Accordion>
+                    </Paper>
 
-                    </Flex>
-                </Flex>
-
-                {/* 3rd Section */}
-                <Flex
-                    direction="column"
-                    bg={'#E6F1FE'}
-                    gap={80}
-                    style={{
-                        flex: 1,
-                        padding: isMobile ? '30px' : '20px 100px 40px 100px',
-                    }}
-                >
-                    {/* Hero */}
                     <Flex
                         align="center"
                         direction={'column'}
@@ -135,53 +108,39 @@ const page = () => {
                             }}>
                             PRIVACY POLICY
                         </Title>
-                        {/* <Divider size="lg" style={{ color: '#043873', zIndex: 2 }}  my="md" /> */}
                     </Flex>
-                </Flex>
 
-
-                {/* 4th Section */}
-                <Flex
-                    direction="column"
-                    bg={'#E6F1FE'}
-                    gap={80}
-                    style={{
-                        flex: 1,
-                        padding: isMobile ? '30px' : '20px 100px 60px 100px',
-                    }}
-                >
-                    {/* Hero */}
-                    <Flex
-                        align="center"
-                        direction={'column'}
-                        style={{ flex: 1 }}
+                    <Paper
+                        shadow="xl"
+                        radius="md"
+                        withBorder
+                        style={{
+                            maxWidth: 1000,
+                            width: "100%",
+                            margin: "auto",
+                            boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)"
+                        }}
                     >
-                        <Paper
-                            shadow="xl"
-                            radius="md"
-                            withBorder
-                            style={{
-                                maxWidth: 1000,
-                                width: "100%",
-                                margin: "auto",
-                                boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)"
-                            }}
-                        >
-                            <Accordion style={{ flex: 1, }}>
-                                {policy}
-                            </Accordion>
-                        </Paper>
-
-                    </Flex>
+                        <Accordion style={{ flex: 1, }}>
+                            {policy}
+                        </Accordion>
+                    </Paper>
                 </Flex>
 
-                {/* 5th Section */}
+
+
+
+                {/* 3rd Section */}
                 <Flex
                     direction={"column"}
                     gap={50}
                     style={{
 
                         padding: isMobile ? "60px 20px" : "100px",
+                        // backgroundImage: `url(${process.env.NEXT_PUBLIC_TERMS_2})`,
+                        // backgroundSize: 'cover',
+                        // backgroundPosition: 'center',
+                        // backgroundRepeat: 'no-repeat',
                     }}
                 >
                     <Title

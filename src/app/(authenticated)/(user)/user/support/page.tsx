@@ -13,6 +13,10 @@ export default function Help() {
       style={{
         flex: 1,
         padding: isMobile ? "60px 20px" : "100px",
+         backgroundImage: `url(${process.env.NEXT_PUBLIC_DASH_1})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }}
     >
       <ContactSection label="Need Help?" />

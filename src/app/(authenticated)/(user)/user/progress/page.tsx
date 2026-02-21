@@ -76,6 +76,10 @@ export default function ProgressPage() {
       style={{
         flex: 1,
         padding: isMobile ? "60px 20px" : "100px",
+        backgroundImage: `url(${process.env.NEXT_PUBLIC_DASH_2})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }}
     >
       <Flex flex={1} direction={"column"} justify={"center"} gap={30}>
@@ -87,7 +91,7 @@ export default function ProgressPage() {
             style={{
               maxWidth: 1000,
               width: "100%",
-              margin: "auto",
+              // margin: "auto",
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
             }}
           >
@@ -180,7 +184,7 @@ export default function ProgressPage() {
                       align="stretch"
                       justify="center"
                       mih={350}
-                      
+
                     >
                       {data?.map((v: any, index: number) => {
                         const itemProgress = _.round(
@@ -197,7 +201,7 @@ export default function ProgressPage() {
                             (v.requirements?.flatMap(
                               (rl: any) => rl.requirement || [],
                             ).length || 1)) *
-                            100,
+                          100,
                         );
 
                         return (

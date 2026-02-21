@@ -95,6 +95,7 @@ export default function ContactSection({ label }: { label: string }) {
         <Paper
           shadow="xl"
           radius="md"
+          p={20}
           withBorder
           style={{
             maxWidth: 1000,

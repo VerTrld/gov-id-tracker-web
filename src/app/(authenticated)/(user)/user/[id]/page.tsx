@@ -207,6 +207,10 @@ export default function GovernmentIds() {
         boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
         minHeight: "100%",
         overflowY: "auto",
+        backgroundImage: `url(${process.env.NEXT_PUBLIC_DASH_2})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }}
     >
       {/* Upload Modal */}
@@ -248,74 +252,74 @@ export default function GovernmentIds() {
 
       {/* View Modal */}
       <ViewImageModal opened={viewOpened} onClose={closeView}>
-  <Stack gap="md">
+        <Stack gap="md">
 
-    {imageView?.[0]?.fileUrl ? (
-      <>
-        <Flex justify="center">
-          <Paper
-            shadow="md"
-            radius="md"
-            p="xs"
-            withBorder
-            style={{ maxWidth: 320 }}
-          >
-          <Image src={imageView[0].fileUrl} alt="image-view" width={300} height={400} style={{ objectFit: "contain", cursor: "pointer" }} onClick={() => window.open( imageView[0].fileUrl, "_blank", "noopener,noreferrer" ) } />
-          </Paper>
-        </Flex>
+          {imageView?.[0]?.fileUrl ? (
+            <>
+              <Flex justify="center">
+                <Paper
+                  shadow="md"
+                  radius="md"
+                  p="xs"
+                  withBorder
+                  style={{ maxWidth: 320 }}
+                >
+                  <Image src={imageView[0].fileUrl} alt="image-view" width={300} height={400} style={{ objectFit: "contain", cursor: "pointer" }} onClick={() => window.open(imageView[0].fileUrl, "_blank", "noopener,noreferrer")} />
+                </Paper>
+              </Flex>
 
-        <Divider />
+              <Divider />
 
-        <Flex justify="end" align="center">
-    
+              <Flex justify="end" align="center">
 
-          <Button
-  color="red"
-  variant="light"
-  leftSection={<IconX size={16} />}
-  loading={deleting}
-  disabled={deleting}
-  onClick={async () => {
-    try {
-      setDeleting(true);
 
-      const res = await del(`/upload/${imageView[0].id}`);
+                <Button
+                  color="red"
+                  variant="light"
+                  leftSection={<IconX size={16} />}
+                  loading={deleting}
+                  disabled={deleting}
+                  onClick={async () => {
+                    try {
+                      setDeleting(true);
 
-      if (res.status === 200 || res.status === 201) {
-        notifications.show({
-          title: "Deleted",
-          message: "Image deleted successfully",
-          color: "green",
-        });
+                      const res = await del(`/upload/${imageView[0].id}`);
 
-        await refetchImageView?.();
-        closeView();
-      }
-    } catch (error) {
-      notifications.show({
-        title: "Error",
-        message: "Failed to delete image",
-        color: "red",
-      });
-    } finally {
-      setDeleting(false);
-    }
-  }}
->
-  Delete
-</Button>
-        </Flex>
-      </>
-    ) : (
-      <Center h={300}>
-        <Stack align="center" gap="xs">
-          <IconPhoto size={48} stroke={1.2} color="gray" />
-          <Text c="dimmed">No image uploaded</Text>
+                      if (res.status === 200 || res.status === 201) {
+                        notifications.show({
+                          title: "Deleted",
+                          message: "Image deleted successfully",
+                          color: "green",
+                        });
+
+                        await refetchImageView?.();
+                        closeView();
+                      }
+                    } catch (error) {
+                      notifications.show({
+                        title: "Error",
+                        message: "Failed to delete image",
+                        color: "red",
+                      });
+                    } finally {
+                      setDeleting(false);
+                    }
+                  }}
+                >
+                  Delete
+                </Button>
+              </Flex>
+            </>
+          ) : (
+            <Center h={300}>
+              <Stack align="center" gap="xs">
+                <IconPhoto size={48} stroke={1.2} color="gray" />
+                <Text c="dimmed">No image uploaded</Text>
+              </Stack>
+            </Center>
+          )}
         </Stack>
-      </Center>
-    )}
-  </Stack>
-</ViewImageModal>
+      </ViewImageModal>
 
       {/* Title and description */}
       {/* <Box>
@@ -463,7 +467,7 @@ export default function GovernmentIds() {
               fontSize: 32,
               marginBottom: 20,
               textAlign: 'center'
-            }}> 
+            }}>
             Are you sure you want to proceed with this ID application?
           </Title>
           <Button onClick={() => handleApplyGovernmentIds(data.id)}>
