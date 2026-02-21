@@ -51,6 +51,7 @@ export default function Login() {
               style={{
                 flex: 1,
                 textAlign: isMobile ? "center" : "left",
+
               }}
             >
               <Title
@@ -60,13 +61,14 @@ export default function Login() {
                   lineHeight: 1.15,
                   fontSize: isMobile ? 32 : 48,
                   marginBottom: 20,
-                  color: '#0A58BD'
+                  color: '#0A58BD',
+                  width: isMobile ? '100%' : '75%',
+                  // textAlign: 'center'
+
                 }}
               >
-                Your One-Stop Guide to
-                <br />
-                Government IDs for
-                <br />
+                Your One-Stop Guide to  Government IDs for&nbsp;
+                {/* <br /> */}
                 <span
                   style={{
                     background: 'linear-gradient(180deg, #0A58BD, #043873)',
@@ -82,6 +84,8 @@ export default function Login() {
                 size={isMobile ? "md" : "lg"}
                 c="#0A58BD"
                 style={{
+                  width: isMobile ? '100%' : '65%',
+                  // textAlign: 'center'
                   // maxWidth: 520,
                   // margin: isMobile ? "0 auto 28px" : "0 0 36px",
                 }}
@@ -91,6 +95,7 @@ export default function Login() {
               </Text>
 
               <Flex
+                pt={20}
                 gap="md"
                 justify={isMobile ? "center" : "flex-start"}
                 wrap="wrap"
@@ -340,7 +345,7 @@ export default function Login() {
             >
               Start preparing your requirements today.
             </Title>
-            <Button
+            {/* <Button
               onClick={() => router.push("?action=register")}
               c="#4F9CF9"
               radius={5}
@@ -351,7 +356,7 @@ export default function Login() {
                 </Text>
                 <IconArrowNarrowRight color="#FFFFFF" />
               </Flex>
-            </Button>
+            </Button> */}
           </Flex>
         </Flex>
 

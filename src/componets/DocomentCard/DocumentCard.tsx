@@ -18,7 +18,8 @@ const DocumentCard = ({ img, title }: IDocumentCard) => {
             justify={'space-evenly'}
             style={{
                 borderRadius: "20px",
-                boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
+                // boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
+                border: '1px solid #043873',
                 width: "250px",
                 height: '115px',
                 backgroundColor: "#FFFFFF",

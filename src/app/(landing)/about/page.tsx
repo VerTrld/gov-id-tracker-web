@@ -367,7 +367,7 @@ const page = () => {
                         ))}
                     </Flex>
 
-                    <Flex direction={'column'} gap={10} >
+                    <Flex direction={'column'} gap={10} pt={10}>
                         <Text ta={'center'} fz={'20px'} style={{ color: '#4F9CF9' }}>
                             View full information and other Government requirements covered by RA 11261
                         </Text>

@@ -525,7 +525,7 @@ const Dashboard = () => {
 
               style={{ borderRadius: '30px 30px 0 0' }}
             >
-              <Text ta={'center'} c={'white'} fw={700} fz={'lg'}>INPROGRESS</Text>
+              <Text ta={'center'} c={'white'} fw={700} fz={'lg'}>IN PROGRESS</Text>
             </Flex>
             <Flex
               direction="column"
