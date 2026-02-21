@@ -175,11 +175,12 @@ export default function ProgressPage() {
                     <Flex
                       direction="column"
                       w="90%"
-                      p={10}
+                      p={20}
                       gap={20}
                       align="stretch"
                       justify="center"
                       mih={350}
+                      
                     >
                       {data?.map((v: any, index: number) => {
                         const itemProgress = _.round(

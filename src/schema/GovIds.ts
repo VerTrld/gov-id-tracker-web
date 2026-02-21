@@ -11,6 +11,7 @@ export const governmentIdsFormSchema = y.object({
             label: y.string().required(),
         })
     ).min(1),
+    file: y.mixed<File>().required().nullable(),
 });
 
 type IGovernmentIdsForm = y.InferType<typeof governmentIdsFormSchema>;

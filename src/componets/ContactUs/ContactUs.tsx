@@ -1,21 +1,22 @@
 import { post } from "@/utils/http-api";
 import {
   Box,
+  Button,
+  Flex,
+  Grid,
+  GridCol,
+  Group,
   Paper,
   Text,
-  TextInput,
-  Button,
-  Grid,
-  Group,
-  Flex,
-  Title,
-  GridCol,
   Textarea,
+  TextInput,
+  Title,
 } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconMail, IconMapPin } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
 import * as y from "yup";
 
 const contactFormSchema = y
@@ -32,13 +33,14 @@ type IContactForm = y.InferType<typeof contactFormSchema>;
 export default function ContactSection({ label }: { label: string }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
+  const session = useSession()
   const contactForm = useForm<IContactForm>({
     validate: yupResolver(contactFormSchema),
     initialValues: {
       message: "",
-      email: "",
-      firstName: "",
-      lastName: "",
+      email: session.data?.user?.email || "",
+      firstName: session.data?.user?.name?.split(" ")[0] || "",
+      lastName: session.data?.user?.name?.split(" ")[1] || "",
     },
   });
 
@@ -114,6 +116,7 @@ export default function ContactSection({ label }: { label: string }) {
                   display: "flex",
                   flexDirection: "column",
                   borderRadius: "10px",
+                  overflow: "hidden",
                 }}
               >
                 <Title order={3}>Contact Information</Title>

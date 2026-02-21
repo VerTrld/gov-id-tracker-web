@@ -20,6 +20,9 @@ import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
 
 export const metadata: Metadata = {
+  icons: {
+    icon: process.env.NEXT_PUBLIC_KARERAMO_LOGO,
+  },
   title: "ID mo. Karera mo",
   description: "Capstone System",
 };
