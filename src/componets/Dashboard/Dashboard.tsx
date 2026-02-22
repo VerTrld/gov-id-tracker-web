@@ -431,6 +431,8 @@ const Dashboard = () => {
               minHeight: 120,
               // width: 280,
               // padding: 10,
+              height: "40vh",
+
               margin: 10,
               borderRadius: "30px",
               cursor: "pointer",
@@ -449,7 +451,17 @@ const Dashboard = () => {
                 IN PROGRESS
               </Text>
             </Flex>
-            <Flex direction="column" w="100%" p={20} gap={15} mih={350}>
+            <Flex
+              direction="column"
+              w="100%"
+              p={20}
+              gap={15}
+              style={{
+                overflowY: "auto",
+                height: "30vh",
+                scrollbarWidth: "thin",
+              }}
+            >
               {data?.map((v: any, index: number) => {
                 const itemProgress = _.round(
                   (_.filter(
