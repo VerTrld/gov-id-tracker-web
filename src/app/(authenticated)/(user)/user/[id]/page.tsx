@@ -482,9 +482,16 @@ export default function GovernmentIds() {
           direction={"column"}
           align={"center"}
           justify={"center"}
-          p={20}
           gap={10}
           w={"60%"}
+          style={{
+            padding: '40px',
+            borderRadius: 20,
+            border: '1px solid white',
+            backdropFilter: 'blur(7px) saturate(200%)',
+            WebkitBackdropFilter: 'blur(7px) saturate(200%)',
+            backgroundColor: 'rgba(118, 118, 119, 0.48)',
+          }}
         >
           <Title
             c={"#043873"}
