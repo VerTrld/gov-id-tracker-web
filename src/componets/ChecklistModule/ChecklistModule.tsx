@@ -66,7 +66,7 @@ export function ChecklistModule({
       _.some(item.userRequirements, {
         userId: userId,
         isCompleted: true,
-      }),
+      })
     ).length;
 
     return _.round((activeCount / total) * 100);
@@ -85,12 +85,12 @@ export function ChecklistModule({
       shadow="xl"
       radius="lg"
       w="90%"
-      h="80dvh"
+      h={"100%"}
       style={{
         boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
         position: "relative",
 
-        // overflow: "hidden",
+        overflowY: "auto",
       }}
     >
       <Grid h="100%" gutter={0}>

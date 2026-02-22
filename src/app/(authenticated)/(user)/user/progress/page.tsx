@@ -58,7 +58,7 @@ export default function ProgressPage() {
       if (requirements.length === 0) return 0;
 
       const completedCount = _.filter(requirements, (req) =>
-        _.some(req.userRequirements, { userId, isCompleted: true }),
+        _.some(req.userRequirements, { userId, isCompleted: true })
       ).length;
 
       return (completedCount / requirements.length) * 100;
@@ -70,62 +70,243 @@ export default function ProgressPage() {
   }, [data, userId]);
 
   return (
+    // <Flex
+    //   direction="column"
+    //   align={"center"}
+    //   justify={"center"}
+    //   style={{
+    //     flex: 1,
+    //     minHeight: "100vh",
+    //     padding: isMobile ? 24 : 60,
+    //     gap: 40,
+    //     backgroundImage: `url(${process.env.NEXT_PUBLIC_DASH_2})`,
+    //     backgroundSize: "cover",
+    //     backgroundPosition: "center",
+    //     backgroundRepeat: "no-repeat",
+    //   }}
+    // >
+    //   <Paper
+    //     shadow="xl"
+    //     radius="xl"
+    //     withBorder
+    //     style={{
+    //       display: "flex",
+    //       flexDirection: isMobile ? "column" : "row", // stack on mobile
+    //       flex: 1,
+    //       width: "100%",
+    //       minHeight: 400,
+    //       maxWidth: "100%",
+    //     }}
+    //   >
+    //     {/* LEFT PANEL */}
+    //     <Flex
+    //       align={"center"}
+    //       style={{ flex: "0 0 40%" }}
+    //       p={isMobile ? 10 : 30}
+    //     >
+    //       <Box
+    //         style={{
+    //           flex: 1,
+    //           height: "80%",
+    //           width: "100%",
+
+    //           backgroundColor: "#0b5ed7",
+    //           color: "white",
+    //           borderRadius: 30,
+    //           display: "flex",
+    //           justifyContent: "center",
+    //           alignItems: "center",
+    //           padding: 40,
+
+    //           backgroundImage: `url(${process.env.NEXT_PUBLIC_PROGRESS})`,
+    //           backgroundSize: "cover",
+    //           backgroundPosition: "center",
+    //           backgroundRepeat: "no-repeat",
+    //         }}
+    //       >
+    //         <Box
+    //           style={{
+    //             width: isMobile ? 120 : 155,
+    //             height: isMobile ? 120 : 155,
+    //             background: "#fff",
+    //             borderRadius: "50%",
+    //             display: "flex",
+    //             justifyContent: "center",
+    //             alignItems: "center",
+    //             marginBottom: isMobile ? 0 : 200,
+    //           }}
+    //         >
+    //           <RingProgress
+    //             size={isMobile ? 180 : 220}
+    //             thickness={15}
+    //             roundCaps
+    //             sections={
+    //               overallProgress > 0
+    //                 ? [{ value: overallProgress, color: "#4dabf7" }]
+    //                 : []
+    //             }
+    //             rootColor="#B4B4B4"
+    //             label={
+    //               <Center>
+    //                 <Text fw={700} size="30px" c="#043873">
+    //                   {overallProgress}%
+    //                 </Text>
+    //               </Center>
+    //             }
+    //           />
+    //         </Box>
+    //       </Box>
+    //     </Flex>
+    //     {/* RIGHT PANEL */}
+    //     <Flex
+    //       direction="column"
+    //       style={{
+    //         flex: "0 0 60%",
+    //         padding: 30,
+    //         gap: 20,
+    //         height: "80%",
+    //         overflowY: "auto",
+    //         alignSelf: "center",
+    //       }}
+    //     >
+    //       {data?.map((v: any, index: number) => {
+    //         const requirements =
+    //           v.requirements?.flatMap((rl: any) => rl.requirement || []) || [];
+    //         const completedCount = _.filter(requirements, (req) =>
+    //           _.some(req.userRequirements, { userId, isCompleted: true })
+    //         ).length;
+
+    //         const itemProgress = _.round(
+    //           (completedCount / (requirements.length || 1)) * 100
+    //         );
+
+    //         return (
+    //           <Flex key={v.id || index} align="center" gap={20}>
+    //             <Text
+    //               fz="20px"
+    //               fw={700}
+    //               style={{ textAlign: "left", minWidth: 120 }}
+    //             >
+    //               {v.label}
+    //             </Text>
+    //             <Progress
+    //               value={itemProgress}
+    //               radius="md"
+    //               color="#A7CEFC"
+    //               h={20}
+    //               style={{ flex: 1 }}
+    //             />
+    //           </Flex>
+    //         );
+    //       })}
+    //     </Flex>
+    //   </Paper>
+    // </Flex>
+
     <Flex
       direction="column"
-      gap={80}
+      align={"center"}
+      justify={"center"}
       style={{
         flex: 1,
-        padding: isMobile ? "60px 20px" : "100px",
+        // padding: 24,
+        gap: 24,
+        // backgroundColor: "#fff",
+        borderRadius: 12,
+        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+        minHeight: "100%",
+        overflowY: "auto",
         backgroundImage: `url(${process.env.NEXT_PUBLIC_DASH_2})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      <Flex flex={1} direction={"column"} justify={"center"} gap={30}>
-        <Flex>
-          <Paper
-            shadow="xl"
-            radius="md"
-            withBorder
-            style={{
-              maxWidth: 1000,
-              width: "100%",
-              // margin: "auto",
-              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
-            }}
-          >
-            <Grid gutter={0}>
-              {/* LEFT / BLUE */}
-              <GridCol span={{ base: 12, md: 5, lg: 5 }}>
+      {/* Title and description */}
+      {/* <Box>
+        <Title order={3} mb="xs" w={"90%"}>
+          {data?.label}
+        </Title>
+        <Text size="sm">{data?.description || "No description indicated"}</Text>
+      </Box> */}
+
+      {/* <Divider my="sm" /> */}
+
+      {/* Requirements checklist */}
+
+      <Box
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+          height: "81%",
+          justifyContent: "center",
+        }}
+      >
+        <Paper
+          withBorder
+          shadow="xl"
+          radius="lg"
+          w="90%"
+          h={"100%"}
+          style={{
+            boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
+            position: "relative",
+
+            overflowY: "auto",
+          }}
+        >
+          <Grid h="100%" gutter={0}>
+            {/* LEFT PANEL */}
+            <Grid.Col
+              span={{ base: 12, md: 5 }}
+              style={{
+                height: isMobile ? undefined : "80vh",
+                padding: 10,
+              }}
+            >
+              <Box
+                style={{
+                  height: "100%",
+                  overflow: "hidden",
+                  padding: isMobile ? 10 : 20,
+                }}
+              >
                 <Box
                   h="100%"
-                  p={40}
-                  bg="#0b5ed7"
                   c="white"
                   style={{
                     position: "relative",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "center",
+                    // justifyContent: "center",
                     alignItems: "center",
-                    borderRadius: "10px",
+                    borderRadius: 30,
+                    padding: 40,
+                    gap: 30,
+                    backgroundImage: `url(${process.env.NEXT_PUBLIC_PROGRESS})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
                   }}
                 >
+                  {/* Ring Progress Container */}
                   <Box
                     style={{
-                      width: 120,
-                      height: 120,
+                      width: 155,
+                      height: 155,
                       background: "#fff",
                       borderRadius: "50%",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                       position: "relative",
+                      // top: { lg: 10, sm: 4 },
                     }}
                   >
                     <RingProgress
-                      size={180}
+                      size={220}
                       thickness={15}
                       roundCaps
                       sections={
@@ -144,95 +325,97 @@ export default function ProgressPage() {
                     />
                   </Box>
 
-                  {/* Decorative circles */}
-                  {/* <Box
-                    style={{
-                      position: "absolute",
-                      bottom: -20,
-                      right: 40,
-                      width: 120,
-                      height: 120,
-                      borderRadius: "50%",
-                      background: "rgba(255,255,255,0.25)",
-                    }}
-                  />
-                  <Box
-                    style={{
-                      position: "absolute",
-                      bottom: -90,
-                      right: -40,
-                      width: 160,
-                      height: 160,
-                      borderRadius: "50%",
-                      background: "rgba(255,255,255,0.15)",
-                    }}
-                  /> */}
+                  {/* Details / Optional content */}
+                  <Stack
+                    gap={10}
+                    justify="center"
+                    align="center"
+                    style={{ zIndex: 1 }}
+                  >
+                    {/* {details} */}
+                  </Stack>
                 </Box>
-              </GridCol>
+              </Box>
+            </Grid.Col>
 
-              {/* RIGHT / FORM */}
-              <GridCol span={{ base: 12, md: 7, lg: 7 }}>
-                <Box h="100%">
-                  {/* Container for the progress items, centered vertically */}
+            {/* RIGHT PANEL */}
+            <Grid.Col span={{ base: 12, md: 7 }}>
+              <Box
+                h="100%"
+                p={{ base: 20, md: 40 }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  background: "#fff",
+                  width: "100%",
+                  borderRadius: "lg",
+                  height: "100%",
+                  overflowY: "auto",
+                }}
+              >
+                <Box
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Flex
+                    direction="column"
+                    style={{
+                      padding: 30,
+                      gap: 20,
+                      height: "100%",
+                      overflowY: "auto",
+                      flex: 1,
+                    }}
+                  >
+                    {data?.map((v: any, index: number) => {
+                      const requirements =
+                        v.requirements?.flatMap(
+                          (rl: any) => rl.requirement || []
+                        ) || [];
+                      const completedCount = _.filter(requirements, (req) =>
+                        _.some(req.userRequirements, {
+                          userId,
+                          isCompleted: true,
+                        })
+                      ).length;
 
-                  <Flex justify="center">
-                    <Flex
-                      direction="column"
-                      w="90%"
-                      p={20}
-                      gap={20}
-                      align="stretch"
-                      justify="center"
-                      mih={350}
+                      const itemProgress = _.round(
+                        (completedCount / (requirements.length || 1)) * 100
+                      );
 
-                    >
-                      {data?.map((v: any, index: number) => {
-                        const itemProgress = _.round(
-                          (_.filter(
-                            v.requirements?.flatMap(
-                              (rl: any) => rl.requirement || [],
-                            ),
-                            (req) =>
-                              _.some(req.userRequirements, {
-                                userId,
-                                isCompleted: true,
-                              }),
-                          ).length /
-                            (v.requirements?.flatMap(
-                              (rl: any) => rl.requirement || [],
-                            ).length || 1)) *
-                          100,
-                        );
-
-                        return (
-                          <Flex key={v.id || index} align="center" gap={20}>
-                            <Text
-                              fz="20px"
-                              fw={700}
-                              style={{
-                                textAlign: "left",
-                              }}
-                            >
-                              {v.label}
-                            </Text>
-                            <Progress
-                              value={itemProgress}
-                              radius="md"
-                              color="#A7CEFC"
-                              h={20}
-                              style={{ flex: 1 }}
-                            />
-                          </Flex>
-                        );
-                      })}
-                    </Flex>
+                      return (
+                        <Flex key={v.id || index} align="center" gap={20}>
+                          <Text
+                            fz="20px"
+                            fw={700}
+                            style={{ textAlign: "left", minWidth: 120 }}
+                          >
+                            {v.label}
+                          </Text>
+                          <Progress
+                            value={itemProgress}
+                            radius="md"
+                            color="#A7CEFC"
+                            h={20}
+                            style={{ flex: 1 }}
+                          />
+                        </Flex>
+                      );
+                    })}
                   </Flex>
                 </Box>
-              </GridCol>
-            </Grid>
-          </Paper>
-        </Flex>
-      </Flex>
+
+                <Flex w="100%" justify="flex-end" mt="md"></Flex>
+              </Box>
+            </Grid.Col>
+          </Grid>
+        </Paper>
+      </Box>
     </Flex>
   );
 }

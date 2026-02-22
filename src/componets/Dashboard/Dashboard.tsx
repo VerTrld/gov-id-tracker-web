@@ -28,39 +28,9 @@ import { get } from "@/utils/http-api";
 import { IdTypes } from "@/entities/IdTypes";
 
 const Dashboard = () => {
-  const images = [
-    {
-      image: process.env.NEXT_PUBLIC_PHILID_ICON,
-      label: "Philippine National (PhilSys ID)",
-    },
-    {
-      image: process.env.NEXT_PUBLIC_TIN_ICON,
-      label: "Tax Identification Number (TIN)",
-    },
-    {
-      image: process.env.NEXT_PUBLIC_SSS_ICON,
-      label: "Social Security System (SSS)",
-    },
-    {
-      image: process.env.NEXT_PUBLIC_PASSPORT_ICON,
-      label: "Philippine Passport",
-    },
-    { image: process.env.NEXT_PUBLIC_POSTAL_ICON, label: "Postal ID" },
-    {
-      image: process.env.NEXT_PUBLIC_UMID_ICON,
-      label: "Unified Multi-Purpose ID (UMID)",
-    },
-    { image: process.env.NEXT_PUBLIC_PHILHEALTH_ICON, label: "PhilHealth ID" },
-    { image: process.env.NEXT_PUBLIC_PAGIBIG_ICON, label: "Pag-IBIG ID" },
-    { image: process.env.NEXT_PUBLIC_NBI_ICON, label: "NBI Clearance" },
-    {
-      image: process.env.NEXT_PUBLIC_DRIVERLICENSE_ICON,
-      label: "Driver's License",
-    },
-  ];
-
   const isMobile = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<"apply" | "completed">("apply");
 
   const { data } = useQuery({
     queryKey: ["id-types"],
@@ -103,6 +73,26 @@ const Dashboard = () => {
 
   console.log(data);
 
+  {
+    data?.map((v: any, index: number) => {
+      const itemProgress = _.round(
+        (_.filter(
+          v.requirements?.flatMap((rl: any) => rl.requirement || []),
+          (req) =>
+            _.some(req.userRequirements, {
+              userId,
+              isCompleted: true,
+            })
+        ).length /
+          (v.requirements?.flatMap((rl: any) => rl.requirement || []).length ||
+            1)) *
+          100
+      );
+
+      console.log(itemProgress);
+    });
+  }
+
   return (
     <Paper
       withBorder
@@ -122,7 +112,13 @@ const Dashboard = () => {
         <Flex direction="row" gap={10} wrap="wrap">
           {/* Left Stack */}
           <Stack flex={1} gap={5}>
-            <Title size={isMobile ? "10vw" : "5vw"} c="#043873" fw={900} style={{ fontStyle: "italic" }} pl={'md'}>
+            <Title
+              size={isMobile ? "10vw" : "5vw"}
+              c="#043873"
+              fw={900}
+              style={{ fontStyle: "italic" }}
+              pl={"md"}
+            >
               Hello,{" "}
               {_.upperCase(String(session.data?.user?.name)?.split(" ")[0])}!
             </Title>
@@ -290,27 +286,29 @@ const Dashboard = () => {
             <Group gap={0} style={{ width: "fit-content" }}>
               <Button
                 size="xs"
-                bg="#0A58BD"
-                c="white"
+                bg={activeTab === "apply" ? "#0A58BD" : "white"}
+                c={activeTab === "apply" ? "white" : "#043873"}
                 fw={600}
                 style={{
                   borderRadius: "8px 0 0 8px",
                   paddingLeft: 20,
                   paddingRight: 20,
                 }}
+                onClick={() => setActiveTab("apply")}
               >
                 Apply
               </Button>
               <Button
                 size="xs"
-                bg="#A7CEFC"
-                c="#043873"
+                bg={activeTab === "completed" ? "#0A58BD" : "white"}
+                c={activeTab === "completed" ? "white" : "#043873"}
                 fw={600}
                 style={{
                   borderRadius: "0 8px 8px 0",
                   paddingLeft: 20,
                   paddingRight: 20,
                 }}
+                onClick={() => setActiveTab("completed")}
               >
                 Completed
               </Button>
@@ -335,67 +333,92 @@ const Dashboard = () => {
               p={isMobile ? "10px" : "20px 50px 20px 50px"}
             >
               <Grid flex={1} align="stretch" gutter="xl">
-                {data?.map((v) => (
-                  <GridCol
-                    span={{ base: 6, md: 3 }}
-                    key={v.label}
-                    style={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <Paper
-                      onClick={() => router.push(`/user/${v.code}`)}
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        maxWidth: 150,
-                        padding: 20,
-                        borderRadius: 20,
-                        backgroundColor: "white",
-                        boxShadow: "0 8px 16px rgba(0,0,0,0.25)",
+                {data?.map((v) => {
+                  const requirements =
+                    v.requirements?.flatMap(
+                      (rl: any) => rl.requirement || []
+                    ) || [];
+                  const completedCount = _.filter(requirements, (req) =>
+                    _.some(req.userRequirements, { userId, isCompleted: true })
+                  ).length;
+                  const itemProgress = _.round(
+                    (completedCount / (requirements.length || 1)) * 100
+                  );
 
-                        // width: 110,
-                        // height: 130,
-                        flex: 1,
-                        cursor: "pointer",
-                        gap: 10,
-                        justifyContent: "space-between",
-                      }}
-                      withBorder
-                      radius="md"
-                      p="md"
-                      shadow="lg"
+                  // filter depende sa active tab
+                  if (activeTab === "apply" && itemProgress >= 100) return null;
+                  if (activeTab === "completed" && itemProgress < 100)
+                    return null;
+                  return (
+                    <GridCol
+                      span={{ base: 6, md: 3 }}
+                      key={v.label}
+                      style={{ display: "flex", justifyContent: "center" }}
                     >
-                      <Flex
-                        style={{ height: "100%" }}
-                        justify={"center"}
-                        align={"center"}
-                        direction={"column"}
-                        gap={20}
+                      <Paper
+                        onClick={() => router.push(`/user/${v.code}`)}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          maxWidth: 150,
+                          padding: 20,
+                          borderRadius: 20,
+                          backgroundColor: "white",
+                          boxShadow: "0 8px 16px rgba(0,0,0,0.25)",
+
+                          // width: 110,
+                          // height: 130,
+                          flex: 1,
+                          cursor: "pointer",
+                          gap: 10,
+                          justifyContent: "space-between",
+                        }}
+                        withBorder
+                        radius="md"
+                        p="md"
+                        shadow="lg"
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#d3e4f9";
+
+                          console.log(v);
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "#fff";
+                        }}
                       >
-                        <Image
-                          alt={v.label}
-                          src={`${v.logoUrl}`}
-                          width={80}
-                          height={80}
-                          style={{ borderRadius: 8, objectFit: "fill" }}
-                        />
-                        <Text
-                          size="sm"
-                          style={{
-                            whiteSpace: "normal",
-                            lineHeight: 1.2,
-                            textAlign: "center",
-                            color: "#043873",
-                            fontWeight: 700,
-                            fontSize: "14px",
-                          }}
+                        <Flex
+                          style={{ height: "100%" }}
+                          justify={"center"}
+                          align={"center"}
+                          direction={"column"}
+                          gap={20}
                         >
-                          {v.label}
-                        </Text>
-                      </Flex>
-                    </Paper>
-                  </GridCol>
-                ))}
+                          <Image
+                            alt={v.label}
+                            src={`${v.logoUrl}`}
+                            width={80}
+                            height={80}
+                            style={{ borderRadius: 8, objectFit: "fill" }}
+                          />
+                          <Text
+                            size="sm"
+                            style={{
+                              whiteSpace: "normal",
+                              lineHeight: 1.2,
+                              textAlign: "center",
+                              color: "#043873",
+                              fontWeight: 700,
+                              fontSize: "14px",
+                            }}
+                          >
+                            {v.label}
+                          </Text>
+                        </Flex>
+                      </Paper>
+                    </GridCol>
+                  );
+                })}
               </Grid>
             </Box>
           </Stack>
@@ -412,7 +435,7 @@ const Dashboard = () => {
               borderRadius: "30px",
               cursor: "pointer",
             }}
-            bg={'#FFFFFF'}
+            bg={"#FFFFFF"}
           >
             <Flex
               direction="column"
@@ -426,14 +449,7 @@ const Dashboard = () => {
                 IN PROGRESS
               </Text>
             </Flex>
-            <Flex
-              direction="column"
-              w="100%"
-              p={20}
-              gap={15}
-
-              mih={350}
-            >
+            <Flex direction="column" w="100%" p={20} gap={15} mih={350}>
               {data?.map((v: any, index: number) => {
                 const itemProgress = _.round(
                   (_.filter(
@@ -446,7 +462,7 @@ const Dashboard = () => {
                   ).length /
                     (v.requirements?.flatMap((rl: any) => rl.requirement || [])
                       .length || 1)) *
-                  100
+                    100
                 );
 
                 console.log({ itemProgress });

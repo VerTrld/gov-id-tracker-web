@@ -120,7 +120,7 @@ export default function GovernmentIds() {
       if (res.status === 200 || res.status === 201) {
         refetchGovernmentIds();
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   const [uploadOpened, { open: openUpload, close: closeUpload }] =
     useDisclosure(false);
@@ -137,61 +137,69 @@ export default function GovernmentIds() {
 
   console.log(data, imageView);
 
-
-  const openModal = () => modals.openConfirmModal({
-    centered: true,
-    size: 'sm',
-    radius: '15px',
-    withCloseButton: false,
-    groupProps: {
-      align: 'center',
-      justify: 'center',
-      p: 'md'
-    },
-    styles: {
-
-      title: {
-        width: '100%',
-        textAlign: 'center',
+  const openModal = () =>
+    modals.openConfirmModal({
+      centered: true,
+      size: "sm",
+      radius: "15px",
+      withCloseButton: false,
+      groupProps: {
+        align: "center",
+        justify: "center",
+        p: "md",
       },
-    },
-    title: (
-      <Flex direction={'column'} align={'center'} justify={'center'} ta={'center'} gap={10} p={'15px'}>
-        <Image
-          alt="Logo"
-          style={{ padding: '5px' }}
-          src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+      styles: {
+        title: {
+          width: "100%",
+          textAlign: "center",
+        },
+      },
+      title: (
+        <Flex
+          direction={"column"}
+          align={"center"}
+          justify={"center"}
+          ta={"center"}
+          gap={10}
+          p={"15px"}
+        >
+          <Image
+            alt="Logo"
+            style={{ padding: "5px" }}
+            src={`${process.env.NEXT_PUBLIC_KARERAMO_LOGO}`}
+            width={60}
+            height={60}
+          />
+          <Text ta={"center"} c="#0B69A3">
+            You’re all set!
+          </Text>
+        </Flex>
+      ),
+      children: (
+        <Text size="sm" ta={"center"} c="#4F9CF9" p={"20px"}>
+          You have completed the required documents. You are now ready to apply
+          for this ID.
+        </Text>
+      ),
+      labels: { confirm: "Apply for other ID", cancel: "Back to Home" },
+      cancelProps: {
+        radius: "10px",
+        style: {
+          color: "white",
+          backgroundColor: "#0A58BD",
+        },
+      },
+      onCancel: () => router.push("/user/home"),
 
-          width={60}
-          height={60}
-        />
-        <Text ta={'center'} c='#0B69A3'>You’re all set!</Text>
-      </Flex>
-    ),
-    children: (
-      <Text size="sm" ta={'center'} c='#4F9CF9' p={'20px'}>
-        You have completed the required documents. You are now ready to apply for this ID.
-      </Text>
-    ),
-    labels: { confirm: 'Apply for other ID', cancel: 'Back to Home' },
-    cancelProps: {
-      radius: '10px',
-      style: {
-        color: 'white',
-        backgroundColor: '#0A58BD',
-      }
-    },
-    onCancel: () => router.push("/user/home"),
-
-    confirmProps: {
-      radius: '10px',
-      style: {
-        color: 'white',
-        backgroundColor: '#4F9CF9',
-      }
-    },
-    onConfirm: () => router.push("/user/home"),
-  });
+      confirmProps: {
+        radius: "10px",
+        style: {
+          color: "white",
+          backgroundColor: "#4F9CF9",
+        },
+      },
+      onConfirm: () => router.push("/user/home"),
+    });
 
   return (
     <Flex
@@ -200,7 +208,7 @@ export default function GovernmentIds() {
       justify={"center"}
       style={{
         flex: 1,
-        padding: 24,
+        // padding: 24,
         gap: 24,
         // backgroundColor: "#fff",
         borderRadius: 12,
@@ -208,9 +216,9 @@ export default function GovernmentIds() {
         minHeight: "100%",
         overflowY: "auto",
         backgroundImage: `url(${process.env.NEXT_PUBLIC_DASH_2})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       {/* Upload Modal */}
@@ -253,7 +261,6 @@ export default function GovernmentIds() {
       {/* View Modal */}
       <ViewImageModal opened={viewOpened} onClose={closeView}>
         <Stack gap="md">
-
           {imageView?.[0]?.fileUrl ? (
             <>
               <Flex justify="center">
@@ -264,15 +271,26 @@ export default function GovernmentIds() {
                   withBorder
                   style={{ maxWidth: 320 }}
                 >
-                  <Image src={imageView[0].fileUrl} alt="image-view" width={300} height={400} style={{ objectFit: "contain", cursor: "pointer" }} onClick={() => window.open(imageView[0].fileUrl, "_blank", "noopener,noreferrer")} />
+                  <Image
+                    src={imageView[0].fileUrl}
+                    alt="image-view"
+                    width={300}
+                    height={400}
+                    style={{ objectFit: "contain", cursor: "pointer" }}
+                    onClick={() =>
+                      window.open(
+                        imageView[0].fileUrl,
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
+                  />
                 </Paper>
               </Flex>
 
               <Divider />
 
               <Flex justify="end" align="center">
-
-
                 <Button
                   color="red"
                   variant="light"
@@ -339,7 +357,7 @@ export default function GovernmentIds() {
             flexDirection: "column",
             alignItems: "center",
             width: "100%",
-            height: "100%",
+            height: "81%",
             justifyContent: "center",
           }}
         >
@@ -375,7 +393,7 @@ export default function GovernmentIds() {
                 window.open(data?.officialUrls?.[0], "_blank");
               }
 
-              openModal()
+              openModal();
             }}
           >
             <Stack gap="lg" style={{ flex: 1 }}>
@@ -459,15 +477,24 @@ export default function GovernmentIds() {
           </ChecklistModule>
         </Box>
       ) : (
-        <Flex direction={'column'} align={'center'} justify={'center'} p={20} gap={10} w={'60%'}>
-          <Title c={'#043873'}
+        <Flex
+          direction={"column"}
+          align={"center"}
+          justify={"center"}
+          p={20}
+          gap={10}
+          w={"60%"}
+        >
+          <Title
+            c={"#043873"}
             style={{
               fontWeight: 900,
               lineHeight: 1.15,
               fontSize: 32,
               marginBottom: 20,
-              textAlign: 'center'
-            }}>
+              textAlign: "center",
+            }}
+          >
             Are you sure you want to proceed with this ID application?
           </Title>
           <Button onClick={() => handleApplyGovernmentIds(data.id)}>
