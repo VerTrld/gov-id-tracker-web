@@ -17,7 +17,7 @@ WORKDIR /app
 
 ENV NEXT_PUBLIC_ILLUSTRATOR="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/illustrator_1.png" \
     NEXT_PUBLIC_KARERAMO_LOGO="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/new-icon-logo.png" \
-    NEXT_PUBLIC_LANDING_IMAGE="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/landing_1.png" \
+    NEXT_PUBLIC_LANDING_IMAGE="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-background/landing_1.png" \
     NEXT_PUBLIC_NATIONAL_ID="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/national-id.png" \
     NEXT_PUBLIC_TIN_ID="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/tin.png" \
     NEXT_PUBLIC_SSS="https://lacbxyahzmyivlbcrtau.supabase.co/storage/v1/object/public/gov-id-tracker-assets/sss.png" \
