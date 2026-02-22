@@ -120,7 +120,7 @@ export default function GovernmentIds() {
       if (res.status === 200 || res.status === 201) {
         refetchGovernmentIds();
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const [uploadOpened, { open: openUpload, close: closeUpload }] =
     useDisclosure(false);
@@ -436,6 +436,7 @@ export default function GovernmentIds() {
 
                   {/* RIGHT SIDE (Buttons) */}
                   <Flex gap={10}>
+
                     <Button
                       variant="outline"
                       onClick={() => {

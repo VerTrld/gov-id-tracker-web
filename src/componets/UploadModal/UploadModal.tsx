@@ -39,7 +39,7 @@ const UploadModal = ({
       onClose={onClose}
       withCloseButton
       centered
-      title="Upload Image"
+      title="Upload Image ( Optional )"
     >
       <Dropzone
         onDrop={handleDrop}

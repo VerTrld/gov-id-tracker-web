@@ -289,6 +289,7 @@ export default function ProgressPage() {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
+                    // justifyContent: 'center'
                   }}
                 >
                   {/* Ring Progress Container */}
@@ -302,9 +303,10 @@ export default function ProgressPage() {
                       justifyContent: "center",
                       alignItems: "center",
                       position: "relative",
-                      // top: { lg: 10, sm: 4 },
+                      justifyItems: 'center',
                     }}
                   >
+
                     <RingProgress
                       size={220}
                       thickness={15}
@@ -326,14 +328,7 @@ export default function ProgressPage() {
                   </Box>
 
                   {/* Details / Optional content */}
-                  <Stack
-                    gap={10}
-                    justify="center"
-                    align="center"
-                    style={{ zIndex: 1 }}
-                  >
-                    {/* {details} */}
-                  </Stack>
+
                 </Box>
               </Box>
             </Grid.Col>
@@ -366,7 +361,7 @@ export default function ProgressPage() {
                     direction="column"
                     style={{
                       padding: 30,
-                      gap: 20,
+                      gap: 35,
                       height: "100%",
                       overflowY: "auto",
                       flex: 1,

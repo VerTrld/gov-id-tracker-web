@@ -91,7 +91,7 @@ export const GovernmentIdModal = ({ opened, onClose, form, onSubmit }: IGovernme
                         mb="sm"
                         {...form.getInputProps("description")}
                     />
-                    <FileInput  {...form.getInputProps("file")} />
+                    <FileInput placeholder='Upload Logo'  {...form.getInputProps("file")} />
 
                     <Flex direction={'column'} gap={5}>
                         <Text fz={'12px'} mt="sm" c='#334E68' fw={700}>Requirements</Text>
