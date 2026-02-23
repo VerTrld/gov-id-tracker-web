@@ -110,7 +110,7 @@ const page = () => {
                     gap={isMobile ? 40 : 80}
                     style={{
                         flex: 1,
-                        padding: isMobile ? '60px 20px' : '40px',
+                        padding: isMobile ? '60px 20px' : '100px',
                         backgroundImage: `url(${process.env.NEXT_PUBLIC_ABOUT_2})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
@@ -353,7 +353,6 @@ const page = () => {
                         }}
                     >
                         Documents Covered Under
-                        <br />
                         RA 11261
                     </Title>
 
@@ -379,7 +378,7 @@ const page = () => {
                     </Flex>
 
 
-                    <Flex wrap="wrap" gap="md" justify={'center'} align={'center'} p={'0px 100px 20px 100px'}>
+                    <Flex wrap="wrap" gap="md" justify={'center'} align={'center'} p={isMobile ? '20px' :'0px 100px 20px 100px'}>
                         {data.map((v, index) => (
                             <Flex
                                 align={'center'}
@@ -412,39 +411,6 @@ const page = () => {
 
 
                 </Flex>
-
-                {/* 6th Section */}
-                {/* <Flex
-                    direction="column"
-                    gap={80}
-                    style={{
-                        flex: 1,
-                        padding: isMobile ? '60px 20px' : '50px 100px',
-                    }}
-                    bg={'#A7CEFC'}
-                >
-                    <Flex
-                        gap={40}
-                        align="center"
-                        justify="space-between"
-                        direction={'column'}
-                        style={{ flex: 1 }}
-
-
-
-                    >
-                        <Title c={'#043873'} style={{
-                            lineHeight: 1.15,
-                            fontSize: isMobile ? 32 : 48,
-                            
-                        }}>Disclaimer
-                        </Title>
-                        <Text c={'#FFFFFF'} ta={'center'}>ID Mo Karera Mo is an independent website created by student developers to help first-time job seekers organize and monitor their employment requirements. The platform functions solely as a reference and tracking tool. It is not affiliated with any government agency. All official applications, registrations, and certifications must be
-                            processed directly through the appropriate government offices and their authorized websites.</Text>
-                    </Flex>
-
-                </Flex> */}
-
 
                 {/* Footer */}
                 <Flex flex={1}>

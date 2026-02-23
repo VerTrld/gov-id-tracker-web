@@ -248,9 +248,10 @@ const Dashboard = () => {
             style={{
               borderRadius: 20,
               padding: 10,
-              margin: 10,
+              margin: isMobile? 'auto' : 10,
               height: "320px",
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
+          
             }}
             renderDay={(date) => {
               const isToday = dayjs(date).isSame(dayjs(), "day");
@@ -351,7 +352,7 @@ const Dashboard = () => {
                     return null;
                   return (
                     <GridCol
-                      span={{ base: 6, md: 3 }}
+                      span={{ base: 6, md: 4 }}
                       key={v.label}
                       style={{ display: "flex", justifyContent: "center" }}
                     >

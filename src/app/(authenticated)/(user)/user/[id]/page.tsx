@@ -483,7 +483,7 @@ export default function GovernmentIds() {
           align={"center"}
           justify={"center"}
           gap={10}
-          w={"60%"}
+          w={"80%"}
           style={{
             padding: '40px',
             borderRadius: 20,

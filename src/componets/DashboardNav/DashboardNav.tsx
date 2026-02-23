@@ -187,9 +187,11 @@ const DashboardNav = ({ children }: IDashboardNav) => {
               </Button>
 
               {session.data?.user?.name ? (
-                <Flex>
-                  <Text ff={'Helvetica'}>{session.data.user.name}</Text>
-                </Flex>
+                // <Flex>
+                 <Button bg={"#A7CEFC"} onClick={() => router.push("/user/home")} >
+                    <Text c={"#4F9CF9"} fw={600} ff={'Helvetica'} >{session.data.user.name}</Text>
+                  </Button>
+                // </Flex>
               ) : (
                 <Button
                   onClick={() => router.push("?action=login")}

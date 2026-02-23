@@ -170,7 +170,7 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
                       textAlign: "left",
                       padding: 10,
                       borderRadius: "20px",
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: 500,
                       color: isActive ? "#043873" : "#fff",
                       backgroundColor: isActive ? "#F8FBFE" : "transparent",
