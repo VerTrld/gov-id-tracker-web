@@ -21,10 +21,11 @@ const page = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
+            // filter: "blur(8px)"
             // opacity: 0.1
           }}
         >
-          <ContactSection label="Contact Us" />
+          <ContactSection label="Contact Us"/>
         </Flex>
 
         <Flex flex={1}>

@@ -490,7 +490,7 @@ export default function GovernmentIds() {
             border: '1px solid white',
             backdropFilter: 'blur(7px) saturate(200%)',
             WebkitBackdropFilter: 'blur(7px) saturate(200%)',
-            backgroundColor: 'rgba(118, 118, 119, 0.48)',
+            backgroundColor: 'rgba(143, 142, 142, 0.48)',
           }}
         >
           <Title

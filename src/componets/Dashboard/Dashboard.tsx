@@ -86,7 +86,7 @@ const Dashboard = () => {
         ).length /
           (v.requirements?.flatMap((rl: any) => rl.requirement || []).length ||
             1)) *
-          100
+        100
       );
 
       console.log(itemProgress);
@@ -113,7 +113,7 @@ const Dashboard = () => {
           {/* Left Stack */}
           <Stack flex={1} gap={5}>
             <Title
-              size={isMobile ? "10vw" : "5vw"}
+              size={isMobile ? "10vw" : "4vw"}
               c="#043873"
               fw={900}
               style={{ fontStyle: "italic" }}
@@ -248,10 +248,19 @@ const Dashboard = () => {
             style={{
               borderRadius: 20,
               padding: 10,
-              margin: isMobile? 'auto' : 10,
+              margin: isMobile ? 'auto' : 10,
               height: "320px",
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
-          
+              backgroundColor: "rgba(82, 102, 126, 0.3)"
+
+            }}
+            styles={{
+              weekday: {
+                color: '#043873'
+              },
+              monthCell:{ 
+                color: 'white'
+              }
             }}
             renderDay={(date) => {
               const isToday = dayjs(date).isSame(dayjs(), "day");
@@ -331,7 +340,7 @@ const Dashboard = () => {
                 border: "1px solid rgba(255, 255, 255, 0.25)", // subtle glass border
                 boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)", // slightly lifted shadow
               }}
-              p={isMobile ? "10px" : "20px 50px 20px 50px"}
+              p={isMobile ? "10px" : "20px 50px"}
             >
               <Grid flex={1} align="stretch" gutter="xl">
                 {data?.map((v) => {
@@ -362,9 +371,9 @@ const Dashboard = () => {
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
-                          maxWidth: 150,
+                          maxWidth: 170,
                           padding: 20,
-                          borderRadius: 20,
+                          borderRadius: 40,
                           backgroundColor: "white",
                           boxShadow: "0 8px 16px rgba(0,0,0,0.25)",
 
@@ -475,7 +484,7 @@ const Dashboard = () => {
                   ).length /
                     (v.requirements?.flatMap((rl: any) => rl.requirement || [])
                       .length || 1)) *
-                    100
+                  100
                 );
 
                 console.log({ itemProgress });
