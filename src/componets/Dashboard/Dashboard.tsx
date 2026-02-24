@@ -110,16 +110,25 @@ const Dashboard = () => {
         <Flex direction="row" gap={10} wrap="wrap">
           {/* Left Stack */}
           <Stack flex={1} gap={5}>
-            <Title
-              size={isMobile ? "10vw" : "4vw"}
-              c="#043873"
-              fw={900}
-              style={{ fontStyle: "italic" }}
-              pl={"md"}
-            >
-              Hello,{" "}
-              {_.upperCase(String(session.data?.user?.name)?.split(" ")[0])}!
-            </Title>
+            <Flex gap={5}>
+              <Title
+                size={isMobile ? "10vw" : "4vw"}
+                c="#043873"
+                fw={900}
+                // style={{ fontStyle: "italic" }}
+                pl={"md"}
+              >
+                Hello,
+              </Title>
+              <Title
+                size={isMobile ? "10vw" : "4vw"}
+                c="#043873"
+                fw={900}
+                // style={{ fontStyle: "italic" }}
+                >
+                {_.upperCase(String(session.data?.user?.name)?.split(" ")[0])}!
+              </Title>
+            </Flex>
 
             <Box
               flex={1}
@@ -139,18 +148,18 @@ const Dashboard = () => {
             >
               <Stack justify="space-between" style={{ height: "100%" }}>
                 <div>
-                  <Text>
+                  <Text fw={500}>
                     Please ensure that you complete your in-progress IDs
                     application
                   </Text>
-                  <Text>at your earliest convenience.</Text>
+                  <Text fw={500}>at your earliest convenience.</Text>
                 </div>
 
                 <div>
-                  <Text c="dimmed" fz="sm" style={{ fontStyle: "italic" }}>
+                  <Text c="#C4D9F2" fz="sm" style={{ fontStyle: "italic" }}>
                     This website is not affiliated with, endorsed by,
                   </Text>
-                  <Text c="dimmed" fz="sm" style={{ fontStyle: "italic" }}>
+                  <Text c="#C4D9F2" fz="sm" style={{ fontStyle: "italic" }}>
                     or connected to any government agency.
                   </Text>
                   {/* <Button

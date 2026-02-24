@@ -74,16 +74,20 @@ const Footer = () => {
             style={{
               textAlign: isMobile ? "center" : "right",
               color: "#FFFFFF",
-              maxWidth: isMobile ? "100%" : 600,
+              maxWidth: isMobile ? "100%" : 700,
             }}
           >
             ID Mo, Karera Mo is an independent platform created to guide first
-            time job seekers. The developers and owners of this website are not
-            affiliated with any government agency. All applications are
+            time job seekers. 
+            <br/>
+            The developers and owners of this website are not
+            affiliated with any government agency.
+              <br/>
+             All applications are
             completed through official government websites and offices.
           </Text>
         </Flex>
-      </Flex>
+      </Flex> 
 
       {/* Bottom Section */}
       <Flex direction="column" gap={10}>

@@ -332,7 +332,7 @@ const page = () => {
                 {/* 5th Section */}
                 <Flex
                     direction={"column"}
-                    gap={20}
+                    gap={15}
                     style={{
                         // flex: 1,
                         padding: isMobile ? "60px 20px" : "100px",
@@ -391,8 +391,8 @@ const page = () => {
                         ))}
                     </Flex>
 
-                    <Flex direction={'column'} gap={10} pt={10}>
-                        <Text ta={'center'} fz={'20px'} style={{ color: '#4F9CF9' }}>
+                    <Flex direction={'column'} gap={20} >
+                        <Text ta={'center'} fz={'20px'} style={{ color: '#0282ff' }}>
                             View full information and other Government requirements covered by RA 11261
                         </Text>
 

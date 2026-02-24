@@ -51,7 +51,7 @@ export default function GovernmentIds() {
   const [userRequirementId, setUserRequirementId] = useState("");
   const [deleting, setDeleting] = useState(false);
 
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const session = useSession();
 
@@ -492,10 +492,9 @@ export default function GovernmentIds() {
           style={{
             padding: '40px',
             borderRadius: 20,
-            border: '1px solid white',
-            backdropFilter: 'blur(7px) saturate(200%)',
-            WebkitBackdropFilter: 'blur(7px) saturate(200%)',
-            backgroundColor: 'rgba(143, 142, 142, 0.48)',
+            backgroundColor: "rgba(255, 255, 255, 0.6)", // semi-transparent white
+            backdropFilter: "blur(10px)", // frosted glass effect
+            border: "1px solid rgba(255, 255, 255, 0.3)", // subtle border to enhance glass effect
           }}
         >
           <Title

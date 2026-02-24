@@ -34,11 +34,12 @@ export const theme = createTheme({
           borderColor: '#F0F4F8',
           backgroundColor: '#D9EAFE',
           fontSize: rem(12),
-          color: '#829AB1',
+          color: '#000000',
 
           '&:focus': {
             borderColor: '#2E8CE9',
           },
+
         },
 
         label: {
@@ -46,7 +47,7 @@ export const theme = createTheme({
           marginBottom: rem(6),
           color: '#334E68',
           fontSize: rem(12),
-          
+
         },
 
         description: {

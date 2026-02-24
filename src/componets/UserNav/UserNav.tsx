@@ -33,7 +33,7 @@ import { useQuery } from "@tanstack/react-query";
 import { get } from "@/utils/http-api";
 import { IdTypes } from "@/entities/IdTypes";
 
-interface ResponsiveNavLayoutProps extends PropsWithChildren {}
+interface ResponsiveNavLayoutProps extends PropsWithChildren { }
 
 export function UserNav({ children }: ResponsiveNavLayoutProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -312,6 +312,9 @@ export function UserNav({ children }: ResponsiveNavLayoutProps) {
               direction="column"
               align="center"
               style={{ margin: "20px 20px 10px 20px" }}
+              onClick={() => {
+                router.push("/user/home");
+              }}
             >
               {/* <Flex
                 style={{
