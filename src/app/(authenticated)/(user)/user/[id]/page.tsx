@@ -51,6 +51,8 @@ export default function GovernmentIds() {
   const [userRequirementId, setUserRequirementId] = useState("");
   const [deleting, setDeleting] = useState(false);
 
+  const [loading , setLoading] = useState(false);
+
   const session = useSession();
 
   console.log(session);
@@ -74,6 +76,7 @@ export default function GovernmentIds() {
   );
 
   const handleApplyGovernmentIds = async (governmentIdsId: string) => {
+    setLoading(true)
     try {
       const res = await post(`/applications/create/${governmentIdsId}`);
 
@@ -96,6 +99,8 @@ export default function GovernmentIds() {
         message: `Success Applying for ${data?.label}`,
         color: "green",
       });
+      setLoading(false);
+
     }
   };
 
@@ -505,7 +510,7 @@ export default function GovernmentIds() {
           >
             Are you sure you want to proceed with this ID application?
           </Title>
-          <Button onClick={() => handleApplyGovernmentIds(data.id)}>
+          <Button loading={loading} disabled={loading} onClick={() => handleApplyGovernmentIds(data.id)}>
             Apply
           </Button>
         </Flex>

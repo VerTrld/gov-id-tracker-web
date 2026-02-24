@@ -21,6 +21,7 @@ const layout = ({ children }: PropsWithChildren) => {
   const params = useSearchParams();
   const action = params.get("action");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const loginForm = useForm<IPersonShcema>({
     validate: yupResolver(PersonSchema),
@@ -37,6 +38,7 @@ const layout = ({ children }: PropsWithChildren) => {
 
   const handleLogIn = loginForm.onSubmit(async () => {
     setError(""); // Clear any previous errors
+    setLoading(true);
 
     try {
       const res = await signIn("credentials", {
@@ -62,7 +64,9 @@ const layout = ({ children }: PropsWithChildren) => {
         });
         router.push("/user/home");
       }
-    } catch (error) {
+    } 
+    
+    catch (error) {
       // Handle unexpected errors (network issues, exceptions)
       setError("An unexpected error occurred. Please try again.");
       notifications.show({
@@ -70,7 +74,12 @@ const layout = ({ children }: PropsWithChildren) => {
         title: 'Error',
         message: 'An unexpected error occurred. Please try again.',
       });
+      
       // console.error("Login error:", error);
+    }
+
+    finally {
+      setLoading(false); // ✅ stop loading
     }
   });
 
@@ -91,6 +100,7 @@ const layout = ({ children }: PropsWithChildren) => {
   });
 
   const handleRegister = registerForm.onSubmit(async () => {
+    setLoading(true);
     try {
       const res = await post(`/user-account/create/one`, {
         name: `${registerForm.values.firstName} ${registerForm.values.lastName}`,
@@ -124,6 +134,10 @@ const layout = ({ children }: PropsWithChildren) => {
       });
       console.error("Registration error:", error);
     }
+
+    finally{
+      setLoading(false);
+    }
   });
 
 
@@ -142,6 +156,7 @@ const layout = ({ children }: PropsWithChildren) => {
           //WIP need to close before going
           router.replace("/?action=register")
         }
+        loading={loading}
       />
 
       <RegisterUserModal
@@ -156,6 +171,7 @@ const layout = ({ children }: PropsWithChildren) => {
           //WIP need to close before going
           router.replace("/?action=login")
         }
+        loading={loading}
       />
       <DashboardNav>{children}</DashboardNav>
     </>

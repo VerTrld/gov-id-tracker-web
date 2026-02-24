@@ -18,11 +18,13 @@ interface ILoginUser extends ModalProps {
   form: UseFormReturnType<IPersonShcema>;
   error?: string;
   onRegisterClick?: () => void;
+  loading?: boolean;
 }
 
 const LoginUserModal = ({
   opened,
   onClose,
+  loading,
   form,
   onSubmit,
   error,
@@ -87,7 +89,7 @@ const LoginUserModal = ({
           </Text>
         )}
         <Flex direction={'column'} mb={10} gap={5}>
-          <Button type="submit" fullWidth radius={10}>
+          <Button type="submit" fullWidth radius={10} loading={loading} disabled={loading}>
             Login
           </Button>
           <Text fz={'12px'} c='#486581' style={{ textAlign: 'right' }}>Forgot Password?</Text>

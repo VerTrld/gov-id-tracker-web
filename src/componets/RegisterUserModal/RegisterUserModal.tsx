@@ -10,10 +10,12 @@ interface IRegisterUser extends ModalProps {
   onSubmit: () => void;
   form: UseFormReturnType<IPersonShcema>;
   onLoginClick?: () => void;
+  loading?: boolean;
 }
 
 const RegisterUserModal = ({
   opened,
+  loading,
   onClose,
   onSubmit,
   form,
@@ -119,7 +121,7 @@ const RegisterUserModal = ({
             />}
 
 
-          <Button type="submit" fullWidth mb="md" radius={10} disabled={form.values.isTerms === false}>
+          <Button type="submit" fullWidth mb="md" radius={10}   disabled={!form.values.isTerms || loading} loading={loading}> 
             Create an account
           </Button>
         </Flex>
