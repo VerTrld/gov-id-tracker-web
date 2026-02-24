@@ -1,31 +1,29 @@
 "use client";
+import { IdTypes } from "@/entities/IdTypes";
+import { get } from "@/utils/http-api";
 import {
   Box,
   Button,
-  Divider,
   Flex,
   Grid,
   GridCol,
   Group,
-  Indicator,
   Paper,
   Progress,
   RingProgress,
   Stack,
   Text,
-  Title,
+  Title
 } from "@mantine/core";
-import Image from "next/image";
-import React, { useMemo, useState } from "react";
 import { Calendar } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
-import dayjs from "dayjs";
-import { useSession } from "next-auth/react";
-import _ from "lodash";
-import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { get } from "@/utils/http-api";
-import { IdTypes } from "@/entities/IdTypes";
+import dayjs from "dayjs";
+import _ from "lodash";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
 
 const Dashboard = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -251,14 +249,14 @@ const Dashboard = () => {
               margin: isMobile ? 'auto' : 10,
               height: "320px",
               boxShadow: "0 10px 10px rgba(0, 0, 0, 0.19)",
-              backgroundColor: "rgba(82, 102, 126, 0.3)"
+              backgroundColor: "#F0F4F9"
 
             }}
             styles={{
               weekday: {
                 color: '#043873'
               },
-              monthCell:{ 
+              monthCell: {
                 color: 'white'
               }
             }}
