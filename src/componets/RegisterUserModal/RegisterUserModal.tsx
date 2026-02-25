@@ -113,15 +113,17 @@ const RegisterUserModal = ({
               label={
 
                 <>
-                  <Flex align={'center'} gap={5}> <Text c='#334E68' fz={'12px'}>I agree to the </Text><Text c='#043873' fz={'12px'} onClick={() => router.push("/terms&condition")} style={{ cursor: 'pointer' }}>  Terms and Conditions.</Text> <Text c='#334E68' fz={'12px'}> I understand that ID Mo,</Text></Flex>
+                  <Flex align={'center'} gap={5}> <Text c='#334E68' fz={'12px'}>I agree to the <Text span c='#043873' fz={'12px'} onClick={() => router.push("/terms&condition")} style={{ cursor: 'pointer' }}>  Terms and Conditions.</Text><Text span c='#334E68' fz={'12px'}> I understand that ID Mo,</Text> <Text span c='#334E68' fz={'12px'}>Karera Mo provides guidance only and is not connected to any government agency.</Text> </Text>
 
-                  <Text c='#334E68' fz={'12px'}>Karera Mo provides guidance only and is not connected to any government agency.</Text>  </>
+                  </Flex>
+
+                </>
               }
               {...form.getInputProps('isTerms')}
             />}
 
 
-          <Button type="submit" fullWidth mb="md" radius={10}   disabled={!form.values.isTerms || loading} loading={loading}> 
+          <Button type="submit" fullWidth mb="md" radius={10} disabled={!form.values.isTerms || loading} loading={loading}>
             Create an account
           </Button>
         </Flex>
