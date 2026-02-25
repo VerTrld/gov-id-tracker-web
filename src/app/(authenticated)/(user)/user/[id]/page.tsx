@@ -7,42 +7,31 @@ import {
   Checkbox,
   Divider,
   Flex,
-  Grid,
-  GridCol,
-  Group,
-  Loader,
   Paper,
   Stack,
   Text,
-  Textarea,
-  TextInput,
-  Title,
-  UnstyledButton,
+  Title
 } from "@mantine/core";
 
 import _ from "lodash";
 import { useParams, useRouter } from "next/navigation";
 // import { governmentIds } from "@/componets/UserNav/govenmentIds";
 import { ChecklistModule } from "@/componets/ChecklistModule/ChecklistModule";
-import UploadModal from "@/componets/UploadModal/UploadModal";
+import ViewImageModal from "@/componets/ViewImageModal/ViiewImageMoldal";
 import { IdTypes } from "@/entities/IdTypes";
+import { IViewImage } from "@/entities/IViewImage";
 import { del, get, patch, post } from "@/utils/http-api";
 import { useDisclosure } from "@mantine/hooks";
-import { useQuery } from "@tanstack/react-query";
-import {
-  IconMail,
-  IconMapPin,
-  IconPhoto,
-  IconUpload,
-  IconX,
-} from "@tabler/icons-react";
-import { useState } from "react";
-import { notifications } from "@mantine/notifications";
-import ViewImageModal from "@/componets/ViewImageModal/ViiewImageMoldal";
-import Image from "next/image";
-import { IViewImage } from "@/entities/IViewImage";
-import { useSession } from "next-auth/react";
 import { modals } from "@mantine/modals";
+import { notifications } from "@mantine/notifications";
+import {
+  IconPhoto,
+  IconX
+} from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function GovernmentIds() {
   const params = useParams();
@@ -227,7 +216,7 @@ export default function GovernmentIds() {
       }}
     >
       {/* Upload Modal */}
-      <UploadModal
+      {/* <UploadModal
         opened={uploadOpened} // separate state for upload modal
         onClose={closeUpload}
         onUpload={async (files) => {
@@ -261,7 +250,7 @@ export default function GovernmentIds() {
             });
           }
         }}
-      />
+      /> */}
 
       {/* View Modal */}
       <ViewImageModal opened={viewOpened} onClose={closeView}>
@@ -442,7 +431,7 @@ export default function GovernmentIds() {
                   {/* RIGHT SIDE (Buttons) */}
                   <Flex gap={10}>
 
-                    <Button
+                    {/* <Button
                       variant="outline"
                       onClick={() => {
                         // const userReq = r.userRequirements.find(
@@ -459,9 +448,9 @@ export default function GovernmentIds() {
                       }}
                     >
                       <IconUpload color="#4F9CF9" size={20} />
-                    </Button>
+                    </Button> */}
 
-                    <Button
+                    {/* <Button
                       variant="outline"
                       onClick={() => {
                         // const userReq = r.userRequirements.find(
@@ -475,7 +464,7 @@ export default function GovernmentIds() {
                       }}
                     >
                       <IconPhoto color="#4F9CF9" size={20} />
-                    </Button>
+                    </Button> */}
                   </Flex>
                 </Flex>
               ))}

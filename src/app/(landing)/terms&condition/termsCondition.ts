@@ -39,11 +39,6 @@ export const privacyPolicy = [
       'We collect only minimal personal information necessary for account management, including: Full name and Email address. We do not collect sensitive personal information such as government identification numbers, official ID copies, certifications, or employment-related documents.',
   },
   {
-    value: 'Optional Document Upload',
-    description:
-      'Document upload, if available, is optional. The platform does not require users to submit official government identification documents for system functionality. ID Mo, Karera Mo does not access, process, or store government ID numbers, official ID copies, certifications, or other sensitive documents. All official documents and applications are processed exclusively through authorized government offices and official websites.',
-  },
-  {
     value: 'Purpose of Data Collection',
     description:
       'Personal information is collected solely for account creation, account management, platform functionality, and responding to user inquiries via email.',

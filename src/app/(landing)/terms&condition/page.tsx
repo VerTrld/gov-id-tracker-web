@@ -1,8 +1,7 @@
 "use client";
 import Footer from '@/componets/Footer/Footer';
-import { Accordion, Divider, Flex, Paper, Text, Title } from '@mantine/core';
+import { Accordion, Flex, Paper, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { data } from '../features/data';
 import { privacyPolicy, term } from './termsCondition';
 
 
