@@ -34,7 +34,7 @@ export default function Page() {
     const { data: users, isLoading: usersLoading, refetch: refetchUsers } = useQuery({
         queryKey: ["user-accounts"],
         queryFn: async () => {
-            const res = await get(`/user-account/users/list`);
+            const res = await get(`/user-account/users/list?limit=999`,);
             return (res.data.data || []) as IUserAccount[];
         },
     });
