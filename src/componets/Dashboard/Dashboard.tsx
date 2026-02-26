@@ -479,7 +479,7 @@ const Dashboard = () => {
                 scrollbarWidth: "thin",
               }}
             >
-              {data?.map((v: any, index: number) => {
+              {data?.filter(d => d.applications.length).map((v: any, index: number) => {
                 const itemProgress = _.round(
                   (_.filter(
                     v.requirements?.flatMap((rl: any) => rl.requirement || []),

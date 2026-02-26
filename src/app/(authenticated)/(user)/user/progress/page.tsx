@@ -1,33 +1,22 @@
 "use client";
+import { IdTypes } from "@/entities/IdTypes";
+import { get } from "@/utils/http-api";
 import {
   Box,
-  Button,
   Center,
-  CloseButton,
   Flex,
   Grid,
-  GridCol,
-  Group,
   Paper,
   Progress,
   RingProgress,
-  Stack,
-  Text,
-  Textarea,
-  TextInput,
-  Title,
+  Text
 } from "@mantine/core";
-import { Calendar } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { get, patch, post } from "@/utils/http-api";
-import Image from "next/image";
-import React, { useMemo } from "react";
-import { useParams } from "next/navigation";
-import { IconMail, IconMapPin, IconX } from "@tabler/icons-react";
-import { useSession } from "next-auth/react";
 import _ from "lodash";
-import { IdTypes } from "@/entities/IdTypes";
+import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
+import { useMemo } from "react";
 
 export default function ProgressPage() {
   const params = useParams();
@@ -367,7 +356,7 @@ export default function ProgressPage() {
                       flex: 1,
                     }}
                   >
-                    {data?.map((v: any, index: number) => {
+                    {data?.filter(d => d.applications.length).map((v: any, index: number) => {
                       const requirements =
                         v.requirements?.flatMap(
                           (rl: any) => rl.requirement || []
