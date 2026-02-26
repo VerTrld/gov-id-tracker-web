@@ -33,7 +33,7 @@ const Dashboard = () => {
   const { data } = useQuery({
     queryKey: ["id-types"],
     queryFn: async () => {
-      const res = await get(`/id-types/read/all`);
+      const res = await get(`/id-types/read/all?limit=999`);
       return res.data as IdTypes[];
     },
   });
@@ -124,8 +124,8 @@ const Dashboard = () => {
                 size={isMobile ? "10vw" : "4vw"}
                 c="#043873"
                 fw={900}
-                // style={{ fontStyle: "italic" }}
-                >
+              // style={{ fontStyle: "italic" }}
+              >
                 {_.upperCase(String(session.data?.user?.name)?.split(" ")[0])}!
               </Title>
             </Flex>

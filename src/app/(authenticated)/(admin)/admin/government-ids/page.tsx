@@ -51,7 +51,7 @@ const page = () => {
   const { data: governemntIds } = useQuery({
     queryKey: ["governmentIds"],
     queryFn: async () => {
-      const allGovernmentIds = await get(`/id-types/read/all`);
+      const allGovernmentIds = await get(`/id-types/read/all?limit=999`);
       console.log({ allGovernmentIds });
       return (allGovernmentIds.data || []) as IdTypes[];
     },
@@ -84,7 +84,7 @@ const page = () => {
         alert("Created Government Ids");
         query.invalidateQueries({ queryKey: ["governmentIds"] });
       }
-    } catch (error) {}
+    } catch (error) { }
   });
 
   useEffect(() => {
