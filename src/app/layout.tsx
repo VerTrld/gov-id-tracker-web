@@ -34,6 +34,15 @@ export default function RootLayout({ children }: IRootLayoutProps) {
     <html lang="en" {...mantineHtmlProps}>
       <head>
         <ColorSchemeScript />
+
+        <meta property="og:title" content="ID mo. Karera mo" />
+        <meta property="og:description" content="Capstone System" />
+        <meta
+          property="og:image"
+          content={process.env.NEXT_PUBLIC_KARERAMO_LOGO}
+        />
+        <meta property="og:url" content="https://idmokareramo.com/" />
+        <meta property="og:type" content="website" />
       </head>
       <body>
         <SessionProvider>
