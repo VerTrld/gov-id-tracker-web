@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   icons: {
     icon: process.env.NEXT_PUBLIC_KARERAMO_LOGO,
   },
-  title: "ID mo. Karera mo",
+  title: "ID Mo. Karera Mo",
   description: "Capstone System",
 };
 
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: IRootLayoutProps) {
       <head>
         <ColorSchemeScript />
 
-        <meta property="og:title" content="ID mo. Karera mo" />
+        <meta property="og:title" content="ID Mo. Karera Mo" />
         <meta property="og:description" content="Capstone System" />
         <meta
           property="og:image"
